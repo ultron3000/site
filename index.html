@@ -1,132 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ultron Streaming Hub</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>PIXAR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
+      background: black;
+      color: #ffcc00;
+      font-family: Arial, sans-serif;
       margin: 0;
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #fff;
-    }
-    header {
-      text-align: center;
-      padding: 40px 20px;
-      background: #000000cc;
-      box-shadow: 0 0 10px #00ffe1;
-    }
-    header h1 {
-      font-size: 3em;
-      margin: 0;
-      color: #00ffe1;
-    }
-    header p {
-      font-size: 1.2em;
-      color: #ccc;
-    }
-    .section {
-      padding: 40px 20px;
-    }
-    .section h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 2em;
-      color: #ffdd57;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      padding: 0 10px;
-    }
-    .card {
-      background: #1e1e1e;
-      border-radius: 15px;
       padding: 20px;
       text-align: center;
-      box-shadow: 0 0 10px rgba(0,0,0,0.6);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 20px #00ffe1aa;
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2em;
     }
-    .card a {
-      color: #00ffe1;
-      text-decoration: none;
+    .movies {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .movie {
+      background: #222;
+      border: 2px solid #ffcc00;
+      border-radius: 12px;
+      width: 200px;
+      padding: 10px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .movie:hover {
+      transform: scale(1.05);
+      background: #333;
+    }
+    .movie img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .movie-title {
+      margin-top: 10px;
+      font-size: 1em;
       font-weight: bold;
     }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #111;
-      font-size: 0.9em;
-      color: #999;
+  
+    @media (max-width: 600px) {
+      .movies {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+      .movie {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .movie img {
+        height: auto;
+      }
     }
+
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>🎬 Ultron Streaming Hub</h1>
-    <p>One site to rule them all — All your movies, shows, and franchises in one place</p>
-  </header>
+<h1>🚨 Pixar Universe</h1>
+<input id="searchBar" placeholder="Search Pixar movies..." style="width: calc(100% - 40px);max-width: 100%;margin: 20px auto;padding: 10px 15px;font-size: 1em;border-radius: 8px;border: 2px solid #ffcc00;background: #111;color: #ffcc00;box-shadow: 0 0 10px #ffcc00a0;display: block;" type="text"/>
+<div class="movies" id="movies"></div>
+<script>
+const movies = [
+  { title: "WALL·E", video: "https://sr81.bradburyg.sbs:443/v4/js/jgoag/index-f2-v1-a1.txt", image: "https://mir-s3-cdn-cf.behance.net/project_modules/hd/05c77b66174149.5b0d6304d6a65.jpg" },
+  { title: "Elemental", video: "https://sskt.mcgarrydvan.sbs:443/v4/ho/bhpt8/index-f2-v1-a1.txt", image: "https://m.media-amazon.com/images/I/71M+yet93tL.jpg" },
+  { title: "Inside Out", video: "https://s9dz.baugherhatchp.sbs:443/v4/sc/mooqa/index-f2-v1-a1.txt", image: "https://i.etsystatic.com/14140434/r/il/f4e478/1486444070/il_fullxfull.1486444070_20a2.jpg" },
+  { title: "Inside Out 2", video: "https://sojg.coombsneils.sbs:443/v4/rw/xhqzk/index-f1-v1-a1.txt", image: "https://posterspy.com/wp-content/uploads/2023/06/TB_WEB_TEMPLATE_1000x1500px.jpg" },
+  { title: "Riley's First Date?", video: "https://sj3l.vivianorov.sbs:443/v4/db/ul69l/index-f2-v1-a1.txt", image: "https://goauctionomega.blob.core.windows.net/stock/35781-1-medium.jpg?v=63826656829657" },
+  { title: "Lightyear", video: "https://scvo.mcentirecajigas.sbs/v4/k5/eorm6/index-f1-v1-a1.txt", image: "https://media-cache.cinematerial.com/p/500x/ztunectl/on-her-majestys-secret-service-movie-poster.jpg?v=1456639344" },
+  { title: "Turning Red", video: "https://sj3l.ghwillawkni.sbs:443/v4/rw/eocdk/index-f2-v1-a1.txt", image: "https://posterspy.com/wp-content/uploads/2023/06/DAF_WEB_TEMPLATE_1000x1500px.jpg" },
+  { title: "Luca", video: "https://sojg.wesleykqpgre.sbs:443/v4/pq/3ye3w/index-f2-v1-a1.txt", image: "https://alternativemovieposters.com/wp-content/uploads/2022/12/Robert-Watts_LiveLetDie.jpg" },
+  { title: "Ciao Alberto", video: "https://skra.cedekkerohartf.sbs:443/v4/k5/xle8s/index-f2-v1-a1.txt", image: "https://image.tmdb.org/t/p/original/itH4xI6TbJtJSqcZ43B3MkpL1gy.jpg" },
+  { title: "Soul", video: "https://sskt.desrocherswick.sbs/v4/db/qywjo/index-f1-v1-a1.txt", image: "https://posterspy.com/wp-content/uploads/2022/11/tswlm-poster.jpg" },
+  { title: "Onward", video: "https://skra.haltermanieddiel.sbs:443/v4/db/inlpf/index-f2-v1-a1.txt", image: "https://image.tmdb.org/t/p/original/uYLS9uMZmP6iXAh0jhWUZI2Nk3e.jpg" },
+  { title: "Finding Nemo", video: "https://sr81.myersbjhardi.sbs:443/v4/6s/bpu6y/index-f2-v1-a1.txt", image: "https://i.pinimg.com/736x/9e/16/41/9e1641d6057cfae2e77879866f54a8a3.jpg" },
+  { title: "Finding Dory", video: "https://sr81.gatesnationjyd.sbs:443/v4/ic/hvbk5/index-f1-v1-a1.txt", image: "https://cdn.posteritati.com/posters/000/000/061/237/octopussy-md-web.jpg" },  
+  { title: "Dory's Reef Cam", video: "https://sr81.swobodafocht.sbs/v4/9a/bkewb/cf-master.txt?v=1732333200", image: "https://i.pinimg.com/736x/cb/36/82/cb3682872fc7b9042b505e884f5e5d54.jpg" },
+  { title: "The Incredibles", video: "https://slob.mcgarrydvan.sbs:443/v4/np/xjokk/index-f2-v1-a1.txt", image: "https://posterspy.com/wp-content/uploads/2023/06/TLD_WEB_TEMPLATE_1000x1500px.jpg" },
+  { title: "Incredibles 2", video: "https://spuc.vivianorovc.sbs/v4/js/gnt5j/cf-master.txt?v=1733545595", image: "https://i.pinimg.com/736x/d8/45/27/d84527d6f1c4cba168b690a59454bf36.jpg" },
+  { title: "Auntie Edna", video: "https://slob.squiressill.sbs:443/v4/db/inpxt/index-f2-v1-a1.txt", image: "https://i.pinimg.com/736x/96/0e/f3/960ef3339761fc03969d9e37ec60d2d5.jpg" },
+  { title: "Coco", video: "https://sipt.killionorellanacoelho.sbs:443/v4/hz/dxnps/index-f1-v1-a1.txt", image: "https://cdn11.bigcommerce.com/s-yzgoj/images/stencil/1280x1280/products/3234392/6220705/GBEFPO431__06020.1709712291.jpg?c=2" },
+  { title: "Cars", video: "https://slob.sralphqesrob.sbs:443/v4/ck/hvpy8/index-f2-v1-a1.txt", image: "https://i.pinimg.com/474x/a5/fc/8f/a5fc8fa3feb3ea9f3f6316cb8c01e9b6.jpg" },
+  { title: "Cars 2", video: "https://s3ae.yevettesha.sbs:443/v4/xq/e8wzv/index-f2-v1-a1.txt", image: "https://cdn11.bigcommerce.com/s-yzgoj/images/stencil/500x659/products/2911891/5955577/MOVAJ0534__87882.1679599595.jpg?c=2" },
+  { title: "Cars 3", video: "https://sr81.dkneropbr.sbs/v4/js/rxsct/cf-master.txt?v=1735259302", image: "https://i.redd.it/6tkj6vkehct81.jpg" },
+  { title: "Air Mater", video: "https://slob.squiressill.sbs:443/v4/db/inpxt/index-f2-v1-a1.txt", image: "https://artofthemovies.co.uk/cdn/shop/files/IMG_4340_300x300.jpg?v=1697040084" },
+  { title: "Cars Toon: Mater's Tall Tales", video: "https://sojg.pouloszcleed.sbs:443/v4/61/cdfwx/index-f2-v1-a1.m3u8", image: "https://i.pinimg.com/736x/d2/b2/ff/d2b2ffa2fb20976ae211f1d473128d2c.jpg" },
+  { title: "The Good Dinosaur", video: "https://sxic.myersbjhardi.sbs/v4/sc/xuhud/cf-master.txt?v=1732328816", image: "https://preview.redd.it/4a8rd5658g161.jpg?width=640&crop=smart&auto=webp&s=8c16f3cd4b0a985f791de5507f7d2b1c411eda02" },
+  { title: "Up", video: "https://f12.megacdn.co:2228/v3-hls-playback/b9b65d54164d3f6c0fb2be6c95a833e2f99d5a4386c8dddb15ed15c4580e5340e444ef6cce00fde2ccfc3127ad7cd26017a9b08f4a211c77cb94bb57b3fbbb5195e078521cfc7cf6f6569eba03ef408bfd0897b877a2cbeb083fbbe8172283d9f3c9b4b2432e4d8bbcf1ccc50db5ad9adfc3bd515d84e1e7a0f2148475557460cfdf8d200784d63b6ffdee90b137f5af16cf55521dc57bf664e62955080e0c05304b9a3f84b29bbba93467399cde5298a8fbfffa3f159c0a1f7e067903536959/1080/index.m3u8", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Carl's Date", video: "https://sipt.shahcanna.sbs/v4/6s/ocq59/index-f1-v1-a1.txt", image: "https://qnmdbn1lucqr.cdn-centaurus.com:443/hls2/01/00363/gkw852ptkl8w_h/iframes-v1-a1.m3u8?t=FEsfe0nqC3nujQKQ5tpB_L4ekOH8EWTmn6q4R1sgPSU&s=1745451962&e=129600&f=1816149&srv=m2q5ea5w42hk&i=0.4&sp=500&p1=m2q5ea5w42hk&p2=m2q5ea5w42hk&asn=24554" }
+  { title: "Monsters University", video: "https://198.186.130.94:443/v4/kkChLmPijNWnl8btDRe1Vg/1745459386/us/p3zyx/index-f2-v1-a1.m3u8", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Monsters, Inc.", video: "https://spuc.ybarrazotz.sbs/v4/db/p8b3s/cf-master.txt?v=1732147597", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Party Central", video: "https://s3ae.squiressill.sbs:443/v4/ek/doan8/index-f2-v1-a1.txt", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Ratatouille", video: "https://smashyplayer.top:443/hls/baPs8vMfovyhGyknuto30g/sc/ghsd6zxw/pw3r1/tt/index-f2-v1-a1.m3u8", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Your Friend the Rat", video: "https://sxic.bsmlecuyer.sbs/v4/db/urcza9/index-f1-v1-a1.txt", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Toy Story", video: "https://s9dz.coombsneils.sbs:443/v4/np/hq5bo/index-f2-v1-a1.txt", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Toy Story 2", video: "https://s9dz.sipeskrlbtrujill.sbs:443/v4/sc/xkfhi/index-f1-v1-a1.txt", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Toy Story 3", video: "https://smashyplayer.top:443/hls/_Aeg_kfj63Gjjp_17Pt9PA/xq/nc31je1o/mn5jj/tt/index-f2-v1-a1.m3u8", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Toy Story 4", video: "https://s3ae.cwsspottstcyl.sbs:443/v4/hz/vijsz/index-f2-v1-a1.txt", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Toy Story That Time Forgot", video: "https://s3ae.desrocherswick.sbs/v4/ck/xujkt/index-f2-v1-a1.txt", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Toy Story of Terror!", video: "https://skra.wesleykqpg.sbs:443/v4/61/r1t1k/index-f1-v1-a1.txt", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Lamp Life", video: "https://skra.kimberlygxjeum.sbs:443/v4/pq/jwdtt/index-f2-v1-a1.txt", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Brave", video: "https://qnmdbn1lucqr.cdn-centaurus.com:443/hls2/01/00363/gkw852ptkl8w_h/iframes-v1-a1.m3u8?t=FEsfe0nqC3nujQKQ5tpB_L4ekOH8EWTmn6q4R1sgPSU&s=1745451962&e=129600&f=1816149&srv=m2q5ea5w42hk&i=0.4&sp=500&p1=m2q5ea5w42hk&p2=m2q5ea5w42hk&asn=24554", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "22 vs. Earth", video: "https://cdn-1.celestialodyssey.site/video-stream/a66dd7c8/playlist.m3u8", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Loop", video: "https://sh9f.cortinala.sbs:443/v4/ck/tqn9q/index-f2-v1-a1.txt", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Purl", video: "https://sj3l.wrendresslerle.sbs:443/v4/rw/h6dz3/index-f2-v1-a1.txt", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Float", video: "https://sojg.cortinala.sbs:443/v4/lf/ixyal/index-f1-v1-a1.txt", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Lou", video: "https://sh9f.gomesscheerer.sbs:443/v4/np/xrpq3/index-f2-v1-a1.txt", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Piper", video: "https://sxic.mcentirecajigas.sbs/v4/k5/xlld9/index-f1-v1-a1.txt", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Lava", video: "https://skra.ulrikeumdqputm.sbs:443/v4/qu/tgn3o/index-f2-v1-a1.txt", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "Partly Cloudy", video: "https://sh9f.tiltonrigobert.sbs:443/v4/hz/no666/index-f1-v1-a1.txt", image: "https://i.redd.it/6tkj6vkehct81.jpg" }
+  { title: "A Bug's Life", video: "https://slob.squiressill.sbs:443/v4/db/inpxt/index-f2-v1-a1.txt", image: "https://i.redd.it/6tkj6vkehct81.jpg" }  
+];
 
-  <div class="section">
-    <h2>🌟 स्वराज्य</h2>
-    <div class="grid">
-      <div class="card"><a href="https://ultron3000.github.io/1">चित्रपट</a></div>
-      <div class="card"><a href="https://ultron3000.github.io/2">मालिका</a></div>
-    </div>
-  </div>
+const container = document.getElementById('movies');
+movies.forEach((movie, index) => {
+  const div = document.createElement('div');
+  div.className = 'movie';
+  div.innerHTML = `
+    <img src="${movie.image}" alt="${movie.title}">
+    <div class="movie-title">${movie.title}</div>
+  `;
+  div.onclick = () => {
+    const url = `player.html?title=${encodeURIComponent(movie.title)}&video=${encodeURIComponent(movie.video)}&index=${index}`;
+    window.location.href = url;
+  };
+  container.appendChild(div);
+});
+// Live Search Filter
 
-  <div class="section">
-    <h2>🎨 Animation</h2>
-    <div class="grid">
-      <div class="card"><a href="https://ultron3000.github.io/pixar">Pixar</a></div>
-      <div class="card"><a href="https://ultron3000.github.io/dreamworks">DreamWorks</a></div>
-      <div class="card"><a href="https://ultron3000.github.io/sony">Sony Animation</a></div>
-      <div class="card"><a href="https://ultron3000.github.io/illumination">Illumination</a></div>
-    </div>
-  </div>
+document.getElementById('searchBar').addEventListener('input', function () {
 
-  <div class="section">
-    <h2>🏢 Studios & Franchises</h2>
-    <div class="grid">
-      <div class="card"><a href="https://ultron3000.github.io/marvel">Marvel Studios</a></div>
-      <div class="card"><a href="https://ultron3000.github.io/wb">Warner Bros Pictures</a></div>
-      <div class="card"><a href="https://ultron3000.github.io/x-men">X-MEN</a></div>
-      <div class="card"><a href="https://ultron3000.github.io/rambo">Rambo</a></div>
-      <div class="card"><a href="https://ultron3000.github.io/transformers">Transformers</a></div>
-      <div class="card"><a href="https://ultron3000.github.io/mi">Mission Impossible</a></div>
-      <div class="card"><a href="https://ultron3000.github.io/predator">Predator</a></div>
-      <div class="card"><a href="https://ultron3000.github.io/007">007</a></div>
-      <div class="card"><a href="https://ultron3000.github.io/rocky">Rocky Balboa</a></div>
-    </div>
-  </div>
+  const searchTerm = this.value.toLowerCase();
 
-  <div class="section">
-    <h2>📺 Web Series</h2>
-    <div class="grid">
-      <div class="card"><a href="https://ultron3000.github.io/moon">Moon Knight</a></div>
-      <div class="card"><a href="https://ultron3000.github.io/jackal">The Day of the Jackal</a></div>
-    </div>
-  </div>
+  const movieDivs = document.querySelectorAll('.movie');
 
-  <div class="section">
-    <h2>🌍 Global Media</h2>
-    <div class="grid">
-      <div class="card"><a href="https://tv.garden/" target="_blank">Live TV</a></div>
-      <div class="card"><a href="https://radio.garden/" target="_blank">Radio</a></div>
-    </div>
-  </div>
+  movieDivs.forEach(div => {
 
-  <footer>
-    ⚡ Powered by Readdy.ai | Curated by Ultron3000 | GitHub Streaming Universe
-  </footer>
+    const title = div.querySelector('.movie-title').textContent.toLowerCase();
+
+    div.style.display = title.includes(searchTerm) ? 'block' : 'none';
+
+  });
+
+});    
+</script>
 
 </body>
 </html>
