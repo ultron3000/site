@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PIXAR</title>
+  <title>DreamWorks</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
@@ -67,30 +67,30 @@
 </head>
 <body>
 
-<h1>🚨 Pixar Universe</h1>
+<h1>🚨 DreamWorks Universe</h1>
 <input id="searchBar" placeholder="Search Pixar movies..." style="width: calc(100% - 40px);max-width: 100%;margin: 20px auto;padding: 10px 15px;font-size: 1em;border-radius: 8px;border: 2px solid #ffcc00;background: #111;color: #ffcc00;box-shadow: 0 0 10px #ffcc00a0;display: block;" type="text"/>
 <div class="movies" id="movies"></div>
 <script>
 const movies = [
-  { title: "WALL·E", video: "https://sr81.bradburyg.sbs:443/v4/js/jgoag/index-f2-v1-a1.txt", image: "https://mir-s3-cdn-cf.behance.net/project_modules/hd/05c77b66174149.5b0d6304d6a65.jpg" },
-  { title: "Elemental", video: "https://sskt.mcgarrydvan.sbs:443/v4/ho/bhpt8/index-f2-v1-a1.txt", image: "https://preview.redd.it/elemental-2023-is-among-pixars-most-successful-recent-v0-lukx1jjb0ybb1.jpg?width=640&crop=smart&auto=webp&s=3d11d7a266ecc1ab4fbacb90ef2f458ef98fd0cb" },
-  { title: "Inside Out", video: "https://s9dz.baugherhatchp.sbs:443/v4/sc/mooqa/index-f2-v1-a1.txt", image: "https://i.ebayimg.com/images/g/wtUAAOSwtqtk4Ytr/s-l1200.jpg" },
-  { title: "Inside Out 2", video: "https://sojg.coombsneils.sbs:443/v4/rw/xhqzk/index-f1-v1-a1.txt", image: "https://lumiere-a.akamaihd.net/v1/images/z_95ab3f83.jpeg?region=0,0,1350,2000" },
-  { title: "Riley's First Date?", video: "https://sj3l.vivianorov.sbs:443/v4/db/ul69l/index-f2-v1-a1.txt", image: "https://m.media-amazon.com/images/M/MV5BMjZjYTRlMGEtNmRhOC00MzEzLTk1ZDktMmRlNjlkZjc5YjI5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" },
-  { title: "Lightyear", video: "https://scvo.mcentirecajigas.sbs/v4/k5/eorm6/index-f1-v1-a1.txt", image: "https://myhotposters.com/cdn/shop/products/mL6180.jpg?v=1745708654" },
-  { title: "Turning Red", video: "https://sj3l.ghwillawkni.sbs:443/v4/rw/eocdk/index-f2-v1-a1.txt", image: "https://i.pinimg.com/564x/f7/2c/bd/f72cbd2d0218e221c05e2b251795abb8.jpg" },
-  { title: "Luca", video: "https://sojg.wesleykqpgre.sbs:443/v4/pq/3ye3w/index-f2-v1-a1.txt", image: "https://image.tmdb.org/t/p/original/8tABCBpzu3mZbzMB3sRzMEHEvJi.jpg" },
-  { title: "Ciao Alberto", video: "https://skra.cedekkerohartf.sbs:443/v4/k5/xle8s/index-f2-v1-a1.txt", image: "https://egybest.media/uploads/m/99f4f6accffeb2c4026c31ede97947b5.jpg" },
-  { title: "Soul", video: "https://sskt.desrocherswick.sbs/v4/db/qywjo/index-f1-v1-a1.txt", image: "https://lh3.googleusercontent.com/proxy/0dnjWe9-HUnUEZ0ebRbdDnoiwVpXXDiIQ0pQeK6O5lMyhvh3TnW8MWNGAJFRKhe96ZScBf5cKuwdPEwYvhkMC31h0Dc9eW8axYkI" },
-  { title: "Onward", video: "https://skra.haltermanieddiel.sbs:443/v4/db/inlpf/index-f2-v1-a1.txt", image: "https://i0.wp.com/raisingwhasians.com/wp-content/uploads/2020/02/Onward-movie-review-safe-for-kids-691x1024.jpg" },
-  { title: "Finding Nemo", video: "https://sr81.myersbjhardi.sbs:443/v4/6s/bpu6y/index-f2-v1-a1.txt", image: "https://m.media-amazon.com/images/I/71+H7cpoK9L._AC_UF1000,1000_QL80_.jpg" },
-  { title: "Finding Dory", video: "https://sr81.gatesnationjyd.sbs:443/v4/ic/hvbk5/index-f1-v1-a1.txt", image: "https://www.aceprensa.com/wp-content/uploads/2016/06/127380-0.jpg" },  
-  { title: "Dory's Reef Cam", video: "https://sr81.swobodafocht.sbs/v4/9a/bkewb/cf-master.txt?v=1732333200", image: "https://www.dvdplanetstore.pk/wp-content/uploads/2024/01/mMWLGu9pFymqipN8yvISHsAaj72-600x900.jpg" },
-  { title: "The Incredibles", video: "https://slob.mcgarrydvan.sbs:443/v4/np/xjokk/index-f2-v1-a1.txt", image: "https://i.ebayimg.com/images/g/VIQAAMXQhuVRKnzc/s-l1200.jpg" },
-  { title: "Incredibles 2", video: "https://spuc.vivianorovc.sbs/v4/js/gnt5j/cf-master.txt?v=1733545595", image: "https://live.staticflickr.com/862/43093706984_b56a7a8915_z.jpg" },
-  { title: "Auntie Edna", video: "https://slob.squiressill.sbs:443/v4/db/inpxt/index-f2-v1-a1.txt", image: "https://m.media-amazon.com/images/M/MV5BNDJiOWYxZTYtOTFjNS00MjY4LThjZmUtNjI5ZDQwODdmNTNiXkEyXkFqcGc@._V1_.jpg" },
-  { title: "Coco", video: "https://sipt.killionorellanacoelho.sbs:443/v4/hz/dxnps/index-f1-v1-a1.txt", image: "https://i5.walmartimages.com/asr/591da8ad-5d7d-4839-924e-156c147701b4.5d243bebf10c969b420a3303a6c989ed.jpeg" },
-  { title: "Cars", video: "https://slob.sralphqesrob.sbs:443/v4/ck/hvpy8/index-f2-v1-a1.txt", image: "https://filmartgallery.com/cdn/shop/files/Cars-Vintage-Movie-Poster-Original.jpg?v=1738907489" },
+  { title: "The Wild Robot", video: "https://sskt.vktcurrey.sbs/v4/k5/j5juh/cf-master.txt?v=1729750605", image: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/the-wild-robot-sensory-friendly-screening-et00417334-1729776735.jpg" },
+  { title: "Turbo", video: "https://sr81.mooringcarmel.sbs/v4/xq/veies/index-f1-v1-a1.txt", image: "https://lh5.googleusercontent.com/proxy/p6uPMoO07mBi7gY7zDrBxPmZWuttNDKFVDHBRWtzAhzKoscx05yh2vwJzjyS8d9BGnCh5Z4vKK0WsP-2mMwrHoE-WHlNvbyE" },
+  { title: "The Croods", video: "https://scvo.seawrightqrg.sbs:443/v4/ck/ve6on/index-f2-v1-a1.txt", image: "https://live.staticflickr.com/8093/8498275195_74ac66cffa_z.jpg" },
+  { title: "The Croods: A New Age", video: "https://s3ae.yevettesh.sbs/v4/ic/oavzo/cf-master.txt?v=1732393660", image: "https://lumiere-a.akamaihd.net/v1/images/z_95ab3f83.jpeg?region=0,0,1350,2000" },
+  { title: "Mr. Peabody & Sherman", video: "https://sr81.carbajalgpsh.sbs/v4/np/rzldl/cf-master.txt?v=1732633440", image: "https://i.ebayimg.com/images/g/GcYAAOSwYlNc9AfS/s-l1200.jpg" },
+  { title: "Over the Hedge", video: "https://scvo.mcentirecajigas.sbs/v4/k5/eorm6/index-f1-v1-a1.txt", image: "https://i.ebayimg.com/images/g/ILcAAOSwciRjCXrE/s-l1200.png" },
+  { title: "Rise of the Guardians", video: "https://sj3l.ghwillawkni.sbs:443/v4/rw/eocdk/index-f2-v1-a1.txt", image: "https://static.wikia.nocookie.net/universalstudios/images/6/67/Rise_of_the_Guardians_Theatrical_Trailer_Poster.jpg/revision/latest?cb=20241010052256" },
+  { title: "The Bad Guys", video: "https://sojg.wesleykqpgre.sbs:443/v4/pq/3ye3w/index-f2-v1-a1.txt", image: "https://image.tmdb.org/t/p/original/8tABCBpzu3mZbzMB3sRzMEHEvJi.jpg" },
+  { title: "Ruby Gillman, Teenage Kraken", video: "https://skra.cedekkerohartf.sbs:443/v4/k5/xle8s/index-f2-v1-a1.txt", image: "https://egybest.media/uploads/m/99f4f6accffeb2c4026c31ede97947b5.jpg" },
+  { title: "Dog Man", video: "https://sskt.desrocherswick.sbs/v4/db/qywjo/index-f1-v1-a1.txt", image: "https://lh3.googleusercontent.com/proxy/0dnjWe9-HUnUEZ0ebRbdDnoiwVpXXDiIQ0pQeK6O5lMyhvh3TnW8MWNGAJFRKhe96ZScBf5cKuwdPEwYvhkMC31h0Dc9eW8axYkI" },
+  { title: "Antz", video: "https://skra.haltermanieddiel.sbs:443/v4/db/inlpf/index-f2-v1-a1.txt", image: "https://i0.wp.com/raisingwhasians.com/wp-content/uploads/2020/02/Onward-movie-review-safe-for-kids-691x1024.jpg" },
+  { title: "The Prince of Egypt", video: "https://sr81.myersbjhardi.sbs:443/v4/6s/bpu6y/index-f2-v1-a1.txt", image: "https://m.media-amazon.com/images/I/71+H7cpoK9L._AC_UF1000,1000_QL80_.jpg" },
+  { title: "Monsters vs. Aliens", video: "https://sr81.gatesnationjyd.sbs:443/v4/ic/hvbk5/index-f1-v1-a1.txt", image: "https://www.aceprensa.com/wp-content/uploads/2016/06/127380-0.jpg" },  
+  { title: "How to Train Your Dragon", video: "https://sr81.swobodafocht.sbs/v4/9a/bkewb/cf-master.txt?v=1732333200", image: "https://www.dvdplanetstore.pk/wp-content/uploads/2024/01/mMWLGu9pFymqipN8yvISHsAaj72-600x900.jpg" },
+  { title: "How to Train Your Dragon 2", video: "https://slob.mcgarrydvan.sbs:443/v4/np/xjokk/index-f2-v1-a1.txt", image: "https://i.ebayimg.com/images/g/VIQAAMXQhuVRKnzc/s-l1200.jpg" },
+  { title: "How to Train Your Dragon: The Hidden World", video: "https://spuc.vivianorovc.sbs/v4/js/gnt5j/cf-master.txt?v=1733545595", image: "https://live.staticflickr.com/862/43093706984_b56a7a8915_z.jpg" },
+  { title: "Dragons: Dawn Of The Dragon Racers", video: "https://slob.squiressill.sbs:443/v4/db/inpxt/index-f2-v1-a1.txt", image: "https://m.media-amazon.com/images/M/MV5BNDJiOWYxZTYtOTFjNS00MjY4LThjZmUtNjI5ZDQwODdmNTNiXkEyXkFqcGc@._V1_.jpg" },
+  { title: "Book of Dragons", video: "https://sipt.killionorellanacoelho.sbs:443/v4/hz/dxnps/index-f1-v1-a1.txt", image: "https://i5.walmartimages.com/asr/591da8ad-5d7d-4839-924e-156c147701b4.5d243bebf10c969b420a3303a6c989ed.jpeg" },
+  { title: "Dragons: Gift of the Night Fury", video: "https://slob.sralphqesrob.sbs:443/v4/ck/hvpy8/index-f2-v1-a1.txt", image: "https://filmartgallery.com/cdn/shop/files/Cars-Vintage-Movie-Poster-Original.jpg?v=1738907489" },
   { title: "Cars 2", video: "https://s3ae.yevettesha.sbs:443/v4/xq/e8wzv/index-f2-v1-a1.txt", image: "https://i.ebayimg.com/images/g/3rgAAOSwk7hfJHpl/s-l1200.jpg" },
   { title: "Cars 3", video: "https://sr81.dkneropbr.sbs/v4/js/rxsct/cf-master.txt?v=1735259302", image: "https://image.tmdb.org/t/p/original/ucGU1HyLfxoQwuq22VWwq55m0cH.jpg" },
   { title: "Air Mater", video: "https://slob.squiressill.sbs:443/v4/db/inpxt/index-f2-v1-a1.txt", image: "https://image.tmdb.org/t/p/original/sEixqafB6xfwovGZ38YPyUlhCuW.jpg" },
