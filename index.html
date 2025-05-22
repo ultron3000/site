@@ -68,7 +68,7 @@
 <body>
 
 <h1>🚨 DreamWorks Universe</h1>
-<input id="searchBar" placeholder="Search Pixar movies..." style="width: calc(100% - 40px);max-width: 100%;margin: 20px auto;padding: 10px 15px;font-size: 1em;border-radius: 8px;border: 2px solid #ffcc00;background: #111;color: #ffcc00;box-shadow: 0 0 10px #ffcc00a0;display: block;" type="text"/>
+<input id="searchBar" placeholder="Search DreamWorks movies..." style="width: calc(100% - 40px);max-width: 100%;margin: 20px auto;padding: 10px 15px;font-size: 1em;border-radius: 8px;border: 2px solid #ffcc00;background: #111;color: #ffcc00;box-shadow: 0 0 10px #ffcc00a0;display: block;" type="text"/>
 <div class="movies" id="movies"></div>
 <script>
 const movies = [
@@ -104,22 +104,41 @@ const movies = [
   { title: "Shrek the Third", video: "https://smashyplayer.top:443/hls/baPs8vMfovyhGyknuto30g/sc/ghsd6zxw/pw3r1/tt/index-f2-v1-a1.m3u8", image: "https://images-cdn.ubuy.co.in/64389b0afd266f2c036cf595-poster-usa-disney-classics-ratatouille.jpg" },
   { title: "Shrek Forever After", video: "https://sxic.bsmlecuyer.sbs/v4/db/urcza9/index-f1-v1-a1.txt", image: "https://m.media-amazon.com/images/M/MV5BMTcyOTU4MTM0OF5BMl5BanBnXkFtZTgwODQzMDgwMjE@._V1_FMjpg_UX1000_.jpg" },
   { title: "Scared Shrekless", video: "https://s9dz.coombsneils.sbs:443/v4/np/hq5bo/index-f2-v1-a1.txt", image: "https://images-cdn.ubuy.co.in/6742c6d683a44b4221024ef9-entertainment-room-decor-toy-story-1.jpg" },
-  { title: "Toy Story 2", video: "https://s9dz.sipeskrlbtrujill.sbs:443/v4/sc/xkfhi/index-f1-v1-a1.txt", image: "https://image.tmdb.org/t/p/original/xVhEI1WCgNCCa5I86AqiwuZoog3.jpg" },
-  { title: "Toy Story 3", video: "https://smashyplayer.top:443/hls/_Aeg_kfj63Gjjp_17Pt9PA/xq/nc31je1o/mn5jj/tt/index-f2-v1-a1.m3u8", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkG34xN0wr4pZgiLpLnfDt65WtXjZP_YOA4SZevisCxmqOyevuU1SojHsFEyBriX7barM&usqp=CAU" },
-  { title: "Toy Story 4", video: "https://s3ae.cwsspottstcyl.sbs:443/v4/hz/vijsz/index-f2-v1-a1.txt", image: "https://i.pinimg.com/736x/32/f0/c2/32f0c2388f8745c2fa2aab3609355116.jpg" },
-  { title: "Toy Story That Time Forgot", video: "https://s3ae.desrocherswick.sbs/v4/ck/xujkt/index-f2-v1-a1.txt", image: "https://i.pinimg.com/736x/ac/c7/b9/acc7b968fea622f39032d123b5a04497.jpg" },
-  { title: "Toy Story of Terror!", video: "https://skra.wesleykqpg.sbs:443/v4/61/r1t1k/index-f1-v1-a1.txt", image: "https://image.tmdb.org/t/p/original/oPBEnNP4Fg4gv9c0KBhchmtoG4H.jpg" },
-  { title: "Lamp Life", video: "https://skra.kimberlygxjeum.sbs:443/v4/pq/jwdtt/index-f2-v1-a1.txt", image: "https://m.media-amazon.com/images/M/MV5BYmQxNzA5YTYtNWZkZi00ZDM1LWFiYjgtMzdmMmJiNjNiMmMyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" },
-  { title: "Brave", video: "https://qnmdbn1lucqr.cdn-centaurus.com:443/hls2/01/00363/gkw852ptkl8w_h/iframes-v1-a1.m3u8?t=FEsfe0nqC3nujQKQ5tpB_L4ekOH8EWTmn6q4R1sgPSU&s=1745451962&e=129600&f=1816149&srv=m2q5ea5w42hk&i=0.4&sp=500&p1=m2q5ea5w42hk&p2=m2q5ea5w42hk&asn=24554", image: "https://image.tmdb.org/t/p/original/L6qqU6Q3k4MmPojncNbT43FSTL.jpg" },
-  { title: "22 vs. Earth", video: "https://cdn-1.celestialodyssey.site/video-stream/a66dd7c8/playlist.m3u8", image: "https://m.media-amazon.com/images/M/MV5BODc5MGM0YzQtNDlmOS00NTMyLTg5YzYtNGU0YTc5NjU1NGE1XkEyXkFqcGc@._V1_.jpg" },
-  { title: "Loop", video: "https://sh9f.cortinala.sbs:443/v4/ck/tqn9q/index-f2-v1-a1.txt", image: "https://speakingofautismcom.wordpress.com/wp-content/uploads/2019/12/img_1643.jpg" },
-  { title: "Purl", video: "https://sj3l.wrendresslerle.sbs:443/v4/rw/h6dz3/index-f2-v1-a1.txt", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAHQTUlNh-wk4l8zGP7rOGM8EZ0ucf3qfn7EU5PF4AKZCtSEjpPQJCFb4etimfCQIE624&usqp=CAU" },
-  { title: "Float", video: "https://sojg.cortinala.sbs:443/v4/lf/ixyal/index-f1-v1-a1.txt", image: "https://m.media-amazon.com/images/M/MV5BNDU5ODg2YjEtODk1My00NDA5LTliMzctZmI5ODY2ZWNjZTEyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" },
-  { title: "Lou", video: "https://sh9f.gomesscheerer.sbs:443/v4/np/xrpq3/index-f2-v1-a1.txt", image: "https://m.media-amazon.com/images/M/MV5BZWQ5ODAwNDMtNmY0Yy00OWQ1LTk0MzctOGE4OTMyYWRjNjg0XkEyXkFqcGc@._V1_.jpg" },
-  { title: "Piper", video: "https://sxic.mcentirecajigas.sbs/v4/k5/xlld9/index-f1-v1-a1.txt", image: "https://i.pinimg.com/736x/71/43/d0/7143d0e2d47e170a230a56f7a8ec0275.jpg" },
-  { title: "Lava", video: "https://skra.ulrikeumdqputm.sbs:443/v4/qu/tgn3o/index-f2-v1-a1.txt", image: "https://m.media-amazon.com/images/M/MV5BNmQ2NTAwMDktYWE5Mi00OTBkLWJiZmUtNGQ4MGM5NzMxOTRhXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" },
-  { title: "Partly Cloudy", video: "https://sh9f.tiltonrigobert.sbs:443/v4/hz/no666/index-f1-v1-a1.txt", image: "https://i.pinimg.com/originals/de/00/22/de0022a3e8b016ffb9458a13fd43885f.jpg" },
-  { title: "A Bug's Life", video: "https://slob.squiressill.sbs:443/v4/db/inpxt/index-f2-v1-a1.txt", image: "https://i.pinimg.com/474x/74/9e/67/749e67191044fb4ace982fa646a385a7.jpg" },
+  { title: "The Ghost of Lord Farquaad", video: "https://s9dz.sipeskrlbtrujill.sbs:443/v4/sc/xkfhi/index-f1-v1-a1.txt", image: "https://image.tmdb.org/t/p/original/xVhEI1WCgNCCa5I86AqiwuZoog3.jpg" },
+  { title: "Spirit: Stallion of the Cimarron", video: "https://smashyplayer.top:443/hls/_Aeg_kfj63Gjjp_17Pt9PA/xq/nc31je1o/mn5jj/tt/index-f2-v1-a1.m3u8", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkG34xN0wr4pZgiLpLnfDt65WtXjZP_YOA4SZevisCxmqOyevuU1SojHsFEyBriX7barM&usqp=CAU" },
+  { title: "Spirit Riding Free: Spirit of Christmas", video: "https://s3ae.cwsspottstcyl.sbs:443/v4/hz/vijsz/index-f2-v1-a1.txt", image: "https://i.pinimg.com/736x/32/f0/c2/32f0c2388f8745c2fa2aab3609355116.jpg" },
+  { title: "Spirit Untamed", video: "https://s3ae.desrocherswick.sbs/v4/ck/xujkt/index-f2-v1-a1.txt", image: "https://i.pinimg.com/736x/ac/c7/b9/acc7b968fea622f39032d123b5a04497.jpg" },
+  { title: "Orion and the Dark", video: "https://skra.wesleykqpg.sbs:443/v4/61/r1t1k/index-f1-v1-a1.txt", image: "https://image.tmdb.org/t/p/original/oPBEnNP4Fg4gv9c0KBhchmtoG4H.jpg" },
+  { title: "Madagascar", video: "https://skra.kimberlygxjeum.sbs:443/v4/pq/jwdtt/index-f2-v1-a1.txt", image: "https://m.media-amazon.com/images/M/MV5BYmQxNzA5YTYtNWZkZi00ZDM1LWFiYjgtMzdmMmJiNjNiMmMyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" },
+  { title: "Madagascar: Escape 2 Africa", video: "https://qnmdbn1lucqr.cdn-centaurus.com:443/hls2/01/00363/gkw852ptkl8w_h/iframes-v1-a1.m3u8?t=FEsfe0nqC3nujQKQ5tpB_L4ekOH8EWTmn6q4R1sgPSU&s=1745451962&e=129600&f=1816149&srv=m2q5ea5w42hk&i=0.4&sp=500&p1=m2q5ea5w42hk&p2=m2q5ea5w42hk&asn=24554", image: "https://image.tmdb.org/t/p/original/L6qqU6Q3k4MmPojncNbT43FSTL.jpg" },
+  { title: "The Penguins of Madagascar", video: "https://cdn-1.celestialodyssey.site/video-stream/a66dd7c8/playlist.m3u8", image: "https://m.media-amazon.com/images/M/MV5BODc5MGM0YzQtNDlmOS00NTMyLTg5YzYtNGU0YTc5NjU1NGE1XkEyXkFqcGc@._V1_.jpg" },
+  { title: "Madly Madagascar", video: "https://sh9f.cortinala.sbs:443/v4/ck/tqn9q/index-f2-v1-a1.txt", image: "https://speakingofautismcom.wordpress.com/wp-content/uploads/2019/12/img_1643.jpg" },
+  { title: "Madagascar 3: Europe’s Most Wanted", video: "https://sj3l.wrendresslerle.sbs:443/v4/rw/h6dz3/index-f2-v1-a1.txt", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAHQTUlNh-wk4l8zGP7rOGM8EZ0ucf3qfn7EU5PF4AKZCtSEjpPQJCFb4etimfCQIE624&usqp=CAU" },
+  { title: "The Madagascar Penguins in a Christmas Caper", video: "https://sojg.cortinala.sbs:443/v4/lf/ixyal/index-f1-v1-a1.txt", image: "https://m.media-amazon.com/images/M/MV5BNDU5ODg2YjEtODk1My00NDA5LTliMzctZmI5ODY2ZWNjZTEyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" },
+  { title: "Merry Madagascar", video: "https://sh9f.gomesscheerer.sbs:443/v4/np/xrpq3/index-f2-v1-a1.txt", image: "https://m.media-amazon.com/images/M/MV5BZWQ5ODAwNDMtNmY0Yy00OWQ1LTk0MzctOGE4OTMyYWRjNjg0XkEyXkFqcGc@._V1_.jpg" },
+  { title: "Shark Tale", video: "https://sxic.mcentirecajigas.sbs/v4/k5/xlld9/index-f1-v1-a1.txt", image: "https://i.pinimg.com/736x/71/43/d0/7143d0e2d47e170a230a56f7a8ec0275.jpg" },
+  { title: "Bee Movie", video: "https://skra.ulrikeumdqputm.sbs:443/v4/qu/tgn3o/index-f2-v1-a1.txt", image: "https://m.media-amazon.com/images/M/MV5BNmQ2NTAwMDktYWE5Mi00OTBkLWJiZmUtNGQ4MGM5NzMxOTRhXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" },
+  { title: "Kung Fu Panda", video: "https://sh9f.tiltonrigobert.sbs:443/v4/hz/no666/index-f1-v1-a1.txt", image: "https://i.pinimg.com/originals/de/00/22/de0022a3e8b016ffb9458a13fd43885f.jpg" },
+  { title: "Kung Fu Panda 2", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Kung Fu Panda 3", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Kung Fu Panda 4", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Kung Fu Panda: Secrets of the Furious Five", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Kung Fu Panda Holiday", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Kung Fu Panda: Secrets of the Masters", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Kung Fu Panda: Secrets of the Scroll", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Night of the Living Carrots", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Puss in Boots", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Puss in Boots: The Three Diablos", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Puss in Boots: The Last Wish", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Puss in Book: Trapped in an Epic Tale", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Home", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Piper", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Piper", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Piper", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Piper", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Piper", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  { title: "Piper", video: "https://slob.squir-a1.txt", image: "https://i.pina646a385a7.jpg" },
+  
 ];
 
 const container = document.getElementById('movies');
