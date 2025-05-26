@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>I Am Groot - Seasons 1 & 2</title>
+  <title>Citadel - Season 1</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -81,32 +81,6 @@
         width: 100%;
       }
     }
-    
-    /* Season selector */
-    .season-selector {
-      scrollbar-width: none;
-    }
-    
-    .season-selector::-webkit-scrollbar {
-      display: none;
-    }
-    
-    /* Modal video aspect ratio */
-    .video-container {
-      position: relative;
-      padding-bottom: 56.25%; /* 16:9 */
-      height: 0;
-      overflow: hidden;
-    }
-    
-    .video-container iframe,
-    .video-container video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
   </style>
 </head>
 <body class="bg-black text-gray-100 min-h-screen">
@@ -117,7 +91,7 @@
         <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center">
           <i class="fas fa-shield-alt text-black text-xl"></i>
         </div>
-        <h1 class="text-2xl font-bold gradient-text">I Am Groot</h1>
+        <h1 class="text-2xl font-bold gradient-text">CITADEL</h1>
       </div>
       
       <div class="flex items-center space-x-4">
@@ -145,11 +119,11 @@
     <!-- Hero Section -->
     <section class="mb-12 relative overflow-hidden rounded-xl">
       <div class="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent z-10"></div>
-      <img src="https://sm.ign.com/t/ign_in/news/i/i-am-groot/i-am-groot-disney-release-date-and-poster-revealed_ye3u.1200.jpg" 
-           alt="I Am Groot Banner" class="w-full h-64 md:h-96 object-cover">
+      <img src="https://m.media-amazon.com/images/S/pv-target-images/7cf708aacfcd9cf0afc502de08cceedb147b9360bc339863382d908e6175c229._BR-6_AC_SX720_FMwebp_.jpg" 
+           alt="Citadel Banner" class="w-full h-64 md:h-96 object-cover">
       <div class="absolute bottom-0 left-0 z-20 p-6 md:p-8">
-        <h2 class="text-3xl md:text-5xl font-bold mb-2 gradient-text">Seasons 1 & 2</h2>
-        <p class="text-gray-300 mb-4 max-w-lg">The complete adventures of Baby Groot. Watch as the adorable Flora Colossus gets into all sorts of mischief across the galaxy.</p>
+        <h2 class="text-3xl md:text-5xl font-bold mb-2 gradient-text">Season 1</h2>
+        <p class="text-gray-300 mb-4 max-w-lg">The complete first season of the high-stakes spy thriller. Betrayal, secrets, and impossible choices.</p>
         <div class="flex space-x-3">
           <button class="bg-yellow-600 hover:bg-yellow-700 text-black font-semibold py-2 px-6 rounded-full transition flex items-center">
             <i class="fas fa-play mr-2"></i> Play All
@@ -161,23 +135,14 @@
       </div>
     </section>
 
-    <!-- Season Selector -->
-    <div class="flex overflow-x-auto season-selector mb-6 pb-2">
-      <div class="flex space-x-2">
-        <button class="season-btn active bg-yellow-600 text-black px-4 py-2 rounded-full font-medium whitespace-nowrap" data-season="all">All Episodes</button>
-        <button class="season-btn bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-full font-medium whitespace-nowrap" data-season="1">Season 1</button>
-        <button class="season-btn bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-full font-medium whitespace-nowrap" data-season="2">Season 2</button>
-      </div>
-    </div>
-
     <!-- Filters -->
     <div class="flex flex-wrap items-center justify-between mb-8 gap-4">
       <div class="flex space-x-2 overflow-x-auto pb-2 scrollbar-hide">
         <button class="filter-btn active bg-yellow-600 text-black px-4 py-1 rounded-full text-sm font-medium">All</button>
-        <button class="filter-btn bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm font-medium">Adventure</button>
-        <button class="filter-btn bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm font-medium">Comedy</button>
-        <button class="filter-btn bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm font-medium">Family</button>
-        <button class="filter-btn bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm font-medium">Sci-Fi</button>
+        <button class="filter-btn bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm font-medium">Action</button>
+        <button class="filter-btn bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm font-medium">Drama</button>
+        <button class="filter-btn bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm font-medium">Thriller</button>
+        <button class="filter-btn bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm font-medium">Espionage</button>
       </div>
       
       <div class="flex items-center space-x-2">
@@ -212,9 +177,9 @@
             <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
               <i class="fas fa-shield-alt text-black text-sm"></i>
             </div>
-            <span class="text-xl font-bold gradient-text">I Am Groot</span>
+            <span class="text-xl font-bold gradient-text">CITADEL</span>
           </div>
-          <p class="text-gray-400 text-sm mt-2">© 2023 Marvel Studios Productions. All rights reserved.</p>
+          <p class="text-gray-400 text-sm mt-2">© 2023 Citadel Productions. All rights reserved.</p>
         </div>
         
         <div class="flex space-x-6">
@@ -233,7 +198,7 @@
       <button id="close-modal" class="absolute top-4 right-4 z-50 text-white hover:text-yellow-500 text-2xl">
         <i class="fas fa-times"></i>
       </button>
-      <div class="video-container">
+      <div class="aspect-w-16 aspect-h-9">
         <video id="modal-video" class="w-full" controls>
           Your browser does not support the video tag.
         </video>
@@ -241,8 +206,8 @@
       <div class="p-6">
         <h3 id="modal-title" class="text-2xl font-bold mb-2"></h3>
         <div class="flex items-center text-gray-400 text-sm mb-4">
-          <span class="mr-4" id="season-episode"></span>
-          <span id="episode-duration"></span>
+          <span class="mr-4">S1 • E<span id="episode-num"></span></span>
+          <span>45 min</span>
         </div>
         <p id="modal-description" class="text-gray-300 mb-6">
           Loading description...
@@ -262,109 +227,62 @@
   <script>
     // Movie data
     const movies = [
-      // Season 1
       { 
-        title: "Groot's First Steps", 
-        video: "https://macdn.hakunaymatata.com/resource/aee2cad164b342db7e61f218ddec99c1.mp4?Expires=1749407841&Signature=okedOYlWrS9JtgxmeXa9aG9KCRaCOT7I7FpjeqCyJqpRThqetL0BVfTCQa9gTEr2eN8JcJMXd3I3KHAiV4nrTWddHXEoCF1gyqhr8Cx7qMKBnp8oxkhiJyU3we5BxJ9x11RQj2HNzccbpiRXX1Iqya1n24joXPZTA5tOIdvYF~ObuYWXtN5fNg~Xj3hnE1aeAPweMEJxjxdXBF4rwBWPHX1ZGsQDP87S9wf5qXeLrQuZzyqX95fZ6JnbSaUFQsPPOK73Av4qmedggx5C7Gm-3QfPU8tYg8gsjSjOzAqDQpxEstaiGCKo17gbphwRMX9m2RXG7gCvj1U9fz8hh40lVA__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://image.tmdb.org/t/p/w300/iecIwrRoq1uZfhJ9XRrZD29Zr4R.jpg",
-        description: "Baby Groot takes his first steps out of his pot, only to learn you have to walk before you can run.",
-        duration: "6 min",
-        season: 1,
-        episode: 1,
-        tags: ["Adventure", "Family"]
+        title: "Mission: Impossible (1996)", 
+        video: "https://macdn.hakunaymatata.com/resource/df1d6c0efb1632bd5669c1f19995c9c9.mp4?Expires=1749419277&Signature=H75pKKf-7BRUmENpfpuqBUpuQhe9xmy4Wwynbt~PIXLukiR3J2o6I9iteHzhoyQlHNMTdfCjoMbb7kq2lRyREVSahN9oLztNVq~ItEky4~eCll0hMV3KW3mDhMYADFWmj7GAMdr3D~GMZGmUJRlgY9wsPxTdihVuaC-w0CRGVtMaibebt0RHkiLhN7vGHVyiE~lfmztaTKrQLXs4K3C5OWIDYQXU4FMZEVRT0IafyVC41EtYhXfmrB6dzv2-oPZfig5doZpjOfjlFyf8VUXAZBgyZM8jwYfSAPcyReWIgKt1YsSCEXCVb1X9GCMQqOo7t8t2QM9fYiFMYtIU5AIRRA__&Key-Pair-Id=KMHN1LQ1HEUPL", 
+        image: "https://media-cache.cinematerial.com/p/500x/gfvt9wkn/mission-impossible-movie-cover.jpg?v=1734193841",
+        description: "Cyclops races to find the source of new anti-mutant technology.",
+        duration: "48 min"
       },
       { 
-        title: "The Little Guy", 
-        video: "https://macdn.hakunaymatata.com/resource/af3218ce4edda6bbd5e5e39b4b92df70.mp4?Expires=1749410153&Signature=3n1kiHVjTPUM0NHCue5faW34i5k-IVZcdcCoKlKGK~epwc9yWLM2J3Ow3u14iOKi7jFv4I34I5M0qa10KOWpuVemwGFBgeePVl27kJ3rZjvClaVVV1zXDjI74bMHuHMtxooJewRJUWEE8cL57NbxmZSIYP9jI~AJNAZyBHjEAGF4VcuhY-FIgdDj6Swg8bz2N-i78ALPRW4~LxMa1whKIn2j~bN82fku48UETgEu27yI41Kgq~apLhc404N42PSeniK3~Hdr3eYx6uam-JvBxLXS2aldCFyIj4zMwkb1h9PlHnVuvDvTAhWMXQxG81kqKj4RsJO67~V4htxpNiuB2w__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://image.tmdb.org/t/p/w300/6pFcTY18M9EpKQEEZZMzVnX4bMF.jpg",
-        description: "Groot discovers a miniature civilization that believes the seemingly enormous tree toddler is the hero they've been waiting for.",
-        duration: "4 min",
-        season: 1,
-        episode: 2,
-        tags: ["Adventure", "Comedy"]
+        title: "Mission: Impossible II (2000)", 
+        video: "https://macdn.hakunaymatata.com/cms/f26dfc974ea8de6193745956a14a3162.mp4?Expires=1749477045&Signature=7L~pjvw-oywh8wSiPO1wV3jV52ow-Y0AORAmq4l0PQK1iJ77dhQmDlUO-CCDSr10eNoK9oxjVLFxsH1DIKHTHO5N9aT~PfpGapYHCxg5DXEO~KFT29rNGEM8UynnQeS7uLtf6vNpPwshL3z6L7Bu4fLDpQXeXWWQfAu049uiIO3GOUS4icOZovMo3wdVPvMv5KvVz~wPiVOSHND7ZC~pz6eJgXrzXuSTJ4qgal95fkOKOAbXib4l9108~t08YnFmtCNnFLeRWSlV1G5pP9UcEeLhM8C8XVW9SVs-dk0OfrNHNpoVg7Xa1NZk~Pal4dodYelUhK0-c7qXE4lFU6owBw__&Key-Pair-Id=KMHN1LQ1HEUPL",
+        image: "https://image.tmdb.org/t/p/original/12mI7kU22nJrmtAgGcDP8tbAz4a.jpg",
+        description: "When Magneto is forced by the UN to stand trial, a group of anti-mutant rioters test his resolve.",
+        duration: "52 min"
       },
       { 
-        title: "Groot's Pursuit", 
-        video: "https://vgorigin.hakunaymatata.com/resource/7de8ac3b05e4aa1dd0dfd9a80d68ca35.mp4?Expires=1749410349&KeyName=wefeed&Signature=VgLXJSuL_iVoKtabnEpFvmOPTgwIC1glS1RNPhslMfzkBKV1NYtV3jV9wxT9O4IpAwveRNmz7eLugXHBK7qmCQ", 
-        image: "https://image.tmdb.org/t/p/w300/nv0q5V1vGwRVO4Rv3MOEmniUbWj.jpg",
-        description: "Groot investigates a spooky noise that's been haunting the Quadrant, which leads to an intense dance off.",
-        duration: "4 min",
-        season: 1,
-        episode: 3,
-        tags: ["Comedy", "Sci-Fi"]
+        title: "Mission: Impossible III (2006)", 
+        video: "https://macdn.hakunaymatata.com/resource/a193b34125b9a20a5e03cc7507009e6a.mp4?Expires=1749477947&Signature=g4r36WYnBv0fSdbL40KdCc0zPkHLJesHnB8n2wD9rjDZhEePVObJJnmmdpvaEqpBYIkXPLrg-3IqkYkAPWkx1ng-ue8XErx8PbUL3hqxK78h1fL42GyiiuJWiWXDdIyagFcmUJtE1ZD6~UHiWg-uoNVzAXW4zuCTulwEdBpii434Sw1TkJmcuIaaTEK8YZkI0B5zYcnEbsvpTklwHQ-IbC0uIyB5aWTSiAjoDf23pLxCy0pD4kRuD56vIFtyCHtqhZ0Shfy-8aFnuM-pqmVhXdkoRVNGZIeMHY1G6L8Y-T6WgcDjwQguo~Ot5XICCN-6SoaRZIN7wgNoZWrW7KEk1w__&Key-Pair-Id=KMHN1LQ1HEUPL", 
+        image: "https://media-cache.cinematerial.com/p/500x/ewsqdvgr/mission-impossible-iii-movie-cover.jpg?v=1464919488",
+        description: "When a visitor arrives at the mansion with a dangerous secret that threatens Cyclops and Jean's relationship, the team is propelled into a tragic confrontation with an immortal mad scientist.",
+        duration: "49 min"
       },
       { 
-        title: "Groot Takes a Bath", 
-        video: "https://macdn.hakunaymatata.com/resource/83f86aa6066c984964574f5e173d8226.mp4?Expires=1749410557&Signature=I3kgFtadusb5mzwkw4SRJHEBS1KUka-v3qsIH34JBti2~do4wH5IT2bGFSZNv9IEZgAs12O8rhGpKV965lkwxrHfDfwinQtH5HqRw0b2htyhVkFXbhM~IQdwApWxYHpEKvnQcB5FkdE362XwFBhmhdpJmTJ2ucis5mrpkLxU4HMT7B4OUHRjAWL-jnFnpRrGMnz~r3z6N6IXGS9DKBo9s3PqdeaGWwb0gGFjUH3CSC295vpgs6DZLwEsLvMf23uBx~TSrae4y0mRq1fkNc3dKdGI61BKZqs8uugHBELYHJ6g8Mwaj8WM4n-ADUEsl-7qbOF-S4wsH0WUYDL7EzCkcw__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://image.tmdb.org/t/p/w300/stKeLppDBwscxoE9RXxNyrur27G.jpg",
-        description: "Everybody needs some alone time to relax and wash up, but things go quite differently when you're a Flora Colossi toddler.",
-        duration: "4 min",
-        season: 1,
-        episode: 4,
-        tags: ["Comedy", "Family"]
+        title: "Ghost Protocol (2011)", 
+        video: "https://vgorigin.hakunaymatata.com/resource/45097cad253e63ca5f3ab4d705ccaa6c.mp4?Expires=1749481692&KeyName=wefeed&Signature=u1MhQj2u0TD8XfF90UG55FtJHL0Kv5klsAEuUf1f0n-UBHfdsAOH5c5i8hpOI_fWEIOcHPp0eBA0XCnMlf-oAw", 
+        image: "https://m.media-amazon.com/images/I/811NSP-z3bL._AC_UF1000,1000_QL80_.jpg",
+        description: "On her birthday, a nostalgic Jubilee is forced to relive the X-Men's greatest adventures when an entertainment system transports her into a 16-bit video game.",
+        duration: "51 min"
       },
       { 
-        title: "Magnum Opus", 
-        video: "https://macdn.hakunaymatata.com/resource/810a4c6e3a665a1899ef5e1676b4d7b2.mp4?Expires=1749342821&Signature=NhwNz9CBRRtCgidFWyBWRx3laJqxm~h8HzlQ7Aa7LAX50MROZF7LdJrQF30cI3HxMy~vMfLEzm-ijdoy4LWOW~XRSFBe9pTi-9Z3rPtBN2DbySpn~kPxt90khGns5~69wLvJ6oYAWQkIjWoHDTHjyYYwn~u2qH3bRMoao9T3ZF9emI3PmbXki33C81dgoTnarXh69WtOL2Q89GWLW~XP3B2Fut6Xdogdf9vl5~IJfEV4jcmXEtPo1rQ~Ix8sinjvWOVp-Tpw1JRf5LCAEjSWDJJ0VkZUyQ-s8Tc1bCd6pmCA5E5f1dCTEIU3tomAtTlx2DKaNm2y932UElhgteTJvw__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://image.tmdb.org/t/p/w300/cnhzecqkKHBIyM4QMbxRy5fbW3l.jpg",
-        description: "Groot sets out to paint a family portrait of himself and the Guardians, only to discover just how messy the artistic process can be.",
-        duration: "4 min",
-        season: 1,
-        episode: 5,
-        tags: ["Comedy", "Family"]
-      },
-      
-      // Season 2
-      { 
-        title: "Are You My Groot?", 
-        video: "https://macdn.hakunaymatata.com/resource/de4e89d34d8993b2d3708d0eda071ba3.mp4?Expires=1749409894&Signature=w1DQLOMttvVMtOoNlsCfIpBzGQIwKoLdDxaqh-fPtF8qZtoTkxcSTFGOU6EulgPirjuwcRHsQJPUyVa8CV33ugq-CiT5K7pIO-pOurxpT~nxz1sIEBH7Tp4DCd3c3pUt9pEv5hRIn0l8xXs58c9V~M-gSuWzp1bc7nzictcP4x0ve7NGBFcOW7q6nsyUyeAqHdKJkmrIb-XdFhgK6e9TM~fE8jMZWRUgun0dFOV8pe-cxkQkh8m3aoTbCJFO6C7nTzxrc2TtMT1Z6-ZI1X6VIr6kjpJE0mkR0cDA-0jx~6o1ZsQeVAm~yIlEemBVlhkV8PPeYjYhSaQyA0Rqk4jZfQ__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://image.tmdb.org/t/p/w300/rJelmgL1yTFfH2PhC3LufMhYQko.jpg",
-        description: "Groot stumbles across a strange egg, adopting the little creature that emerges as his own.",
-        duration: "5 min",
-        season: 2,
-        episode: 1,
-        tags: ["Adventure", "Comedy"]
+        title: "Rogue Nation (2015)", 
+        video: "https://macdn.hakunaymatata.com/resource/c224822dd553f9fb36aad5dcbd233a3b.mp4?Expires=1749478211&Signature=Y-QHTfcwJAvzA~zjH-PhLaeCLyEBBjBpdFNr3auYse~R0~ykP2VR1xuBK5Y-bvrQ2Cdv~KsMPW~HBqWbqV4SXQv4VXDBZWuq0zqaIufI9jk-u5Ns~p9AaLeeV73DSuUPSIsAenlrZvu46zRgfFFnj~IVyRPOwqKtyRuX9ywxGgHvDf1rQphHLJvjyg~31tDKotnLwEztU8yOCDQbDDAPYtBzhICUVOKqDmQahVq2sFLHRmUFj4BcEFYuBABBxHVu4-eA~qJ1tCw~bLy7wBR~Z3tjPchP7NGVVWljV74CvhFFWlAWlaR2zHDuPHBjBe0HyBNgsxFfN78CzdjcSs7-7Q__&Key-Pair-Id=KMHN1LQ1HEUPL", 
+        image: "https://www.jbhifi.com.au/cdn/shop/products/806399-Product-0-I_f04f6def-c8a6-44be-94e5-612b61f56e35.jpg?v=1571711638",
+        description: "As Genosha prepares to join the UN, select members of the team head to the island nation to be honorees. Back at the mansion, a behind-the-scenes press event risks airing the X-Men's dirty laundry.",
+        duration: "47 min"
       },
       { 
-        title: "Groot Noses Around", 
-        video: "https://macdn.hakunaymatata.com/resource/8a1a2ae9a183a2fa0e90f9f59dafae93.mp4?Expires=1749410489&Signature=CHbmbnLWLoCIor5qA57J4nux5bACNb~7Lj1KOJxM3g2eRfjPf3GiXfvRINWf2CaKQrimGceCJQs8adw8P~HNei-P-ThkIRdsSkFXKVB5pWCGoTZ4Mjvb8660nQRCZ9yrEMgJXKEkbUrSnSfiP9WvJ675g6Dk7m6zLw6e2435qKQVH2U~lXGCZXMNKRBnWNnRFMyLgikgO30mgw2gSDgfs-amOcA9HSViukitvDOdcTexVby52FuzBWfjttj0Pu1rzdQepCvXLwb9cVfr6zAx-K6fp9zgy2yTMdgiFq3y19wnjsT9D6-yA6ejqtyzH-YnPWnXgrRC4oZ6h5lM8Fv8bA__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://image.tmdb.org/t/p/w300/bf39ykfbUodisUirJXcUbI8bRFe.jpg",
-        description: "When Groot gets the sense of smell, he learns not to stick his new nose where it doesn't belong.",
-        duration: "5 min",
-        season: 2,
-        episode: 2,
-        tags: ["Adventure", "Family"]
+        title: "Fallout (2018)", 
+        video: "https://vgorigin.hakunaymatata.com/resource/830c40ade58888194549b09662a0f134.mp4?Expires=1749478405&KeyName=wefeed&Signature=JmdYG_bjZ9MK4WfEjzsHiT5b_PEW9S3A91i0jl-xVCBUtHZfEWu5dBXfxQG66uVUgvu3MQIiGZwMdK4mxZqaCg", 
+        image: "https://posterspy.com/wp-content/uploads/2018/08/MI6.jpg",
+        description: "Storm is forced to face her worst fears in order to free herself.",
+        duration: "58 min"
       },
       { 
-        title: "Groot's Snow Day", 
-        video: "https://macdn.hakunaymatata.com/resource/1ad9b7f4793896affedb670125df0858.mp4?Expires=1749413775&Signature=Uk82AD9vnaTs6dm66TJWnBMxm6yMvgBJVYdCAl2VMO1RuOJPqgWIVvPpLY79dx~F3ZaQpRbQV56RfXEKIZwGfzSBU3vrMToDUb-oFKwY3oMwEJBpfhaWTJivbH6E1VHXnIiyOqazPY7wY3CYiwSec636HUWoT2mYwAJ8zis4v9H0Lk7dkSUHPFBgaNNCvediCi0CuNp0ql~TWiIv4KVSWtNpaJQs-Uy35AJ8GRQbmqGVohho3WoSgCUCUle35Yhul40DuldxSrAROaru1a1NkcOywFHDdoRLrGBsXi1ULmqueGftBkq1pQ2DsLoF55PLMx-o2b2JNNZbpMxwbw-pRw__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://image.tmdb.org/t/p/w300/6H9lUVRUJyWn7t0VAix83TszrfJ.jpg",
-        description: "Groot builds a snowman with scraps of junk, creating an unstoppable snowman-robot that wreaks havoc.",
-        duration: "4 min",
-        season: 2,
-        episode: 3,
-        tags: ["Comedy", "Family"]
+        title: "Dead Reckoning Part One (2023)", 
+        video: "https://macdn.hakunaymatata.com/resource/e6eb1ea9e24ce15b90e595cdc3afbf61.mp4?Expires=1749483610&Signature=hqD9EjSd2ddnhBO~Ma4wdr5EvIVOZuxk3JIAiC3AKKneomvFK~cdA~ls2v3bgTFIQSoAtFXx-Sjyt1kBf-1GFeQGRwoqZ1WOZAlr8dF6Fr-PRHj9ELGMDhR2UNzG70qJJHxae6gkNPStigmR734InDqIA-Df3tGAHcgaebRjpi74QGnXMLctgLEGGFHyqulmLDEOxTa7kxhCtTpiu7TSRloWeMg6rzyb~T824A1f4m8ir8nnnv0Vzcoh45WGoWFSPPZzFVmc2HFA~WjYw97PSkoHpzUDydzUJDaO4vz1AgCgEkKlYbKXeMA3MWntgWeOcYK91TActI3pI3VBE2-Dig__&Key-Pair-Id=KMHN1LQ1HEUPL", 
+        image: "https://upload.wikimedia.org/wikipedia/en/e/ed/Mission-_Impossible_%E2%80%93_Dead_Reckoning_Part_One_poster.jpg",
+        description: "Cyclops focuses the X-Men on finding Bolivar Trask. However, when the team locates the Sentinel inventor, they realize that they all have been played by a mastermind.",
+        duration: "49 min"
       },
       { 
-        title: "Groot's Sweet Treat", 
-        video: "https://macdn.hakunaymatata.com/resource/2d26d733932b288d9f88b7dd153feefe.mp4?Expires=1749413823&Signature=J2zUOlESkbW2SKHxnQVQqufYG17lBBjxtHK5SsJt2yVp~C2QRNDmULHpznP-6iXdnvYwiRmM1dLhmRnz2kJrz8HtejdQz3O6CtC-CFYF1n7aJ5A-oYS~D~en3fNNS7-YeUhVp5j4gh2fvG-YEVeMuhixTFHa4IVXaN0SMw2OUryDDGVpy6RRzPW5hydxJ3X~0uUt87Hc7wA4MS0jayezsK5cL30JoBaf0hnPRn5AJuFzCUasHtH3QrJd0wvX9rYsQktXZcQIhiucWJ3wjc0ShbWJxehvLfYNTUPyooS~goWCkiK16LF5D1ZcF~ol37ogKri-z44uInNnnSPApLUAbA__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://image.tmdb.org/t/p/w300/4PSxBL0Muya07GIteMxJhA4A2iB.jpg",
-        description: "Groot frantically scours the ship for coins as an intergalactic ice cream truck approaches.",
-        duration: "6 min",
-        season: 2,
-        episode: 4,
-        tags: ["Adventure", "Family"]
+        title: "The Final Reckoning (2025)", 
+        video: "https://macdn.hakunaymatata.com/resource/5a9586f6996816b51eb3e496193d520d.mp4?Expires=1749480336&Signature=yYqsbxPm1M~3qqlCcBTR8t0AMvn9ibG9w0rcM4-t74ayJJDG3AGys6sJqukZ93wpbrRStBf6ScpPtubLoI8DBCVcRpc19ZICyTQF14uRGic~TZ4OU7rZGIk~fFhmf4xtT5UpID0BgtRoYhuj29aKMn9-k8BqmI5hax~kPUVhubKtPQeL3QErYvEFLPvLHeQeHZW1ECE-R4NetbAuj4nmjHCLGnoeqbB-hC6snhYumDbbhvgvOjCfgjR9Km9U~By8P86yO-TAKqrfScXmqRywFMNQAXGOn2UWyGjCN4PjJdUvzA~7oNpRQuey54eS3vUm4opoUZVf8WpY4Ikecqmy~Q__&Key-Pair-Id=KMHN1LQ1HEUPL", 
+        image: "https://preview.redd.it/new-final-reckoning-poster-v0-99llptunx1ge1.jpeg?auto=webp&s=9604de4c4d65fa106ff30080d4996f6773f606c1",
+        description: "The X-Men must unite to face a new threat.",
+        duration: "51 min"
       },
-      { 
-        title: "Groot and the Great Prophecy", 
-        video: "https://macdn.hakunaymatata.com/resource/e71df8f64ac613e8947743d8a40a3f82.mp4?Expires=1749412171&Signature=mMR6JeivZPPuB-0QgfTbXFG64zSMFuX-B2l9v61ahUyCkcAjsW8aV60wAQ2eANUXrbTKAPwopeRr-f0Bp0eNRMAvciorqEnvK9dmigGM8qgAyzHY5nbYzWk6iOSeKJjJ~ki-ai9ojMHNXNASU1c3jDVeLj8GG2V77q9GWiM0YD02bFa9Hxee~JUyNmAB46Rh-BO1sdNsxo1lQ6b737Cpf8yH9JtvIBkQOlzAHNd2VUnbbJGNaJs0XqGhLBoB5QjY8NEPWjtzZ1ThFWlgVBGxfa3HCbJnABiSqQb3ShTX6WFn68xqusSUF55ER0YEyx6ebARjzfuEpuFC09AmcaSJWQ__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://image.tmdb.org/t/p/w300/o7gblk3nygQh2lEIjCHEdLK3RHA.jpg",
-        description: "Groot lands in the heart of an ancient temple with a prophecy he must fulfill to save the universe.",
-        duration: "5 min",
-        season: 2,
-        episode: 5,
-        tags: ["Comedy", "Sci-Fi"]
-      }
     ];
 
     // DOM elements
@@ -377,58 +295,12 @@
     const modalVideo = document.getElementById('modal-video');
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
-    const seasonEpisode = document.getElementById('season-episode');
-    const episodeDuration = document.getElementById('episode-duration');
-    const seasonBtns = document.querySelectorAll('.season-btn');
-    const filterBtns = document.querySelectorAll('.filter-btn');
-
-    // Current filter state
-    let currentSeason = 'all';
-    let currentFilter = 'All';
+    const episodeNum = document.getElementById('episode-num');
 
     // Initialize the page
     function initPage() {
-      renderMovies();
-      
-      // Season buttons
-      seasonBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-          document.querySelector('.season-btn.active').classList.remove('active', 'bg-yellow-600', 'text-black');
-          this.classList.add('active', 'bg-yellow-600', 'text-black');
-          currentSeason = this.dataset.season;
-          renderMovies();
-        });
-      });
-
-      // Filter buttons
-      filterBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-          document.querySelector('.filter-btn.active').classList.remove('active', 'bg-yellow-600', 'text-black');
-          this.classList.add('active', 'bg-yellow-600', 'text-black');
-          currentFilter = this.textContent;
-          renderMovies();
-        });
-      });
-    }
-
-    // Render movies based on current filters
-    function renderMovies() {
-      container.innerHTML = '';
-      
-      let filteredMovies = movies;
-      
-      // Apply season filter
-      if (currentSeason !== 'all') {
-        filteredMovies = filteredMovies.filter(movie => movie.season == currentSeason);
-      }
-      
-      // Apply tag filter
-      if (currentFilter !== 'All') {
-        filteredMovies = filteredMovies.filter(movie => movie.tags.includes(currentFilter));
-      }
-      
       // Create movie cards
-      filteredMovies.forEach((movie, index) => {
+      movies.forEach((movie, index) => {
         const card = document.createElement('div');
         card.className = `movie-card fade-in delay-${index % 5} glow-effect`;
         card.innerHTML = `
@@ -448,30 +320,34 @@
           <div class="mt-3">
             <h3 class="text-white font-medium">${movie.title}</h3>
             <div class="flex items-center text-gray-400 text-sm mt-1">
-              <span>S${movie.season} • E${movie.episode}</span>
+              <span>S1 • E${index + 1}</span>
               <span class="mx-2">•</span>
               <span>${movie.duration}</span>
-            </div>
-            <div class="flex flex-wrap gap-1 mt-2">
-              ${movie.tags.map(tag => `<span class="bg-gray-800 text-gray-300 text-xs px-2 py-0.5 rounded-full">${tag}</span>`).join('')}
             </div>
           </div>
         `;
         
         card.addEventListener('click', () => {
-          openModal(movie);
+          openModal(movie, index + 1);
         });
         
         container.appendChild(card);
       });
+
+      // Filter buttons
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelector('.filter-btn.active').classList.remove('active', 'bg-yellow-600', 'text-black');
+          this.classList.add('active', 'bg-yellow-600', 'text-black');
+        });
+      });
     }
 
     // Open modal with movie details
-    function openModal(movie) {
+    function openModal(movie, episodeNumber) {
       modalTitle.textContent = movie.title;
       modalDescription.textContent = movie.description;
-      seasonEpisode.textContent = `S${movie.season} • E${movie.episode}`;
-      episodeDuration.textContent = movie.duration;
+      episodeNum.textContent = episodeNumber;
       modalVideo.src = movie.video;
       
       playbackModal.classList.remove('hidden');
