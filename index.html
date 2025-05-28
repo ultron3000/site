@@ -1,168 +1,629 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Iwájú - Season 1</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-black text-white">
-  <main class="container mx-auto px-4 py-8">
-    <h1 class="text-4xl font-bold text-yellow-400 mb-8">Iwájú - Season 1</h1>
-    <div id="episodes" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
-  </main>
-
-  <!-- Modal -->
-  <div id="playback-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-90">
-    <div class="relative w-full max-w-4xl bg-gray-900 rounded-xl overflow-hidden">
-      <button id="close-modal" class="absolute top-4 right-4 z-50 text-white hover:text-yellow-500 text-2xl">
-        <i class="fas fa-times"></i>
-      </button>
-      <div class="aspect-w-16 aspect-h-9">
-        <video id="modal-video" class="w-full" controls></video>
-      </div>
-      <div class="p-6">
-        <h3 id="modal-title" class="text-2xl font-bold mb-2"></h3>
-        <div class="text-gray-400 text-sm mb-4">
-          <span>S1 • E<span id="episode-num"></span></span> • 45 min
-        </div>
-        <p id="modal-description" class="text-gray-300 mb-6"></p>
-        <div class="flex space-x-3">
-          <button class="bg-yellow-600 hover:bg-yellow-700 text-black font-semibold py-2 px-6 rounded-full">
-            <i class="fas fa-play mr-2"></i> Play
-          </button>
-          <button class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-6 rounded-full">
-            <i class="fas fa-plus mr-2"></i> Watchlist
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const movies = [
-      { 
-        title: "The Arrival", 
-        year: 2024,
-        video: "https://sipt.swobodafocht.sbs/v4/vz/ikqd3/cf-master.txt?v=1729962163", 
-        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/5760/1665760-h-84d351053326",
-        runtime: "45 min",
-        rating: "8.2/10",
-        description: "Tola, a young girl from a wealthy island, and her best friend Kole, a self-taught tech expert, discover a mysterious device that changes their lives forever.",
-        director: "Ziki Nelson",
-        cast: "Simisola Gbadamosi, Dayo Okeniyi, Femi Branch, Siji Soetan"
-      },
-      { 
-        title: "Crossing the Bridge", 
-        year: 2024,
-        video: "https://vgorigin.hakunaymatata.com/resource/3c6c83e5f7b81f1e0606a4eac23bd216.mp4?Expires=1749555095&KeyName=wefeed&Signature=Y44HJCV7rii33TqjKKFrVEpwKrnghcdFSXbe9z7qbOD8cW7_PrQ0dxpkxyE3Hg77PxVMczClJ8ww_EufH6iSCA", 
-        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/5761/1665761-h-9a062a804668",
-        runtime: "45 min",
-        rating: "8.4/10",
-        description: "Tola convinces Kole to take her to the mainland for the first time, where they encounter both the wonders and dangers of Lagos they never imagined.",
-        director: "Ziki Nelson",
-        cast: "Simisola Gbadamosi, Dayo Okeniyi, Femi Branch, Siji Soetan"
-      },
-      { 
-        title: "The Underbelly", 
-        year: 2024,
-        video: "https://macdn.hakunaymatata.com/resource/31ae90115e84ea47a97b6cf21386c658.mp4?Expires=1749555125&Signature=iJIwfVPohJ4NvgxQBNc5BTTD2cDJdXXYrbwlpJtOGNcF-qiycKHNqFY7hho2MQC9337Y54ltPqgHz9KmrRtBxpV0nwQv5VZ5XhmB1LRuUbi7dulXMxXWj4S5FE38jj5RtCf693XMbIh-PTW5CK1eWXkIHbDk2rsaWpXfiHQC4RU1A9KOWYkQpNSTZ~pnZPDmMoW45AYzjeaRUZNz1iTXU3gRIOzn6cKtnPmVhtF7GlhjFpZjX3QqEqNO130TkxdqdanccW4u7qhxXj3hGuXQN9SIHYajFHd3p56uOovJ8JSHDMWfoHe-0m3le54Jt~THmJPn3AAP6-bIJ7rSYZS5EQ__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/5762/1665762-h-9eece7cd7566",
-        runtime: "45 min",
-        rating: "8.6/10",
-        description: "As Tola and Kole explore the mainland, they uncover a criminal operation that threatens the entire city, forcing them to make difficult choices.",
-        director: "Ziki Nelson",
-        cast: "Simisola Gbadamosi, Dayo Okeniyi, Femi Branch, Siji Soetan"
-      },
-      { 
-        title: "The Truth Revealed", 
-        year: 2024,
-        video: "https://macdn.hakunaymatata.com/convert-h264/06dd9d75830e3beba18892c560cd47ac.mp4?Expires=1749552321&Signature=h9FwZ7gT1vrhMXiktWTCJimndXAI2HlRl35199nQf3oxGwPF9rchz3REltO08kX0w56B6NCPHBvCPqx3-Ujw~UcnsCoEiiItL-3Kmc5oJ0AeiPdtjtGSbBhsjjYJiaCgU6GwDTwj7CutqAgFNFu6i9vpK3BR1VpFUjYHTnoeMt8eYErH9rNXplIlOofGToTRsmh1zxZswiVpMY4bakTqOU-cEkFL2TBPg32N9Sy-p27-jk6VGcoV~ZdQ06cl1HKs2Kio2P0s3Ek1ZNmtNejdjLgSuVcN04Z5K9PsFkouQF5APnbcFi8Z7KBvDsmhwJLPMo-jkJgEU68ax16eqftOcQ__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/5763/1665763-h-533d8b61b270",
-        runtime: "45 min",
-        rating: "8.8/10",
-        description: "The origins of the mysterious device come to light, connecting to a larger conspiracy that affects both the island and mainland communities.",
-        director: "Ziki Nelson",
-        cast: "Simisola Gbadamosi, Dayo Okeniyi, Femi Branch, Siji Soetan"
-      },
-      { 
-        title: "Choices and Consequences", 
-        year: 2024,
-        video: "https://vgorigin.hakunaymatata.com/resource/da468912789579693ea05dce4e7acc2f.mp4?Expires=1749554941&KeyName=wefeed&Signature=KwJ1asjnkhmLMIc0DUIv31M-oZ_5aAOJowJo4SwDXRlFkt4U4g54Va0HbY4L54PDyyZUKUP6mFnzXcA16pUgAQ", 
-        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/5766/1665766-h-29274fe6f6c2",
-        runtime: "45 min",
-        rating: "9.0/10",
-        description: "Tola and Kole must decide whether to use their knowledge to help bridge the divide between the island and mainland or protect their own interests.",
-        director: "Ziki Nelson",
-        cast: "Simisola Gbadamosi, Dayo Okeniyi, Femi Branch, Siji Soetan"
-      },
-      { 
-        title: "The Final Stand", 
-        year: 2024,
-        video: "https://vgorigin.hakunaymatata.com/resource/a22840c410e840f1325a862f0b7e5343.mp4?Expires=1749555209&KeyName=wefeed&Signature=6nwbcWLQzA-jjewAOroc9CNCXNth2Xk56i5BguBoHqZWpYkdYd5grK1sB7_0bgmVtfdcV6L2nZqjLWO3YnH-Aw", 
-        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/5767/1665767-h-aeb4be639328",
-        runtime: "45 min",
-        rating: "9.2/10",
-        description: "In the season finale, Tola and Kole confront the forces threatening Lagos, testing their friendship and their beliefs about the world they live in.",
-        director: "Ziki Nelson",
-        cast: "Simisola Gbadamosi, Dayo Okeniyi, Femi Branch, Siji Soetan"
-      }
-    ];
-
-    const container = document.getElementById('episodes');
-    const playbackModal = document.getElementById('playback-modal');
-    const closeModal = document.getElementById('close-modal');
-    const modalVideo = document.getElementById('modal-video');
-    const modalTitle = document.getElementById('modal-title');
-    const modalDescription = document.getElementById('modal-description');
-    const episodeNum = document.getElementById('episode-num');
-
-    function isStream(url) {
-      return url.includes('.m3u8') || url.includes('.txt');
-    }
-
-    function openModal(movie, episodeNumber) {
-      modalTitle.textContent = movie.title;
-      modalDescription.textContent = movie.description;
-      episodeNum.textContent = episodeNumber;
-      modalVideo.src = movie.video;
-
-      playbackModal.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-      modalVideo.play();
-    }
-
-    function closeModalHandler() {
-      playbackModal.classList.add('hidden');
-      modalVideo.pause();
-      modalVideo.src = "";
-      document.body.style.overflow = '';
-    }
-
-    closeModal.addEventListener('click', closeModalHandler);
-
-    // Render movie cards
-    movies.forEach((movie, index) => {
-      const card = document.createElement('div');
-      card.className = 'cursor-pointer bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition';
-      card.innerHTML = `
-        <img src="${movie.image}" alt="${movie.title}" class="w-full h-48 object-cover">
-        <div class="p-4">
-          <h2 class="text-xl font-semibold mb-1">${movie.title}</h2>
-          <p class="text-sm text-gray-400">Episode ${index + 1}</p>
-        </div>
-      `;
-      card.addEventListener('click', () => {
-        if (isStream(movie.video)) {
-          const url = `player.html?title=${encodeURIComponent(movie.title)}&video=${encodeURIComponent(movie.video)}&index=${index}`;
-          window.location.href = url;
-        } else {
-          openModal(movie, index + 1);
+    <meta charset="utf-8"/>
+    <title>Warner Bros. Pictures</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
         }
-      });
-      container.appendChild(card);
-    });
-  </script>
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ffcc00;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ffdd33;
+        }
+        
+        /* Custom animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .movie-poster {
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .movie-poster:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(255, 204, 0, 0.2);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+        }
+        
+        .search-container {
+            position: relative;
+        }
+        
+        .search-container i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ffcc00;
+        }
+        
+        .category-btn.active {
+            background-color: #ffcc00;
+            color: #000;
+            font-weight: bold;
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            border: 4px solid rgba(255, 204, 0, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #ffcc00;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            width: 80%;
+            max-width: 800px;
+            background-color: #111;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+        }
+        
+        .modal-header {
+            padding: 15px;
+            background-color: #000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ffcc00;
+        }
+        
+        .modal-title {
+            color: #ffcc00;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .close-btn {
+            color: #ffcc00;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 0;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+        }
+        
+        .iframe-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Video controls styling */
+        video::-webkit-media-controls {
+            display: flex !important;
+        }
+        
+        video::-webkit-media-controls-play-button {
+            color: #ffcc00;
+        }
+        
+        video::-webkit-media-controls-volume-slider {
+            background-color: #ffcc00;
+        }
+        
+        video::-webkit-media-controls-current-time-display,
+        video::-webkit-media-controls-time-remaining-display {
+            color: #ffcc00;
+        }
+        
+        /* Play overlay for autoplay restrictions */
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 10;
+            cursor: pointer;
+        }
+        
+        .play-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .play-button i {
+            font-size: 4rem;
+            color: #ffcc00;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-black to-gray-900 py-6 px-4 shadow-lg border-b border-yellow-500">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center mb-4 md:mb-0">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Warner_Bros_logo.svg/1965px-Warner_Bros_logo.svg.png" 
+                     alt="Warner Bros. Logo" 
+                     class="h-12 mr-4">
+                <h1 class="text-3xl md:text-4xl font-bold text-yellow-400 glow-text">
+                    PICTURES CATALOG
+                </h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="text-yellow-400 hover:text-yellow-300 text-2xl">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="sort-toggle" class="text-yellow-400 hover:text-yellow-300 text-2xl">
+                    <i class="fas fa-sort-alpha-down"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search and Filter Section -->
+    <section class="container mx-auto px-4 py-6">
+        <div class="search-container mb-6">
+            <i class="fas fa-search"></i>
+            <input id="searchBar" 
+                   type="text" 
+                   placeholder="Search Warner Bros. movies..." 
+                   class="w-full pl-12 pr-4 py-3 bg-gray-900 border-2 border-yellow-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 text-white placeholder-yellow-400">
+        </div>
+        
+        <div class="flex flex-wrap gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
+            <button class="category-btn active px-4 py-2 rounded-full bg-gray-800 text-yellow-400 hover:bg-yellow-500 hover:text-black transition" data-category="all">
+                All Movies
+            </button>
+            <button class="category-btn px-4 py-2 rounded-full bg-gray-800 text-yellow-400 hover:bg-yellow-500 hover:text-black transition" data-category="batman">
+                Batman
+            </button>
+            <button class="category-btn px-4 py-2 rounded-full bg-gray-800 text-yellow-400 hover:bg-yellow-500 hover:text-black transition" data-category="superman">
+                Superman
+            </button>
+            <button class="category-btn px-4 py-2 rounded-full bg-gray-800 text-yellow-400 hover:bg-yellow-500 hover:text-black transition" data-category="justice">
+                Justice League
+            </button>
+            <button class="category-btn px-4 py-2 rounded-full bg-gray-800 text-yellow-400 hover:bg-yellow-500 hover:text-black transition" data-category="fantastic">
+                Fantastic Beasts
+            </button>
+            <button class="category-btn px-4 py-2 rounded-full bg-gray-800 text-yellow-400 hover:bg-yellow-500 hover:text-black transition" data-category="godzilla">
+                Godzilla/Kong
+            </button>
+            <button class="category-btn px-4 py-2 rounded-full bg-gray-800 text-yellow-400 hover:bg-yellow-500 hover:text-black transition" data-category="matrix">
+                The Matrix
+            </button>
+            <button class="category-btn px-4 py-2 rounded-full bg-gray-800 text-yellow-400 hover:bg-yellow-500 hover:text-black transition" data-category="conjuring">
+                The Conjuring
+            </button>
+        </div>
+        
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold text-yellow-400">
+                Featured Movies
+            </h2>
+            <div class="text-sm text-gray-400">
+                <span id="movie-count">0</span> movies available
+            </div>
+        </div>
+    </section>
+
+    <!-- Movies Grid -->
+    <main class="container mx-auto px-4 pb-10">
+        <div id="loading" class="spinner"></div>
+        <div id="movies" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6"></div>
+    </main>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle"></div>
+                <span class="close-btn">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="video-container">
+                    <video id="modalVideo" controls>
+                        Your browser does not support the video tag.
+                    </video>
+                    <div id="playOverlay" class="play-overlay hidden">
+                        <button class="play-button">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Iframe Container for player.html -->
+    <div id="iframeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="iframeTitle"></div>
+                <span class="close-btn">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="iframe-container">
+                    <iframe id="playerIframe" src="" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-yellow-500 py-6">
+        <div class="container mx-auto px-4 text-center text-gray-400">
+            <p>© 2024 Warner Bros. Pictures. All rights reserved.</p>
+            <div class="flex justify-center space-x-4 mt-3">
+                <a href="#" class="hover:text-yellow-400 transition"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="hover:text-yellow-400 transition"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="hover:text-yellow-400 transition"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="hover:text-yellow-400 transition"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const movies = [
+            { 
+                title: "A Minecraft Movie", 
+                video: "https://macdn.hakunaymatata.com/resource/d3f493124fb8e41dd83933475997072c.mp4?Expires=1749641780&Signature=VbzBE002HBrZxgO30fh6l3mjstETbwTyc68yj~UjkS3xLWOGJRyYd6WJ6UwoCwCFnV9FS3PL79XM2UJpx9WKoexX2uYBJ5AtZiD2RS9FO0yBYQDBNTSzHSaSsPOKhjbvIA78XdA~MGGcgQpR2x1YPX-VS4H3WBVa6~z7RNHlSyJYuOiKH6nicfN5cQaXckddiRiEwu6m0C7lVjkQPAmXvzo-UT1rhrpC~HCf1aEXpLWwkjFowHKVNv2D3ldrSPeZadCOCh9KZG-V~wSBScIPWAN32FODTbnQqoZZ6kD1MkvimvH-fW5wFYMg65ObrKkKJBHAUkb5j5OwIIjh3h03kw__&Key-Pair-Id=KMHN1LQ1HEUPL", 
+                image: "https://lh5.googleusercontent.com/proxy/0nlhqTKgDGo1cPzHFBZR8INQrF5Cpk0GnKUqxkjCKZwzI7JFgt5PnBW_6P8sKXh1LdfFJUs7gzODOQh7fD5KC0q6IRHLAzt0_7rY95d7gWdob5tCQzE", 
+                category: "other", 
+                year: 2025 
+            },
+            { 
+                title: "The Hangover Part III", 
+                video: "https://skra.hungerfordeckertev.sbs:443/v4/61/ij5no/index-f2-v1-a1.txt", 
+                image: "https://m.media-amazon.com/images/I/61infdk7z7L.jpg", 
+                category: "other", 
+                year: 2013 
+            },
+            { 
+                title: "Duma", 
+                video: "https://sxic.shahcanna.sbs:443/v4/np/ky8jh/index-f2-v1-a1.txt", 
+                image: "https://m.media-amazon.com/images/S/pv-target-images/3f41be42cf3d19f16efff7f854406943ccde4b52f6804f7459f757ff7eb22306.jpg", 
+                category: "other", 
+                year: 2005 
+            },
+            { 
+                title: "The Island", 
+                video: "https://s3ae.ybarrazotz.sbs:443/v4/36/63krn/index-f2-v1-a1.txt", 
+                image: "https://media-cache.cinematerial.com/p/500x/yll7yozq/the-island-dvd-movie-cover.jpg?v=1456654083", 
+                category: "other", 
+                year: 2005 
+            }
+        ];
+
+        // DOM Elements
+        const container = document.getElementById('movies');
+        const loadingElement = document.getElementById('loading');
+        const movieCountElement = document.getElementById('movie-count');
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const searchBar = document.getElementById('searchBar');
+        const themeToggle = document.getElementById('theme-toggle');
+        const sortToggle = document.getElementById('sort-toggle');
+        
+        // Modal elements
+        const videoModal = document.getElementById('videoModal');
+        const modalVideo = document.getElementById('modalVideo');
+        const modalTitle = document.getElementById('modalTitle');
+        const closeModalBtn = videoModal.querySelector('.close-btn');
+        const playOverlay = document.getElementById('playOverlay');
+        
+        const iframeModal = document.getElementById('iframeModal');
+        const playerIframe = document.getElementById('playerIframe');
+        const iframeTitle = document.getElementById('iframeTitle');
+        const closeIframeBtn = iframeModal.querySelector('.close-btn');
+        
+        // State
+        let currentCategory = 'all';
+        let sortBy = 'title'; // 'title' or 'year'
+        let isDarkMode = true;
+        
+        // Initialize
+        function init() {
+            renderMovies();
+            setupEventListeners();
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Category filter
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    currentCategory = button.dataset.category;
+                    updateActiveCategoryButton();
+                    renderMovies();
+                });
+            });
+            
+            // Search
+            searchBar.addEventListener('input', () => {
+                renderMovies();
+            });
+            
+            // Theme toggle
+            themeToggle.addEventListener('click', toggleTheme);
+            
+            // Sort toggle
+            sortToggle.addEventListener('click', toggleSort);
+            
+            // Close modal buttons
+            closeModalBtn.addEventListener('click', () => {
+                videoModal.style.display = 'none';
+                modalVideo.pause();
+                modalVideo.src = ''; // Clear the video source
+            });
+            
+            closeIframeBtn.addEventListener('click', () => {
+                iframeModal.style.display = 'none';
+                playerIframe.src = '';
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', (event) => {
+                if (event.target === videoModal) {
+                    videoModal.style.display = 'none';
+                    modalVideo.pause();
+                    modalVideo.src = ''; // Clear the video source
+                }
+                if (event.target === iframeModal) {
+                    iframeModal.style.display = 'none';
+                    playerIframe.src = '';
+                }
+            });
+            
+            // Handle video ended event
+            modalVideo.addEventListener('ended', () => {
+                videoModal.style.display = 'none';
+                modalVideo.src = ''; // Clear the video source
+            });
+            
+            // Play button overlay click
+            playOverlay.addEventListener('click', () => {
+                modalVideo.play()
+                    .then(() => {
+                        playOverlay.classList.add('hidden');
+                    })
+                    .catch(e => {
+                        console.error('Playback failed:', e);
+                    });
+            });
+        }
+        
+        // Update active category button
+        function updateActiveCategoryButton() {
+            categoryButtons.forEach(button => {
+                if (button.dataset.category === currentCategory) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+        }
+        
+        // Toggle between dark and light theme
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            
+            if (isDarkMode) {
+                document.body.classList.remove('bg-gray-100', 'text-gray-900');
+                document.body.classList.add('bg-black', 'text-gray-100');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                document.body.classList.remove('bg-black', 'text-gray-100');
+                document.body.classList.add('bg-gray-100', 'text-gray-900');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        }
+        
+        // Toggle between sorting by title or year
+        function toggleSort() {
+            sortBy = sortBy === 'title' ? 'year' : 'title';
+            
+            if (sortBy === 'title') {
+                sortToggle.innerHTML = '<i class="fas fa-sort-alpha-down"></i>';
+            } else {
+                sortToggle.innerHTML = '<i class="fas fa-sort-numeric-down"></i>';
+            }
+            
+            renderMovies();
+        }
+        
+        // Filter and sort movies
+        function getFilteredMovies() {
+            let filtered = [...movies];
+            
+            // Filter by category
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(movie => movie.category === currentCategory);
+            }
+            
+            // Filter by search term
+            const searchTerm = searchBar.value.toLowerCase();
+            if (searchTerm) {
+                filtered = filtered.filter(movie => 
+                    movie.title.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            // Sort
+            filtered.sort((a, b) => {
+                if (sortBy === 'title') {
+                    return a.title.localeCompare(b.title);
+                } else {
+                    return b.year - a.year; // Newest first
+                }
+            });
+            
+            return filtered;
+        }
+        
+        // Play video based on file type
+        function playVideo(title, videoUrl) {
+            if (videoUrl.endsWith('.mp4')) {
+                // Play MP4 in modal
+                modalTitle.textContent = title;
+                modalVideo.src = videoUrl;
+                modalVideo.load(); // Ensure the video loads
+                
+                // Show the modal
+                videoModal.style.display = 'flex';
+                
+                // Reset the play overlay
+                playOverlay.classList.remove('hidden');
+                
+                // Try to autoplay (may be blocked by browser)
+                modalVideo.play()
+                    .then(() => {
+                        // Autoplay worked, hide the overlay
+                        playOverlay.classList.add('hidden');
+                    })
+                    .catch(e => {
+                        console.log('Autoplay was prevented, showing play button');
+                        // Autoplay was blocked, show the play button overlay
+                        playOverlay.classList.remove('hidden');
+                    });
+                
+                // Handle errors
+                modalVideo.addEventListener('error', function() {
+                    console.error('Error loading video');
+                    alert('Error loading video. Please try another movie.');
+                    videoModal.style.display = 'none';
+                });
+            } else if (videoUrl.endsWith('.txt') || videoUrl.endsWith('.m3u8')) {
+                // Play in player.html within iframe
+                iframeTitle.textContent = title;
+                playerIframe.src = `player.html?title=${encodeURIComponent(title)}&video=${encodeURIComponent(videoUrl)}`;
+                iframeModal.style.display = 'flex';
+            }
+        }
+        
+        // Render movies to the DOM
+        function renderMovies() {
+            loadingElement.style.display = 'block';
+            container.innerHTML = '';
+            
+            // Simulate loading (remove in production)
+            setTimeout(() => {
+                const filteredMovies = getFilteredMovies();
+                
+                if (filteredMovies.length === 0) {
+                    container.innerHTML = `
+                        <div class="col-span-full text-center py-10">
+                            <i class="fas fa-film text-5xl text-yellow-400 mb-4"></i>
+                            <h3 class="text-xl font-semibold">No movies found</h3>
+                            <p class="text-gray-400">Try adjusting your search or filter</p>
+                        </div>
+                    `;
+                } else {
+                    filteredMovies.forEach((movie, index) => {
+                        const div = document.createElement('div');
+                        div.className = 'fade-in';
+                        div.innerHTML = `
+                            <div class="movie-poster bg-gray-800 rounded-lg overflow-hidden shadow-lg h-full flex flex-col">
+                                <img src="${movie.image}" 
+                                     alt="${movie.title}" 
+                                     class="w-full h-64 md:h-80 object-cover">
+                                <div class="p-3 flex-grow">
+                                    <h3 class="font-bold text-yellow-400 truncate">${movie.title}</h3>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <span class="text-sm text-gray-400">${movie.year}</span>
+                                        <span class="text-xs px-2 py-1 bg-yellow-500 text-black rounded-full">${movie.category.toUpperCase()}</span>
+                                    </div>
+                                </div>
+                                <button class="play-btn w-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-4 transition">
+                                    <i class="fas fa-play mr-2"></i> Watch Now
+                                </button>
+                            </div>
+                        `;
+                        div.querySelector('.play-btn').addEventListener('click', () => {
+                            playVideo(movie.title, movie.video);
+                        });
+                        container.appendChild(div);
+                    });
+                }
+                
+                // Update movie count
+                movieCountElement.textContent = filteredMovies.length;
+                
+                loadingElement.style.display = 'none';
+            }, 300);
+        }
+        
+        // Initialize the app
+        init();
+    </script>
 </body>
 </html>
