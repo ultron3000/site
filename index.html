@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Network Stream Player + Link Extractor</title>
+  <title>AI-Powered Stream Player + Deepsite Link Extractor</title>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <style>
     :root {
@@ -35,11 +35,11 @@
       padding: 20px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
-    input {
+    input, textarea {
       width: 100%;
       padding: 12px;
       font-size: 1rem;
-     border-radius: 8px;
+      border-radius: 8px;
       border: 2px solid var(--primary);
       background: rgba(0,0,0,0.3);
       color: var(--text);
@@ -48,7 +48,6 @@
     button {
       padding: 12px 24px;
       font-size: 1rem;
-
       border-radius: 5px;
       border: none;
       background-color: var(--primary);
@@ -99,18 +98,15 @@
   </style>
 </head>
 <body>
-
-  <h1>Advanced Media Player</h1>
-  
+  <h1>AI-Powered Network Stream Player</h1>
   <div class="container">
     <div class="panel">
       <h2>Stream Player</h2>
-      <input type="text" id="streamUrl" placeholder="Paste stream URL (.m3u8, .mp4, .mkv, .avi, .mov, .webm, .txt)" />
+      <input type="text" id="streamUrl" placeholder="Paste stream URL (.m3u8, .mp4, .mkv, .avi, .mov, .webm, .flv, .ts, .mpd, .txt)" />
       <button onclick="playStream()">▶ Play Stream</button>
       <div id="playerStatus" class="status"></div>
       <video id="videoPlayer" controls autoplay crossorigin="anonymous" playsinline></video>
     </div>
-
     <div class="panel">
       <h2>Link Extractor</h2>
       <input type="text" id="pageUrl" placeholder="Paste webpage URL to extract video links" />
@@ -120,14 +116,21 @@
     </div>
   </div>
 
+  <div class="panel" style="margin-top: 30px;">
+    <h2>Deepsite AI Analyzer</h2>
+    <input type="text" id="deepsiteUrl" placeholder="Paste video stream URL to analyze" />
+    <button onclick="analyzeWithDeepsite()">🧠 Analyze with Deepsite</button>
+    <div id="deepsiteResult" class="status"></div>
+  </div>
+
   <script>
     const SUPPORTED_FORMATS = ['.m3u8', '.mp4', '.mkv', '.avi', '.mov', '.webm', '.flv', '.ts', '.mpd'];
-    
+
     function playStream(urlInputId = 'streamUrl') {
       const video = document.getElementById('videoPlayer');
       const status = document.getElementById('playerStatus');
       let url = document.getElementById(urlInputId).value.trim();
-      
+
       if (!url) {
         status.innerHTML = '<div class="error">Please enter a URL</div>';
         return;
@@ -138,7 +141,6 @@
       video.removeAttribute('src');
       video.load();
 
-      // Check if URL points to a playlist file
       if (url.endsWith('.txt')) {
         fetch(url)
           .then(response => response.text())
@@ -156,43 +158,27 @@
 
     function playStreamWithUrl(video, url, status) {
       const format = SUPPORTED_FORMATS.find(f => url.includes(f));
-      
       if (!format) {
         status.innerHTML = `<div class="error">Unsupported format. Supported: ${SUPPORTED_FORMATS.join(', ')}</div>`;
         return;
       }
-
-      // HLS/DASH streams
       if (Hls.isSupported() && (url.endsWith('.m3u8') || url.includes('.m3u8?'))) {
-        const hls = new Hls({
-          maxBufferLength: 30,
-          maxMaxBufferLength: 600,
-          maxBufferSize: 60 * 1000 * 1000,
-          maxBufferHole: 0.5
-        });
-        
+        const hls = new Hls();
         hls.loadSource(url);
         hls.attachMedia(video);
-        
         hls.on(Hls.Events.MANIFEST_PARSED, () => {
           status.innerHTML = '<div class="success">Stream loaded successfully</div>';
           video.play().catch(e => {
             status.innerHTML = `<div class="error">Playback error: ${e.message}</div>`;
           });
         });
-        
         hls.on(Hls.Events.ERROR, (event, data) => {
           if (data.fatal) {
-            let errorMsg = `HLS Error: ${data.details}`;
-            if (data.response) errorMsg += ` (HTTP ${data.response.code})`;
-            status.innerHTML = `<div class="error">${errorMsg}</div>`;
+            status.innerHTML = `<div class="error">HLS error: ${data.details}</div>`;
             hls.destroy();
           }
         });
-      } 
-      // Native HTML5 playback for supported formats
-      else if (video.canPlayType(`video/${format.replace('.', '')}`) || 
-               video.canPlayType(`video/mp4`)) {
+      } else {
         video.src = url;
         video.addEventListener('loadedmetadata', () => {
           status.innerHTML = '<div class="success">Stream loaded successfully</div>';
@@ -200,12 +186,9 @@
             status.innerHTML = `<div class="error">Playback error: ${e.message}</div>`;
           });
         });
-        
         video.addEventListener('error', () => {
           status.innerHTML = `<div class="error">Playback error: ${video.error ? video.error.message : 'Unknown error'}</div>`;
         });
-      } else {
-        status.innerHTML = `<div class="error">Format not supported by your browser</div>`;
       }
     }
 
@@ -213,7 +196,7 @@
       const pageUrl = document.getElementById('pageUrl').value.trim();
       const linksContainer = document.getElementById('links');
       const status = document.getElementById('extractStatus');
-      
+
       if (!pageUrl) {
         status.innerHTML = '<div class="error">Please enter a URL</div>';
         return;
@@ -225,10 +208,10 @@
       try {
         const response = await fetch(`https://stream-production-e59c.up.railway.app/extract?url=${encodeURIComponent(pageUrl)}`);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        
+
         const html = await response.text();
         const videoRegex = /https?:[^"'\s>]+\.(m3u8|mp4|mkv|avi|mov|webm|flv|ts|mpd)(\?[^"'\s>]*)?/gi;
-        const matches = [...new Set([...html.matchAll(videoRegex)].map(m => m[0]))]; // Remove duplicates
+        const matches = [...new Set([...html.matchAll(videoRegex)].map(m => m[0]))];
 
         if (matches.length === 0) {
           status.innerHTML = '<div class="error">No video links found</div>';
@@ -237,7 +220,7 @@
 
         status.innerHTML = `<div class="success">Found ${matches.length} video links</div>`;
         linksContainer.innerHTML = '<h3>Video Links:</h3>';
-        
+
         matches.forEach((link, index) => {
           const id = `foundLink${index}`;
           const linkItem = document.createElement('div');
@@ -263,102 +246,25 @@
         alert("Copied to clipboard");
       });
     }
-  </script>
-</body>
-  <!-- GitHub Dark Theme Embedded Player Section -->
-<hr style="margin:40px 0; border: 1px solid #ffcc00;">
-<h2>Embed-Ready Movie Player (GitHub Pages Compatible)</h2>
-<p>Use ?movie= URL parameter to auto-load streams.</p>
-<input id="ghUrlInput" type="text" placeholder="Paste .m3u8 or .mp4 link here or use ?movie=" style="width:80%; padding:10px; margin:10px 0;" />
-<button onclick="ghPlayStream()" style="padding:10px 20px; background:#ffcc00; color:black; border:none; border-radius:6px;">Play</button>
-<br/>
-<video id="ghVideoPlayer" controls autoplay style="margin-top:20px; width:90%; max-width:900px; background:black; border:3px solid #ffcc00; border-radius:12px;"></video>
 
-<script>
-  function ghGetQueryParam(name) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(name);
-  }
+    async function analyzeWithDeepsite() {
+      const url = document.getElementById('deepsiteUrl').value.trim();
+      const status = document.getElementById('deepsiteResult');
 
-  function ghPlayStream() {
-    const url = document.getElementById('ghUrlInput').value.trim();
-    const video = document.getElementById('ghVideoPlayer');
-    if (Hls.isSupported() && url.endsWith(".m3u8")) {
-      const hls = new Hls();
-      hls.loadSource(url);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, function () {
-        video.play();
-      });
-    } else {
-      video.src = url;
-      video.load();
-      video.play();
-    }
-  }
-
-  window.addEventListener("load", () => {
-    const movie = ghGetQueryParam("movie");
-    if (movie) {
-      document.getElementById("ghUrlInput").value = movie;
-      ghPlayStream();
-    }
-  });
-</script>
-  <script>
-  async function ghPlayStream() {
-    const video = document.getElementById('ghVideoPlayer');
-    const input = document.getElementById('ghUrlInput').value.trim();
-    let url = input;
-
-    // If it's a .txt file, fetch it
-    if (url.endsWith('.txt')) {
-      try {
-        const response = await fetch(url);
-        url = (await response.text()).trim();
-      } catch (err) {
-        alert("Failed to load .txt file");
+      if (!url) {
+        status.innerHTML = '<div class="error">Please enter a URL</div>';
         return;
       }
+
+      status.innerHTML = '<div class="loading">Analyzing with Deepsite...</div>';
+      try {
+        const response = await fetch(`https://api.deepsite.ai/analyze?url=${encodeURIComponent(url)}`);
+        const result = await response.json();
+        status.innerHTML = `<div class="success"><pre>${JSON.stringify(result, null, 2)}</pre></div>`;
+      } catch (err) {
+        status.innerHTML = `<div class="error">Deepsite analysis failed: ${err.message}</div>`;
+      }
     }
-
-    // Reset player
-    video.pause();
-    video.removeAttribute('src');
-    video.load();
-
-    // Use HLS.js for .m3u8
-    if (Hls.isSupported() && url.endsWith(".m3u8")) {
-      const hls = new Hls();
-      hls.loadSource(url);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, function () {
-        video.play();
-      });
-      hls.on(Hls.Events.ERROR, function (event, data) {
-        if (data.fatal) alert("HLS error: " + data.details);
-      });
-    } else {
-      // Fallback to native HTML5 for MP4 or supported formats
-      video.src = url;
-      video.addEventListener("loadedmetadata", () => video.play());
-      video.load();
-    }
-  }
-
-  function ghGetQueryParam(name) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(name);
-  }
-
-  window.addEventListener("load", () => {
-    const movie = ghGetQueryParam("movie");
-    if (movie) {
-      document.getElementById("ghUrlInput").value = movie;
-      ghPlayStream();
-    }
-  });
-</script>
-
-
+  </script>
+</body>
 </html>
