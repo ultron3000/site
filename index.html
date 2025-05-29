@@ -1,629 +1,922 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <title>Warner Bros. Pictures</title>
-    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Media Player</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #111;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #ffcc00;
-            border-radius: 5px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ffdd33;
-        }
-        
-        /* Custom animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-        
-        .movie-poster {
+        .player-container {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            overflow: hidden;
         }
-        
-        .movie-poster:hover {
-            transform: translateY(-10px) scale(1.03);
-            box-shadow: 0 15px 30px rgba(255, 204, 0, 0.2);
+        .player-container:hover {
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+            transform: translateY(-2px);
         }
-        
-        .glow-text {
-            text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+        .media-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1rem;
         }
-        
-        .search-container {
+        #video-player, #audio-cover {
+            width: 100%;
+            height: 8100%;
+            object-fit: contain;
+        }
+        #audio-cover {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+        }
+        .progress-container {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            cursor: pointer;
             position: relative;
         }
-        
-        .search-container i {
+        .progress-bar::after {
+            content: '';
             position: absolute;
-            left: 15px;
+            right: 0;
             top: 50%;
             transform: translateY(-50%);
-            color: #ffcc00;
-        }
-        
-        .category-btn.active {
-            background-color: #ffcc00;
-            color: #000;
-            font-weight: bold;
-        }
-        
-        /* Loading spinner */
-        .spinner {
-            border: 4px solid rgba(255, 204, 0, 0.3);
+            width: 12px;
+            height: 12px;
+            background: white;
             border-radius: 50%;
-            border-top: 4px solid #ffcc00;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .progress-container:hover .progress-bar::after {
+            opacity: 1;
+            margin: 1rem 0;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+            border-radius: 3px;
+            transition: width 0.1s linear;
+        }
+        .playlist-item {
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+            padding: 0.75rem 1rem;
+        }
+        .playlist-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid #3b82f6;
+            transform: translateX(5px);
+        }
+        .playlist-item.active {
+            background: rgba(59, 130, 246, 0.15);
+            border-left: 3px solid #3b82f6;
+        }
+        .controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+        .control-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
             width: 40px;
             height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-        
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            justify-content: center;
+            display: flex;
             align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
         }
-        
-        .modal-content {
-            width: 80%;
-            max-width: 800px;
-            background-color: #111;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
         }
-        
-        .modal-header {
-            padding: 15px;
-            background-color: #000;
+        .control-btn.play-pause {
+            background: #3b82f6;
+            width: 50px;
+            height: 50px;
+        }
+        .control-btn.play-pause:hover {
+            background: #2563eb;
+        }
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+        .volume-slider {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            transition: all 0.2s;
+        }
+        .volume-slider:hover {
+            height: 6px;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        .dropzone {
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            padding: 2rem;
+            text-align: center;
+        }
+        .dropzone.active {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+            transform: scale(0.99);
+        }
+        .media-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .time-display {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #ffcc00;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
         }
-        
-        .modal-title {
-            color: #ffcc00;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-        
-        .close-btn {
-            color: #ffcc00;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        
-        .modal-body {
-            padding: 0;
-        }
-        
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            height: 0;
-            overflow: hidden;
-        }
-        
-        .video-container video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-        }
-        
-        .iframe-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            height: 0;
-            overflow: hidden;
-        }
-        
-        .iframe-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Video controls styling */
-        video::-webkit-media-controls {
-            display: flex !important;
-        }
-        
-        video::-webkit-media-controls-play-button {
-            color: #ffcc00;
-        }
-        
-        video::-webkit-media-controls-volume-slider {
-            background-color: #ffcc00;
-        }
-        
-        video::-webkit-media-controls-current-time-display,
-        video::-webkit-media-controls-time-remaining-display {
-            color: #ffcc00;
-        }
-        
-        /* Play overlay for autoplay restrictions */
-        .play-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        .playback-controls {
             display: flex;
-            justify-content: center;
             align-items: center;
-            background-color: rgba(0,0,0,0.7);
-            z-index: 10;
-            cursor: pointer;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
         }
-        
-        .play-button {
-            background: none;
-            border: none;
-            cursor: pointer;
+        .fullscreen-btn {
+            margin-left: auto;
         }
-        
-        .play-button i {
-            font-size: 4rem;
-            color: #ffcc00;
-            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        @media (max-width: 768px) {
+            .player-container {
+                border-radius: 0;
+            }
+            .flex-col.md\:flex-row {
+                flex-direction: column;
+            }
+            .w-full.md\:w-64 {
+                width: 100%;
+            }
         }
     </style>
 </head>
-<body class="bg-black text-gray-100 min-h-screen">
-    <!-- Header -->
-    <header class="bg-gradient-to-r from-black to-gray-900 py-6 px-4 shadow-lg border-b border-yellow-500">
-        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
-            <div class="flex items-center mb-4 md:mb-0">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Warner_Bros_logo.svg/1965px-Warner_Bros_logo.svg.png" 
-                     alt="Warner Bros. Logo" 
-                     class="h-12 mr-4">
-                <h1 class="text-3xl md:text-4xl font-bold text-yellow-400 glow-text">
-                    PICTURES CATALOG
-                </h1>
-            </div>
-            <div class="flex items-center space-x-4">
-                <button id="theme-toggle" class="text-yellow-400 hover:text-yellow-300 text-2xl">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button id="sort-toggle" class="text-yellow-400 hover:text-yellow-300 text-2xl">
-                    <i class="fas fa-sort-alpha-down"></i>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Search and Filter Section -->
-    <section class="container mx-auto px-4 py-6">
-        <div class="search-container mb-6">
-            <i class="fas fa-search"></i>
-            <input id="searchBar" 
-                   type="text" 
-                   placeholder="Search Warner Bros. movies..." 
-                   class="w-full pl-12 pr-4 py-3 bg-gray-900 border-2 border-yellow-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 text-white placeholder-yellow-400">
-        </div>
+<body class="bg-gray-900 text-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="player-container w-full max-w-4xl p-6">
+        <h1 class="text-2xl font-bold mb-6 text-center">Advanced Media Player</h1>
         
-        <div class="flex flex-wrap gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
-            <button class="category-btn active px-4 py-2 rounded-full bg-gray-800 text-yellow-400 hover:bg-yellow-500 hover:text-black transition" data-category="all">
-                All Movies
-            </button>
-            <button class="category-btn px-4 py-2 rounded-full bg-gray-800 text-yellow-400 hover:bg-yellow-500 hover:text-black transition" data-category="batman">
-                Batman
-            </button>
-            <button class="category-btn px-4 py-2 rounded-full bg-gray-800 text-yellow-400 hover:bg-yellow-500 hover:text-black transition" data-category="superman">
-                Superman
-            </button>
-            <button class="category-btn px-4 py-2 rounded-full bg-gray-800 text-yellow-400 hover:bg-yellow-500 hover:text-black transition" data-category="justice">
-                Justice League
-            </button>
-            <button class="category-btn px-4 py-2 rounded-full bg-gray-800 text-yellow-400 hover:bg-yellow-500 hover:text-black transition" data-category="fantastic">
-                Fantastic Beasts
-            </button>
-            <button class="category-btn px-4 py-2 rounded-full bg-gray-800 text-yellow-400 hover:bg-yellow-500 hover:text-black transition" data-category="godzilla">
-                Godzilla/Kong
-            </button>
-            <button class="category-btn px-4 py-2 rounded-full bg-gray-800 text-yellow-400 hover:bg-yellow-500 hover:text-black transition" data-category="matrix">
-                The Matrix
-            </button>
-            <button class="category-btn px-4 py-2 rounded-full bg-gray-800 text-yellow-400 hover:bg-yellow-500 hover:text-black transition" data-category="conjuring">
-                The Conjuring
-            </button>
-        </div>
-        
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-semibold text-yellow-400">
-                Featured Movies
-            </h2>
-            <div class="text-sm text-gray-400">
-                <span id="movie-count">0</span> movies available
-            </div>
-        </div>
-    </section>
-
-    <!-- Movies Grid -->
-    <main class="container mx-auto px-4 pb-10">
-        <div id="loading" class="spinner"></div>
-        <div id="movies" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6"></div>
-    </main>
-
-    <!-- Video Modal -->
-    <div id="videoModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title" id="modalTitle"></div>
-                <span class="close-btn">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="video-container">
-                    <video id="modalVideo" controls>
-                        Your browser does not support the video tag.
-                    </video>
-                    <div id="playOverlay" class="play-overlay hidden">
-                        <button class="play-button">
-                            <i class="fas fa-play"></i>
+        <div class="flex flex-col md:flex-row gap-6">
+            <!-- Player Section -->
+            <div class="flex-1">
+                <div class="bg-gray-800 rounded-lg p-4 mb-4">
+                    <div class="media-container">
+                        <video id="video-player" class="hidden" controls></video>
+                        <div id="audio-cover">
+                            <i class="fas fa-music text-6xl text-white" id="cover-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="media-info">
+                        <h2 class="text-xl font-semibold truncate" id="now-playing">No media selected</h2>
+                        <p class="text-gray-400 text-sm truncate" id="media-source"></p>
+                    </div>
+                    
+                    <div class="progress-container" id="progress-container">
+                        <div class="progress-bar" id="progress-bar"></div>
+                    </div>
+                    <div class="time-display">
+                        <span id="current-time">0:00</span>
+                        <span id="duration">0:00</span>
+                    </div>
+                    
+                    <div class="controls">
+                        <button class="control-btn" id="prev-btn" title="Previous">
+                            <i class="fas fa-step-backward"></i>
+                        </button>
+                        <button class="control-btn play-pause" id="play-btn" title="Play/Pause">
+                            <i class="fas fa-play" id="play-icon"></i>
+                        </button>
+                        <button class="control-btn" id="next-btn" title="Next">
+                            <i class="fas fa-step-forward"></i>
+                        </button>
+                        
+                        <div class="volume-container">
+                            <i class="fas fa-volume-up"></i>
+                            <input type="range" min="0" max="1" step="0.01" value="0.7" 
+                                   class="volume-slider" id="volume" title="Volume">
+                        </div>
+                    </div>
+                    
+                    <div class="playback-controls">
+                        <span class="text-sm">Speed:</span>
+                        <select class="bg-gray-700 rounded px-2 py-1 text-sm" id="playback-rate">
+                            <option value="0.5">0.5x</option>
+                            <option value="0.75">0.75x</option>
+                            <option value="1" selected>1x</option>
+                            <option value="1.25">1.25x</option>
+                            <option value="1.5">1.5x</option>
+                            <option value="2">2x</option>
+                        </select>
+                        
+                        <button class="control-btn fullscreen-btn hidden" id="fullscreen-btn" title="Fullscreen">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Input Section -->
+                <div class="bg-gray-800 rounded-lg p-4">
+                    <div class="dropzone p-6 text-center mb-4" id="dropzone">
+                        <i class="fas fa-cloud-upload-alt text-3xl mb-2 text-blue-500"></i>
+                        <p class="mb-2">Drag & drop media files or .txt files here</p>
+                        <p class="text-sm text-gray-400">Supports: MP3, MP4, WebM, OGG, and .txt with URLs</p>
+                    </div>
+                    
+                    <div class="flex gap-2 mb-4">
+                        <input type="text" id="media-url" placeholder="Enter media URL or .txt URL" 
+                               class="flex-1 bg-gray-700 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button id="add-url" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <button id="load-sample" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded text-sm">
+                            <i class="fas fa-music"></i> Load Sample
+                        </button>
+                        <button id="clear-all" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-sm">
+                            <i class="fas fa-trash"></i> Clear All
                         </button>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Iframe Container for player.html -->
-    <div id="iframeModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title" id="iframeTitle"></div>
-                <span class="close-btn">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="iframe-container">
-                    <iframe id="playerIframe" src="" allowfullscreen></iframe>
+            
+            <!-- Playlist Section -->
+            <div class="w-full md:w-64 bg-gray-800 rounded-lg p-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-semibold">Playlist</h3>
+                    <span class="text-xs bg-gray-700 px-2 py-1 rounded" id="playlist-count">0 items</span>
+                </div>
+                
+                <div class="overflow-y-auto max-h-96" id="playlist">
+                    <p class="text-gray-400 text-center py-4">Your playlist is empty</p>
                 </div>
             </div>
         </div>
+        
+        <audio id="audio-player"></audio>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // DOM Elements
+                const audioPlayer = document.getElementById('audio-player');
+                const videoPlayer = document.getElementById('video-player');
+                const mediaContainer = document.querySelector('.media-container');
+                const playBtn = document.getElementById('play-btn');
+                const playIcon = document.getElementById('play-icon');
+                const prevBtn = document.getElementById('prev-btn');
+                const nextBtn = document.getElementById('next-btn');
+                const progressBar = document.getElementById('progress-bar');
+                const progressContainer = document.getElementById('progress-container');
+                const currentTimeEl = document.getElementById('current-time');
+                const durationEl = document.getElementById('duration');
+                const volumeSlider = document.getElementById('volume');
+                const playbackRate = document.getElementById('playback-rate');
+                const nowPlayingEl = document.getElementById('now-playing');
+                const mediaSourceEl = document.getElementById('media-source');
+                const coverIcon = document.getElementById('cover-icon');
+                const fullscreenBtn = document.getElementById('fullscreen-btn');
+                const playlistEl = document.getElementById('playlist');
+                const playlistCountEl = document.getElementById('playlist-count');
+                const mediaUrlInput = document.getElementById('media-url');
+                const addUrlBtn = document.getElementById('add-url');
+                const loadSampleBtn = document.getElementById('load-sample');
+                const clearAllBtn = document.getElementById('clear-all');
+                const dropzone = document.getElementById('dropzone');
+                
+                // Player state
+                let playlist = [];
+                let currentTrackIndex = -1;
+                let isPlaying = false;
+                let isVideo = false;
+                
+                // Initialize player
+                function initPlayer() {
+                    updatePlaylistCount();
+                    updatePlaylistUI();
+                    
+                    // Event listeners
+                    playBtn.addEventListener('click', togglePlay);
+                    prevBtn.addEventListener('click', prevTrack);
+                    nextBtn.addEventListener('click', nextTrack);
+                    progressContainer.addEventListener('click', setProgress);
+                    volumeSlider.addEventListener('input', setVolume);
+                    playbackRate.addEventListener('change', setPlaybackRate);
+                    addUrlBtn.addEventListener('click', addMediaFromInput);
+                    loadSampleBtn.addEventListener('click', loadSamplePlaylist);
+                    clearAllBtn.addEventListener('click', clearPlaylist);
+                    fullscreenBtn.addEventListener('click', toggleFullscreen);
+                    
+                    mediaUrlInput.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') addMediaFromInput();
+                    });
+                    
+                    // Drag and drop events
+                    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                        dropzone.addEventListener(eventName, preventDefaults, false);
+                    });
+                    
+                    function preventDefaults(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    
+                    ['dragenter', 'dragover'].forEach(eventName => {
+                        dropzone.addEventListener(eventName, highlight, false);
+                    });
+                    
+                    ['dragleave', 'drop'].forEach(eventName => {
+                        dropzone.addEventListener(eventName, unhighlight, false);
+                    });
+                    
+                    function highlight() {
+                        dropzone.classList.add('active');
+                    }
+                    
+                    function unhighlight() {
+                        dropzone.classList.remove('active');
+                    }
+                    
+                    dropzone.addEventListener('drop', handleDrop, false);
+                    
+                    // Media player events
+                    audioPlayer.addEventListener('timeupdate', updateProgress);
+                    audioPlayer.addEventListener('ended', nextTrack);
+                    audioPlayer.addEventListener('play', updatePlayState);
+                    audioPlayer.addEventListener('pause', updatePlayState);
+                    audioPlayer.addEventListener('loadedmetadata', updateMediaInfo);
+                    
+                    videoPlayer.addEventListener('timeupdate', updateProgress);
+                    videoPlayer.addEventListener('ended', nextTrack);
+                    videoPlayer.addEventListener('play', updatePlayState);
+                    videoPlayer.addEventListener('pause', updatePlayState);
+                    videoPlayer.addEventListener('loadedmetadata', updateMediaInfo);
+                    videoPlayer.addEventListener('fullscreenchange', updateFullscreenButton);
+                }
+                
+                // Playlist management
+                function addToPlaylist(url, name = null) {
+                    // Check if URL is a .txt file
+                    if (url.toLowerCase().endsWith('.txt')) {
+                        fetchTxtFile(url);
+                        return;
+                    }
+                    
+                    const id = Date.now();
+                    const fileName = name || url.split('/').pop().split('?')[0];
+                    const isVideoFile = /\.(mp4|webm|ogg|mov|avi|mkv)$/i.test(url);
+                    
+                    playlist.push({
+                        id,
+                        url,
+                        name: fileName,
+                        isVideo: isVideoFile
+                    });
+                    
+                    updatePlaylistCount();
+                    updatePlaylistUI();
+                    
+                    // If this is the first item, play it
+                    if (playlist.length === 1) {
+                        currentTrackIndex = 0;
+                        loadTrack(currentTrackIndex);
+                    }
+                }
+                
+                async function fetchTxtFile(url) {
+                    try {
+                        const response = await fetch(url);
+                        if (!response.ok) throw new Error('Failed to fetch .txt file');
+                        
+                        const text = await response.text();
+                        const urls = text.split('\n')
+                            .map(line => line.trim())
+                            .filter(line => line.length > 0 && !line.startsWith('#'));
+                        
+                        if (urls.length === 0) {
+                            alert('The .txt file contains no valid URLs');
+                            return;
+                        }
+                        
+                        urls.forEach(url => addToPlaylist(url));
+                    } catch (error) {
+                        console.error('Error loading .txt file:', error);
+                        alert('Failed to load .txt file: ' + error.message);
+                    }
+                }
+                
+                function loadTrack(index) {
+                    if (index < 0 || index >= playlist.length) return;
+                    
+                    const track = playlist[index];
+                    isVideo = track.isVideo;
+                    
+                    if (isVideo) {
+                        audioPlayer.pause();
+                        audioPlayer.src = '';
+                        videoPlayer.src = track.url;
+                        videoPlayer.classList.remove('hidden');
+                        coverIcon.parentElement.classList.add('hidden');
+                        fullscreenBtn.classList.remove('hidden');
+                    } else {
+                        videoPlayer.pause();
+                        videoPlayer.src = '';
+                        videoPlayer.classList.add('hidden');
+                        coverIcon.parentElement.classList.remove('hidden');
+                        fullscreenBtn.classList.add('hidden');
+                        audioPlayer.src = track.url;
+                    }
+                    
+                    nowPlayingEl.textContent = track.name;
+                    mediaSourceEl.textContent = track.url;
+                    
+                    if (isPlaying) {
+                        isVideo ? videoPlayer.play() : audioPlayer.play();
+                    }
+                    
+                    updatePlaylistUI();
+                }
+                
+                function togglePlay() {
+                    if (playlist.length === 0) return;
+                    
+                    if (currentTrackIndex === -1) {
+                        currentTrackIndex = 0;
+                        loadTrack(currentTrackIndex);
+                    }
+                    
+                    if (isPlaying) {
+                        isVideo ? videoPlayer.pause() : audioPlayer.pause();
+                    } else {
+                        isVideo ? videoPlayer.play() : audioPlayer.play();
+                    }
+                }
+                
+                function updatePlayState() {
+                    isPlaying = isVideo ? !videoPlayer.paused : !audioPlayer.paused;
+                    playIcon.className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
+                }
+                
+                // ... (rest of the JavaScript remains similar but updated to handle both players)
+                
+                // Fullscreen control
+                function toggleFullscreen() {
+                    if (!isVideo) return;
+                    
+                    if (!document.fullscreenElement) {
+                        mediaContainer.requestFullscreen().catch(err => {
+                            console.error(`Error attempting to enable fullscreen: ${err.message}`);
+                        });
+                    } else {
+                        document.exitFullscreen();
+                    }
+                }
+                
+                function updateFullscreenButton() {
+                    const icon = fullscreenBtn.querySelector('i');
+                    icon.className = document.fullscreenElement ? 'fas fa-compress' : 'fas fa-expand';
+                }
+                
+                // Initialize the player
+                initPlayer();
+            });
+        </script>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 border-t border-yellow-500 py-6">
-        <div class="container mx-auto px-4 text-center text-gray-400">
-            <p>© 2024 Warner Bros. Pictures. All rights reserved.</p>
-            <div class="flex justify-center space-x-4 mt-3">
-                <a href="#" class="hover:text-yellow-400 transition"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="hover:text-yellow-400 transition"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="hover:text-yellow-400 transition"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="hover:text-yellow-400 transition"><i class="fab fa-youtube"></i></a>
-            </div>
-        </div>
-    </footer>
-
     <script>
-        const movies = [
-            { 
-                title: "A Minecraft Movie", 
-                video: "https://macdn.hakunaymatata.com/resource/d3f493124fb8e41dd83933475997072c.mp4?Expires=1749641780&Signature=VbzBE002HBrZxgO30fh6l3mjstETbwTyc68yj~UjkS3xLWOGJRyYd6WJ6UwoCwCFnV9FS3PL79XM2UJpx9WKoexX2uYBJ5AtZiD2RS9FO0yBYQDBNTSzHSaSsPOKhjbvIA78XdA~MGGcgQpR2x1YPX-VS4H3WBVa6~z7RNHlSyJYuOiKH6nicfN5cQaXckddiRiEwu6m0C7lVjkQPAmXvzo-UT1rhrpC~HCf1aEXpLWwkjFowHKVNv2D3ldrSPeZadCOCh9KZG-V~wSBScIPWAN32FODTbnQqoZZ6kD1MkvimvH-fW5wFYMg65ObrKkKJBHAUkb5j5OwIIjh3h03kw__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-                image: "https://lh5.googleusercontent.com/proxy/0nlhqTKgDGo1cPzHFBZR8INQrF5Cpk0GnKUqxkjCKZwzI7JFgt5PnBW_6P8sKXh1LdfFJUs7gzODOQh7fD5KC0q6IRHLAzt0_7rY95d7gWdob5tCQzE", 
-                category: "other", 
-                year: 2025 
-            },
-            { 
-                title: "The Hangover Part III", 
-                video: "https://skra.hungerfordeckertev.sbs:443/v4/61/ij5no/index-f2-v1-a1.txt", 
-                image: "https://m.media-amazon.com/images/I/61infdk7z7L.jpg", 
-                category: "other", 
-                year: 2013 
-            },
-            { 
-                title: "Duma", 
-                video: "https://sxic.shahcanna.sbs:443/v4/np/ky8jh/index-f2-v1-a1.txt", 
-                image: "https://m.media-amazon.com/images/S/pv-target-images/3f41be42cf3d19f16efff7f854406943ccde4b52f6804f7459f757ff7eb22306.jpg", 
-                category: "other", 
-                year: 2005 
-            },
-            { 
-                title: "The Island", 
-                video: "https://s3ae.ybarrazotz.sbs:443/v4/36/63krn/index-f2-v1-a1.txt", 
-                image: "https://media-cache.cinematerial.com/p/500x/yll7yozq/the-island-dvd-movie-cover.jpg?v=1456654083", 
-                category: "other", 
-                year: 2005 
-            }
-        ];
-
-        // DOM Elements
-        const container = document.getElementById('movies');
-        const loadingElement = document.getElementById('loading');
-        const movieCountElement = document.getElementById('movie-count');
-        const categoryButtons = document.querySelectorAll('.category-btn');
-        const searchBar = document.getElementById('searchBar');
-        const themeToggle = document.getElementById('theme-toggle');
-        const sortToggle = document.getElementById('sort-toggle');
-        
-        // Modal elements
-        const videoModal = document.getElementById('videoModal');
-        const modalVideo = document.getElementById('modalVideo');
-        const modalTitle = document.getElementById('modalTitle');
-        const closeModalBtn = videoModal.querySelector('.close-btn');
-        const playOverlay = document.getElementById('playOverlay');
-        
-        const iframeModal = document.getElementById('iframeModal');
-        const playerIframe = document.getElementById('playerIframe');
-        const iframeTitle = document.getElementById('iframeTitle');
-        const closeIframeBtn = iframeModal.querySelector('.close-btn');
-        
-        // State
-        let currentCategory = 'all';
-        let sortBy = 'title'; // 'title' or 'year'
-        let isDarkMode = true;
-        
-        // Initialize
-        function init() {
-            renderMovies();
-            setupEventListeners();
-        }
-        
-        // Setup event listeners
-        function setupEventListeners() {
-            // Category filter
-            categoryButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    currentCategory = button.dataset.category;
-                    updateActiveCategoryButton();
-                    renderMovies();
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const audioPlayer = document.getElementById('audio-player');
+            const playBtn = document.getElementById('play-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const progressBar = document.getElementById('progress-bar');
+            const progressContainer = document.getElementById('progress-container');
+            const currentTimeEl = document.getElementById('current-time');
+            const durationEl = document.getElementById('duration');
+            const volumeSlider = document.getElementById('volume');
+            const playbackRate = document.getElementById('playback-rate');
+            const nowPlayingEl = document.getElementById('now-playing');
+            const mediaSourceEl = document.getElementById('media-source');
+            const coverIcon = document.getElementById('cover-icon');
+            const coverImage = document.getElementById('cover-image');
+            const playlistEl = document.getElementById('playlist');
+            const playlistCountEl = document.getElementById('playlist-count');
+            const mediaUrlInput = document.getElementById('media-url');
+            const addUrlBtn = document.getElementById('add-url');
+            const loadSampleBtn = document.getElementById('load-sample');
+            const clearAllBtn = document.getElementById('clear-all');
+            const dropzone = document.getElementById('dropzone');
+            
+            // Player state
+            let playlist = [];
+            let currentTrackIndex = -1;
+            let isPlaying = false;
+            
+            // Initialize player
+            function initPlayer() {
+                updatePlaylistCount();
+                updatePlaylistUI();
+                
+                // Event listeners
+                playBtn.addEventListener('click', togglePlay);
+                prevBtn.addEventListener('click', prevTrack);
+                nextBtn.addEventListener('click', nextTrack);
+                progressContainer.addEventListener('click', setProgress);
+                volumeSlider.addEventListener('input', setVolume);
+                playbackRate.addEventListener('change', setPlaybackRate);
+                addUrlBtn.addEventListener('click', addMediaFromInput);
+                loadSampleBtn.addEventListener('click', loadSamplePlaylist);
+                clearAllBtn.addEventListener('click', clearPlaylist);
+                mediaUrlInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') addMediaFromInput();
                 });
-            });
-            
-            // Search
-            searchBar.addEventListener('input', () => {
-                renderMovies();
-            });
-            
-            // Theme toggle
-            themeToggle.addEventListener('click', toggleTheme);
-            
-            // Sort toggle
-            sortToggle.addEventListener('click', toggleSort);
-            
-            // Close modal buttons
-            closeModalBtn.addEventListener('click', () => {
-                videoModal.style.display = 'none';
-                modalVideo.pause();
-                modalVideo.src = ''; // Clear the video source
-            });
-            
-            closeIframeBtn.addEventListener('click', () => {
-                iframeModal.style.display = 'none';
-                playerIframe.src = '';
-            });
-            
-            // Close modals when clicking outside
-            window.addEventListener('click', (event) => {
-                if (event.target === videoModal) {
-                    videoModal.style.display = 'none';
-                    modalVideo.pause();
-                    modalVideo.src = ''; // Clear the video source
-                }
-                if (event.target === iframeModal) {
-                    iframeModal.style.display = 'none';
-                    playerIframe.src = '';
-                }
-            });
-            
-            // Handle video ended event
-            modalVideo.addEventListener('ended', () => {
-                videoModal.style.display = 'none';
-                modalVideo.src = ''; // Clear the video source
-            });
-            
-            // Play button overlay click
-            playOverlay.addEventListener('click', () => {
-                modalVideo.play()
-                    .then(() => {
-                        playOverlay.classList.add('hidden');
-                    })
-                    .catch(e => {
-                        console.error('Playback failed:', e);
-                    });
-            });
-        }
-        
-        // Update active category button
-        function updateActiveCategoryButton() {
-            categoryButtons.forEach(button => {
-                if (button.dataset.category === currentCategory) {
-                    button.classList.add('active');
-                } else {
-                    button.classList.remove('active');
-                }
-            });
-        }
-        
-        // Toggle between dark and light theme
-        function toggleTheme() {
-            isDarkMode = !isDarkMode;
-            
-            if (isDarkMode) {
-                document.body.classList.remove('bg-gray-100', 'text-gray-900');
-                document.body.classList.add('bg-black', 'text-gray-100');
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            } else {
-                document.body.classList.remove('bg-black', 'text-gray-100');
-                document.body.classList.add('bg-gray-100', 'text-gray-900');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            }
-        }
-        
-        // Toggle between sorting by title or year
-        function toggleSort() {
-            sortBy = sortBy === 'title' ? 'year' : 'title';
-            
-            if (sortBy === 'title') {
-                sortToggle.innerHTML = '<i class="fas fa-sort-alpha-down"></i>';
-            } else {
-                sortToggle.innerHTML = '<i class="fas fa-sort-numeric-down"></i>';
-            }
-            
-            renderMovies();
-        }
-        
-        // Filter and sort movies
-        function getFilteredMovies() {
-            let filtered = [...movies];
-            
-            // Filter by category
-            if (currentCategory !== 'all') {
-                filtered = filtered.filter(movie => movie.category === currentCategory);
-            }
-            
-            // Filter by search term
-            const searchTerm = searchBar.value.toLowerCase();
-            if (searchTerm) {
-                filtered = filtered.filter(movie => 
-                    movie.title.toLowerCase().includes(searchTerm)
-                );
-            }
-            
-            // Sort
-            filtered.sort((a, b) => {
-                if (sortBy === 'title') {
-                    return a.title.localeCompare(b.title);
-                } else {
-                    return b.year - a.year; // Newest first
-                }
-            });
-            
-            return filtered;
-        }
-        
-        // Play video based on file type
-        function playVideo(title, videoUrl) {
-            if (videoUrl.endsWith('.mp4')) {
-                // Play MP4 in modal
-                modalTitle.textContent = title;
-                modalVideo.src = videoUrl;
-                modalVideo.load(); // Ensure the video loads
                 
-                // Show the modal
-                videoModal.style.display = 'flex';
-                
-                // Reset the play overlay
-                playOverlay.classList.remove('hidden');
-                
-                // Try to autoplay (may be blocked by browser)
-                modalVideo.play()
-                    .then(() => {
-                        // Autoplay worked, hide the overlay
-                        playOverlay.classList.add('hidden');
-                    })
-                    .catch(e => {
-                        console.log('Autoplay was prevented, showing play button');
-                        // Autoplay was blocked, show the play button overlay
-                        playOverlay.classList.remove('hidden');
-                    });
-                
-                // Handle errors
-                modalVideo.addEventListener('error', function() {
-                    console.error('Error loading video');
-                    alert('Error loading video. Please try another movie.');
-                    videoModal.style.display = 'none';
+                // Drag and drop events
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, preventDefaults, false);
                 });
-            } else if (videoUrl.endsWith('.txt') || videoUrl.endsWith('.m3u8')) {
-                // Play in player.html within iframe
-                iframeTitle.textContent = title;
-                playerIframe.src = `player.html?title=${encodeURIComponent(title)}&video=${encodeURIComponent(videoUrl)}`;
-                iframeModal.style.display = 'flex';
-            }
-        }
-        
-        // Render movies to the DOM
-        function renderMovies() {
-            loadingElement.style.display = 'block';
-            container.innerHTML = '';
-            
-            // Simulate loading (remove in production)
-            setTimeout(() => {
-                const filteredMovies = getFilteredMovies();
                 
-                if (filteredMovies.length === 0) {
-                    container.innerHTML = `
-                        <div class="col-span-full text-center py-10">
-                            <i class="fas fa-film text-5xl text-yellow-400 mb-4"></i>
-                            <h3 class="text-xl font-semibold">No movies found</h3>
-                            <p class="text-gray-400">Try adjusting your search or filter</p>
-                        </div>
+                function preventDefaults(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, highlight, false);
+                });
+                
+                ['dragleave', 'drop'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, unhighlight, false);
+                });
+                
+                function highlight() {
+                    dropzone.classList.add('active');
+                }
+                
+                function unhighlight() {
+                    dropzone.classList.remove('active');
+                }
+                
+                dropzone.addEventListener('drop', handleDrop, false);
+                
+                // Audio player events
+                audioPlayer.addEventListener('timeupdate', updateProgress);
+                audioPlayer.addEventListener('ended', nextTrack);
+                audioPlayer.addEventListener('play', () => {
+                    isPlaying = true;
+                    updatePlayButton();
+                });
+                audioPlayer.addEventListener('pause', () => {
+                    isPlaying = false;
+                    updatePlayButton();
+                });
+                audioPlayer.addEventListener('loadedmetadata', updateMediaInfo);
+            }
+            
+            // Playlist management
+            function addToPlaylist(url, name = null) {
+                // Check if URL is a .txt file
+                if (url.toLowerCase().endsWith('.txt')) {
+                    fetchTxtFile(url);
+                    return;
+                }
+                
+                const id = Date.now();
+                const fileName = name || url.split('/').pop().split('?')[0];
+                
+                playlist.push({
+                    id,
+                    url,
+                    name: fileName
+                });
+                
+                updatePlaylistCount();
+                updatePlaylistUI();
+                
+                // If this is the first item, play it
+                if (playlist.length === 1) {
+                    currentTrackIndex = 0;
+                    loadTrack(currentTrackIndex);
+                }
+            }
+            
+            async function fetchTxtFile(url) {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error('Failed to fetch .txt file');
+                    
+                    const text = await response.text();
+                    const urls = text.split('\n')
+                        .map(line => line.trim())
+                        .filter(line => line.length > 0 && !line.startsWith('#'));
+                    
+                    if (urls.length === 0) {
+                        alert('The .txt file contains no valid URLs');
+                        return;
+                    }
+                    
+                    urls.forEach(url => addToPlaylist(url));
+                } catch (error) {
+                    console.error('Error loading .txt file:', error);
+                    alert('Failed to load .txt file: ' + error.message);
+                }
+            }
+            
+            function removeFromPlaylist(id) {
+                const index = playlist.findIndex(item => item.id === id);
+                if (index === -1) return;
+                
+                playlist.splice(index, 1);
+                
+                // Adjust current track index if needed
+                if (currentTrackIndex >= index && currentTrackIndex > 0) {
+                    currentTrackIndex--;
+                }
+                
+                // If we removed the currently playing track
+                if (index === currentTrackIndex) {
+                    if (playlist.length > 0) {
+                        loadTrack(Math.min(currentTrackIndex, playlist.length - 1));
+                    } else {
+                        currentTrackIndex = -1;
+                        audioPlayer.src = '';
+                        nowPlayingEl.textContent = 'No media selected';
+                        mediaSourceEl.textContent = '';
+                        coverIcon.classList.remove('hidden');
+                        coverImage.classList.add('hidden');
+                    }
+                }
+                
+                updatePlaylistCount();
+                updatePlaylistUI();
+            }
+            
+            function clearPlaylist() {
+                if (playlist.length === 0) return;
+                
+                if (confirm('Are you sure you want to clear the playlist?')) {
+                    playlist = [];
+                    currentTrackIndex = -1;
+                    audioPlayer.src = '';
+                    isPlaying = false;
+                    updatePlayButton();
+                    nowPlayingEl.textContent = 'No media selected';
+                    mediaSourceEl.textContent = '';
+                    coverIcon.classList.remove('hidden');
+                    coverImage.classList.add('hidden');
+                    updatePlaylistCount();
+                    updatePlaylistUI();
+                }
+            }
+            
+            function updatePlaylistCount() {
+                playlistCountEl.textContent = `${playlist.length} ${playlist.length === 1 ? 'item' : 'items'}`;
+            }
+            
+            function updatePlaylistUI() {
+                if (playlist.length === 0) {
+                    playlistEl.innerHTML = '<p class="text-gray-400 text-center py-4">Your playlist is empty</p>';
+                    return;
+                }
+                
+                playlistEl.innerHTML = '';
+                playlist.forEach((item, index) => {
+                    const itemEl = document.createElement('div');
+                    itemEl.className = `playlist-item p-3 mb-1 rounded cursor-pointer flex justify-between items-center ${index === currentTrackIndex ? 'active' : ''}`;
+                    itemEl.innerHTML = `
+                        <div class="truncate flex-1">${item.name}</div>
+                        <button class="text-red-400 hover:text-red-300 ml-2" data-id="${item.id}">
+                            <i class="fas fa-times"></i>
+                        </button>
                     `;
-                } else {
-                    filteredMovies.forEach((movie, index) => {
-                        const div = document.createElement('div');
-                        div.className = 'fade-in';
-                        div.innerHTML = `
-                            <div class="movie-poster bg-gray-800 rounded-lg overflow-hidden shadow-lg h-full flex flex-col">
-                                <img src="${movie.image}" 
-                                     alt="${movie.title}" 
-                                     class="w-full h-64 md:h-80 object-cover">
-                                <div class="p-3 flex-grow">
-                                    <h3 class="font-bold text-yellow-400 truncate">${movie.title}</h3>
-                                    <div class="flex justify-between items-center mt-2">
-                                        <span class="text-sm text-gray-400">${movie.year}</span>
-                                        <span class="text-xs px-2 py-1 bg-yellow-500 text-black rounded-full">${movie.category.toUpperCase()}</span>
-                                    </div>
-                                </div>
-                                <button class="play-btn w-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-4 transition">
-                                    <i class="fas fa-play mr-2"></i> Watch Now
-                                </button>
-                            </div>
-                        `;
-                        div.querySelector('.play-btn').addEventListener('click', () => {
-                            playVideo(movie.title, movie.video);
-                        });
-                        container.appendChild(div);
+                    
+                    itemEl.addEventListener('click', () => {
+                        currentTrackIndex = index;
+                        loadTrack(currentTrackIndex);
+                        if (isPlaying) {
+                            audioPlayer.play();
+                        }
+                        updatePlaylistUI();
                     });
+                    
+                    const removeBtn = itemEl.querySelector('button');
+                    removeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        removeFromPlaylist(item.id);
+                    });
+                    
+                    playlistEl.appendChild(itemEl);
+                });
+            }
+            
+            // Player controls
+            function loadTrack(index) {
+                if (index < 0 || index >= playlist.length) return;
+                
+                const track = playlist[index];
+                audioPlayer.src = track.url;
+                nowPlayingEl.textContent = track.name;
+                mediaSourceEl.textContent = track.url;
+                
+                // Reset cover
+                coverIcon.classList.remove('hidden');
+                coverImage.classList.add('hidden');
+                coverImage.src = '';
+                
+                if (isPlaying) {
+                    audioPlayer.play();
                 }
                 
-                // Update movie count
-                movieCountElement.textContent = filteredMovies.length;
+                updatePlaylistUI();
+            }
+            
+            function togglePlay() {
+                if (playlist.length === 0) return;
                 
-                loadingElement.style.display = 'none';
-            }, 300);
-        }
-        
-        // Initialize the app
-        init();
+                if (currentTrackIndex === -1) {
+                    currentTrackIndex = 0;
+                    loadTrack(currentTrackIndex);
+                }
+                
+                if (isPlaying) {
+                    audioPlayer.pause();
+                } else {
+                    audioPlayer.play();
+                }
+            }
+            
+            function prevTrack() {
+                if (playlist.length === 0) return;
+                
+                currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+                loadTrack(currentTrackIndex);
+                if (isPlaying) {
+                    audioPlayer.play();
+                }
+            }
+            
+            function nextTrack() {
+                if (playlist.length === 0) return;
+                
+                currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+                loadTrack(currentTrackIndex);
+                if (isPlaying) {
+                    audioPlayer.play();
+                }
+            }
+            
+            function updatePlayButton() {
+                const icon = playBtn.querySelector('i');
+                if (isPlaying) {
+                    icon.classList.remove('fa-play');
+                    icon.classList.add('fa-pause');
+                } else {
+                    icon.classList.remove('fa-pause');
+                    icon.classList.add('fa-play');
+                }
+            }
+            
+            // Progress bar
+            function updateProgress() {
+                const { currentTime, duration } = audioPlayer;
+                const progressPercent = (currentTime / duration) * 100;
+                progressBar.style.width = `${progressPercent}%`;
+                
+                // Update time display
+                currentTimeEl.textContent = formatTime(currentTime);
+                
+                if (!isNaN(duration)) {
+                    durationEl.textContent = formatTime(duration);
+                }
+            }
+            
+            function setProgress(e) {
+                const width = this.clientWidth;
+                const clickX = e.offsetX;
+                const duration = audioPlayer.duration;
+                audioPlayer.currentTime = (clickX / width) * duration;
+            }
+            
+            function formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            }
+            
+            // Volume control
+            function setVolume() {
+                audioPlayer.volume = this.value;
+            }
+            
+            // Playback rate
+            function setPlaybackRate() {
+                audioPlayer.playbackRate = this.value;
+            }
+            
+            // Media info
+            function updateMediaInfo() {
+                // Try to extract metadata or show filename
+                const track = playlist[currentTrackIndex];
+                nowPlayingEl.textContent = track.name;
+                mediaSourceEl.textContent = track.url;
+                
+                // For audio files, we could try to fetch cover art here
+                // This is a placeholder - in a real app you might use a metadata library
+                if (track.url.match(/\.(mp3|ogg|wav)$/i)) {
+                    // Could try to extract cover art from audio files
+                }
+            }
+            
+            // Input handling
+            function addMediaFromInput() {
+                const url = mediaUrlInput.value.trim();
+                if (!url) return;
+                
+                addToPlaylist(url);
+                mediaUrlInput.value = '';
+            }
+            
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                
+                if (files.length > 0) {
+                    // In a real app, you would handle file uploads here
+                    // For this demo, we'll just show a message
+                    alert('File upload would be handled here in a real app. For this demo, please use URLs.');
+                }
+            }
+            
+            // Sample playlist
+            function loadSamplePlaylist() {
+                if (playlist.length > 0 && !confirm('This will replace your current playlist. Continue?')) {
+                    return;
+                }
+                
+                playlist = [];
+                currentTrackIndex = -1;
+                
+                // Add some sample tracks
+                const samples = [
+                    {
+                        name: "Sample Audio 1",
+                        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+                    },
+                    {
+                        name: "Sample Audio 2",
+                        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+                    },
+                    {
+                        name: "Sample Playlist (TXT)",
+                        url: "https://example.com/playlist.txt" // This is a placeholder
+                    }
+                ];
+                
+                samples.forEach(sample => {
+                    addToPlaylist(sample.url, sample.name);
+                });
+                
+                alert('Sample playlist loaded. Note: The .txt example is a placeholder and won\'t actually work.');
+            }
+            
+            // Initialize the player
+            initPlayer();
+        });
     </script>
 </body>
 </html>
