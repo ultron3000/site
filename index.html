@@ -2,548 +2,858 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>WondLa | Apple TV+ Original Series</title>
+  <title>Hawkeye - Season 1 | Marvel Studios</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Stream all episodes of WondLa Seasons 1 & 2, the breathtaking Apple TV+ animated series based on Tony DiTerlizzi's books.">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Marvel:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom, #000000, #1a1a2e);
-      min-height: 100vh;
-      overflow-x: hidden;
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
     }
-    .episode-card:hover .play-icon {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1.1);
+    ::-webkit-scrollbar-track {
+      background: #111;
     }
-    .gradient-text {
-      background: linear-gradient(90deg, #ff2d75 0%, #7e5bff 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+    ::-webkit-scrollbar-thumb {
+      background: #ffcc00;
+      border-radius: 4px;
     }
-    .modal-enter {
-      animation: modalEnter 0.3s ease-out forwards;
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ffdd33;
     }
-    @keyframes modalEnter {
-      from {
-        opacity: 0;
-        transform: scale(0.95);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
+    
+    /* Custom animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .showcase-header {
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    @keyframes arrowBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(5px); }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+    
+    .pulse-hover:hover {
+      animation: pulse 1.5s infinite;
+    }
+    
+    .arrow-bounce {
+      animation: arrowBounce 2s infinite;
+    }
+    
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+    
+    /* Glow effect */
+    .glow-effect {
       position: relative;
-      height: 100vh;
-      min-height: 600px;
-      max-height: 1200px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+      transition: transform 0.3s ease;
     }
-    .showcase-video {
+    
+    .glow-effect:hover {
+      transform: translateY(-5px);
+    }
+    
+    .glow-effect::after {
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 204, 0, 0);
+      transition: box-shadow 0.3s ease;
+      pointer-events: none;
     }
-    .showcase-overlay {
-      position: relative;
-      z-index: 1;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
+    
+    .glow-effect:hover::after {
+      box-shadow: 0 0 20px rgba(255, 204, 0, 0.7);
     }
-    .apple-logo {
-      background: linear-gradient(to right, #A2AAAD, #FAFBFB);
+    
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(90deg, #ffcc00, #ff9900);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      font-weight: 600;
     }
-    .mobile-menu {
-      transform: translateX(100%);
-      transition: transform 0.3s ease-out;
+    
+    /* Custom fonts */
+    .marvel-font {
+      font-family: 'Marvel', sans-serif;
     }
-    .mobile-menu.open {
-      transform: translateX(0);
+    
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      .movie-card {
+        width: calc(50% - 1rem);
+      }
     }
-    .scroll-down-indicator {
+    
+    @media (max-width: 400px) {
+      .movie-card {
+        width: 100%;
+      }
+    }
+    
+    /* Custom modal transition */
+    .modal-enter {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    
+    .modal-enter-active {
+      opacity: 1;
+      transform: scale(1);
+      transition: opacity 300ms, transform 300ms;
+    }
+    
+    .modal-exit {
+      opacity: 1;
+      transform: scale(1);
+    }
+    
+    .modal-exit-active {
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 300ms, transform 300ms;
+    }
+    
+    /* Custom progress bar */
+    .progress-bar {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.2);
+      position: relative;
+    }
+    
+    .progress-bar-fill {
       position: absolute;
-      bottom: 30px;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: #ffcc00;
+      transition: width 0.3s ease;
+    }
+    
+    /* Custom tooltip */
+    .tooltip {
+      position: relative;
+    }
+    
+    .tooltip-text {
+      visibility: hidden;
+      width: 120px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
       left: 50%;
       transform: translateX(-50%);
-      animation: bounce 2s infinite;
+      opacity: 0;
+      transition: opacity 0.3s;
     }
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0) translateX(-50%);
-      }
-      40% {
-        transform: translateY(-20px) translateX(-50%);
-      }
-      60% {
-        transform: translateY(-10px) translateX(-50%);
-      }
+    
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
     }
-    @media (max-width: 768px) {
-      .showcase-header {
-        min-height: 100vh;
-        height: auto;
-      }
-      .showcase-content {
-        padding-top: 30vh;
-      }
+    
+    /* Custom checkbox for watchlist */
+    .watchlist-checkbox {
+      position: relative;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+    }
+    
+    .watchlist-checkbox input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .watchlist-checkbox .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 20px;
+      width: 20px;
+      background-color: transparent;
+      border: 2px solid #ffcc00;
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+    
+    .watchlist-checkbox input:checked ~ .checkmark {
+      background-color: #ffcc00;
+    }
+    
+    .watchlist-checkbox .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+    
+    .watchlist-checkbox input:checked ~ .checkmark:after {
+      display: block;
+    }
+    
+    .watchlist-checkbox .checkmark:after {
+      left: 6px;
+      top: 2px;
+      width: 5px;
+      height: 10px;
+      border: solid black;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
     }
   </style>
 </head>
-<body>
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="mobile-menu fixed inset-0 bg-black bg-opacity-90 z-50 p-6 flex flex-col items-center justify-center">
-    <button id="close-menu" class="absolute top-6 right-6 text-white text-3xl">
-      <i class="fas fa-times"></i>
-    </button>
-    <nav class="flex flex-col items-center space-y-8">
-      <a href="#" class="text-white text-2xl hover:text-purple-300 transition">Home</a>
-      <a href="#" class="text-white text-2xl hover:text-purple-300 transition">Episodes</a>
-      <a href="#" class="text-white text-2xl hover:text-purple-300 transition">Characters</a>
-      <a href="#" class="text-white text-2xl hover:text-purple-300 transition">Gallery</a>
-      <div class="pt-8 flex space-x-6">
-        <a href="#" class="text-white text-xl hover:text-purple-300 transition"><i class="fab fa-twitter"></i></a>
-        <a href="#" class="text-white text-xl hover:text-purple-300 transition"><i class="fab fa-instagram"></i></a>
-        <a href="#" class="text-white text-xl hover:text-purple-300 transition"><i class="fab fa-facebook"></i></a>
-      </div>
-    </nav>
-  </div>
-
-  <!-- Showcase Header -->
-  <div class="showcase-header">
-    <video class="showcase-video" autoplay muted loop playsinline poster="https://assets.apple.com/v/apple-tv-plus/shows/wondla/season-1/images/show-home-graphic-header/medium.jpg">
-      <source src="https://imdb-video.media-imdb.com/vi4265986329/1434659607842-pgv4ql-1744031694069.mp4?Expires=1748650444&Signature=V818SvLLhTtVMJnYgAbZkRyoA11TNCjTVMg5AD8LC9xQ0MoZs6wyx5ObiIHdk1bR~rUzCJKbCz29Jc733ApppNHugoiToGT-s~UUVjZ8GQIfKAIUmatheTNAVn~RA9cXgI1FRytCGGbtVk2vYY6haYBM9v~ejhm1waMhKyv7lFs9RuH7WAIMSagG4BDU~H44CH8NkCPndUw47JHYlcN2yaRiAm07BK2MgCt2NXlyVfwTEtbkI-9v4LIaaPRMu62SPqOSrQkI2sif~ANzLcrIUmxcOJNAPMiGsT3cAp~Ip6pdZNVQTmc7AG172YsfCUea5rcVKgJDHjKYlUOlzRlzDw__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    <div class="showcase-overlay">
-      <header class="bg-gradient-to-b from-black to-transparent py-4 px-6">
-        <div class="container mx-auto flex justify-between items-center">
-          <div class="flex items-center space-x-2">
-            <div class="w-10 h-10 bg-gradient-to-r from-[#ff2d75] to-[#7e5bff] rounded-full flex items-center justify-center">
-              <i class="fas fa-play text-white"></i>
-            </div>
-            <h1 class="text-xl font-bold apple-logo">WondLa<span class="text-white">+</span></h1>
-          </div>
-          <nav class="hidden md:flex space-x-6">
-            <a href="#" class="text-white hover:text-purple-300 transition">Home</a>
-            <a href="#" class="text-white hover:text-purple-300 transition">Episodes</a>
-            <a href="#" class="text-white hover:text-purple-300 transition">Characters</a>
-            <a href="#" class="text-white hover:text-purple-300 transition">Gallery</a>
-          </nav>
-          <button id="open-menu" class="md:hidden text-2xl text-white">
-            <i class="fas fa-bars"></i>
-          </button>
+<body class="bg-black text-gray-100 min-h-screen font-roboto">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-black bg-opacity-90 backdrop-blur-sm border-b border-yellow-600/20 shadow-lg">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center pulse-hover">
+          <i class="fas fa-bullseye text-black text-xl"></i>
         </div>
-      </header>
-
-      <div class="container mx-auto px-4 flex-1 flex items-center showcase-content">
-        <div class="max-w-4xl">
-          <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 gradient-text">WondLa</h1>
-          <div class="flex items-center space-x-2 sm:space-x-4 mb-6 flex-wrap">
-            <span class="bg-gradient-to-r from-[#ff2d75] to-[#7e5bff] text-white px-3 py-1 rounded-full text-xs sm:text-sm font-semibold mb-2 sm:mb-0">Seasons 1 & 2</span>
-            <span class="text-gray-400 text-xs sm:text-sm">2024</span>
-            <span class="text-gray-400 hidden sm:block">•</span>
-            <span class="text-gray-400 text-xs sm:text-sm">14 Episodes</span>
-          </div>
-          <p class="text-base sm:text-lg text-gray-300 mb-6">
-            Follow Eva Nine, a young human girl raised underground by a robot, as she emerges to discover the alien world of Orbona. 
-            With her companions Rovender Kitt and the robot Muthr, Eva embarks on an epic journey to uncover the truth about her origins 
-            and the mysterious WondLa.
-          </p>
-          <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-            <button class="bg-gradient-to-r from-[#ff2d75] to-[#7e5bff] hover:from-[#e5276a] hover:to-[#6d4de8] text-white font-semibold py-3 px-6 sm:px-8 rounded-full flex items-center justify-center transition transform hover:scale-105">
-              <i class="fas fa-play mr-2"></i> Play All
-            </button>
-            <button class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 px-6 sm:px-8 rounded-full flex items-center justify-center transition">
-              <i class="fas fa-plus mr-2"></i> My List
-            </button>
-          </div>
-        </div>
+        <h1 class="text-2xl font-bold gradient-text marvel-font tracking-wide">HAWKEYE</h1>
       </div>
       
-      <div class="scroll-down-indicator">
-        <i class="fas fa-chevron-down text-white text-2xl animate-bounce"></i>
-      </div>
-    </div>
-  </div>
-
-  <main class="container mx-auto px-4 py-12 sm:py-16">
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-      <h2 class="text-2xl sm:text-3xl font-bold flex items-center">
-        <span class="mr-2 sm:mr-4">Episodes</span>
-        <span class="text-purple-300 text-lg sm:text-xl">Seasons 1 & 2</span>
-      </h2>
-      <div class="flex space-x-2">
-        <button class="bg-gray-800 hover:bg-gray-700 text-white px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm">Season 1</button>
-        <button class="bg-gray-800 hover:bg-gray-700 text-white px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm">Season 2</button>
+      <div class="flex items-center space-x-4">
+        <button id="watchlist-btn" class="tooltip p-2 rounded-full hover:bg-gray-800 transition relative">
+          <i class="fas fa-bookmark text-yellow-500"></i>
+          <span class="tooltip-text">My Watchlist</span>
+        </button>
+        <button id="theme-toggle" class="tooltip p-2 rounded-full hover:bg-gray-800 transition">
+          <i class="fas fa-moon text-yellow-500"></i>
+          <span class="tooltip-text">Toggle Theme</span>
+        </button>
+        <button id="search-btn" class="tooltip p-2 rounded-full hover:bg-gray-800 transition">
+          <i class="fas fa-search text-yellow-500"></i>
+          <span class="tooltip-text">Search</span>
+        </button>
       </div>
     </div>
     
-    <div id="episodes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
-  </main>
-
-  <!-- Modal -->
-  <div id="playback-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-90 p-4">
-    <div class="relative w-full max-w-4xl bg-gray-900 rounded-xl overflow-hidden modal-enter">
-      <button id="close-modal" class="absolute top-4 right-4 z-50 text-white hover:text-purple-300 text-2xl transition">
-        <i class="fas fa-times"></i>
-      </button>
-      <div class="aspect-w-16 aspect-h-9">
-        <video id="modal-video" class="w-full" controls poster="https://assets.apple.com/v/apple-tv-plus/shows/wondla/season-1/images/show-home-graphic-header/medium.jpg"></video>
-      </div>
-      <div class="p-4 sm:p-6">
-        <div class="flex flex-col sm:flex-row justify-between items-start mb-4 gap-4">
-          <div>
-            <h3 id="modal-title" class="text-xl sm:text-2xl font-bold mb-1"></h3>
-            <div class="text-gray-400 text-xs sm:text-sm">
-              <span>S<span id="season-num">1</span> • E<span id="episode-num"></span></span> • 45 min • <span class="text-purple-300">★ 9.1/10</span>
-            </div>
-          </div>
-          <div class="flex space-x-3">
-            <button class="text-gray-400 hover:text-white transition">
-              <i class="fas fa-share-alt"></i>
-            </button>
-            <button class="text-gray-400 hover:text-white transition">
-              <i class="fas fa-ellipsis-h"></i>
-            </button>
-          </div>
-        </div>
-        <p id="modal-description" class="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base"></p>
-        <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-          <button class="bg-gradient-to-r from-[#ff2d75] to-[#7e5bff] hover:from-[#e5276a] hover:to-[#6d4de8] text-white font-semibold py-2 sm:py-3 px-4 sm:px-8 rounded-full flex items-center justify-center transition transform hover:scale-105">
-            <i class="fas fa-play mr-2"></i> Play
-          </button>
-          <button class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 sm:py-3 px-4 sm:px-8 rounded-full flex items-center justify-center transition">
-            <i class="fas fa-plus mr-2"></i> Watchlist
-          </button>
-          <button class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 sm:py-3 px-4 rounded-full flex items-center justify-center transition">
-            <i class="fas fa-thumbs-up"></i>
-          </button>
-        </div>
-        <div class="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gray-800">
-          <h4 class="text-xs sm:text-sm font-semibold text-gray-400 mb-2">Starring</h4>
-          <p class="text-gray-300 text-xs sm:text-sm">Jeanine Mason, Alan Tudyk, Brad Garrett, Gary Anthony Williams</p>
-        </div>
+    <!-- Search Bar (hidden by default) -->
+    <div id="search-bar" class="hidden px-4 pb-4 bg-black/80">
+      <div class="relative">
+        <input type="text" placeholder="Search episodes..." 
+               class="w-full bg-gray-900 border border-yellow-600/30 rounded-full py-2 px-4 pl-10 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent placeholder-gray-400">
+        <i class="fas fa-search absolute left-3 top-3 text-yellow-500"></i>
       </div>
     </div>
-  </div>
+    
+    <!-- Watchlist dropdown (hidden by default) -->
+    <div id="watchlist-dropdown" class="hidden absolute right-4 mt-2 w-64 bg-gray-900 border border-gray-700 rounded-lg shadow-lg z-50 py-2">
+      <div class="px-4 py-2 border-b border-gray-700">
+        <h3 class="font-semibold text-yellow-500">My Watchlist</h3>
+      </div>
+      <div id="watchlist-items" class="max-h-60 overflow-y-auto">
+        <!-- Watchlist items will be added here -->
+        <div class="px-4 py-3 text-center text-gray-400">Your watchlist is empty</div>
+      </div>
+    </div>
+  </header>
 
-  <footer class="bg-gray-900 py-8 sm:py-12">
+  <!-- Main Content -->
+<main class="container mx-auto px-4 py-6">
+  <!-- Hero Section -->
+  <section class="mb-12 relative overflow-hidden rounded-xl shadow-2xl">
+    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent z-10"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10"></div>
+    
+    <video autoplay muted loop playsinline class="w-full h-64 md:h-96 object-cover object-center">
+      <source src="https://imdb-video.media-imdb.com/vi2263335705/1434659607842-pgv4ql-1637184484200.mp4?Expires=1748652807&Signature=jjpWQ~isUFOQt9w24Hq-R2ujWAFlFOxUmcHcJlGtoB0Bz0uhEaO3B2lYQAni3laiQxo4WhyvE1-OSkVsh3YqDj3oRRlxNeHBcjU3DZ8McGhE27PtcD9jbq1MwtwBvyxBjGWQty4vsqCcQ1MzpAaRImTGaD~AwepgergdpPRJAC7~Sx3le6AR6AJWgyMakEF5gApB3c-OgjgLmd8T4DXp6QAIGp3frupQJoyDm1oYJGil13O7HqxLgwfOSH9lJbJR7cpFBZy2XyCq30H1b4XZm3~KpuH-0oo-WrgIJWiMU5KElTgmeI1Rm9kw8sOVN4R6DC0v64YTDDzCIi5meoTyOA__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA">
+      Your browser does not support the video tag.
+    </video>
+    
+    <div class="absolute bottom-0 left-0 z-20 p-6 md:p-8">
+      <div class="flex items-center mb-2">
+        <span class="bg-yellow-600 text-black text-xs font-bold px-2 py-1 rounded mr-2">NEW</span>
+        <span class="text-yellow-500 text-sm">Season 1 • 2021</span>
+      </div>
+      <h2 class="text-3xl md:text-5xl font-bold mb-2 gradient-text marvel-font tracking-wide">HAWKEYE</h2>
+      <div class="flex items-center mb-4">
+        <div class="flex items-center mr-4">
+          <i class="fas fa-star text-yellow-500 mr-1"></i>
+          <span class="text-white">4.8</span>
+        </div>
+        <span class="text-gray-300 text-sm mr-4">TV-14</span>
+        <span class="text-gray-300 text-sm">6 Episodes</span>
+      </div>
+      <p class="text-gray-300 mb-4 max-w-lg text-sm md:text-base">Clint Barton aka Hawkeye has the mission to get back to his family for Christmas. But when a threat from his past shows up, Hawkeye reluctantly teams up with Kate Bishop, a skilled archer and his biggest fan, to unravel a conspiracy.</p>
+      <div class="flex space-x-3">
+        <button class="bg-yellow-600 hover:bg-yellow-700 text-black font-semibold py-2 px-6 rounded-full transition flex items-center pulse-hover">
+          <i class="fas fa-play mr-2"></i> Play All
+        </button>
+        <button class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-6 rounded-full transition flex items-center">
+          <i class="fas fa-info-circle mr-2"></i> Details
+        </button>
+      </div>
+    </div>
+    <div class="absolute bottom-4 right-4 z-20">
+      <button id="scroll-down" class="bg-black/50 text-yellow-500 rounded-full p-2 border border-yellow-500/30 hover:bg-yellow-500 hover:text-black transition">
+        <i class="fas fa-chevron-down arrow-bounce"></i>
+      </button>
+    </div>
+  </section>
+</main>
+
+
+    <!-- Season Navigation -->
+    <div class="flex items-center justify-between mb-8 border-b border-gray-800 pb-4">
+      <h3 class="text-xl font-semibold flex items-center">
+        <i class="fas fa-tv text-yellow-500 mr-2"></i>
+        <span class="marvel-font">EPISODES</span>
+      </h3>
+      <div class="flex items-center space-x-2">
+        <button class="season-btn active bg-yellow-600 text-black px-3 py-1 rounded-full text-xs font-medium">Season 1</button>
+        <button class="season-btn bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded-full text-xs font-medium">Season 2</button>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="flex flex-wrap items-center justify-between mb-8 gap-4">
+      <div class="flex space-x-2 overflow-x-auto pb-2 scrollbar-hide">
+        <button class="filter-btn active bg-yellow-600 text-black px-4 py-1 rounded-full text-sm font-medium">All</button>
+        <button class="filter-btn bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm font-medium">Action</button>
+        <button class="filter-btn bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm font-medium">Drama</button>
+        <button class="filter-btn bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm font-medium">Thriller</button>
+        <button class="filter-btn bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm font-medium">Espionage</button>
+      </div>
+      
+      <div class="flex items-center space-x-2">
+        <span class="text-gray-400 text-sm">Sort by:</span>
+        <select class="bg-gray-900 border border-gray-700 text-white text-sm rounded-full px-3 py-1 focus:outline-none focus:ring-1 focus:ring-yellow-500">
+          <option>Release Date</option>
+          <option>Episode Order</option>
+          <option>Popularity</option>
+          <option>Duration</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Episodes Grid -->
+    <section>
+      <div id="movies" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+        <!-- Movie cards will be inserted here by JavaScript -->
+      </div>
+    </section>
+
+    <!-- Cast Section -->
+    <section class="mt-16">
+      <h3 class="text-xl font-semibold mb-6 flex items-center">
+        <i class="fas fa-users text-yellow-500 mr-2"></i>
+        <span class="marvel-font">MAIN CAST</span>
+      </h3>
+      
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <!-- Cast cards -->
+        <div class="cast-card bg-gray-900 rounded-lg overflow-hidden hover:shadow-lg transition">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvhyy-9rmW32nmflfikPS-DweMlaNLsF3ewg&s" 
+               alt="Jeremy Renner" class="w-full h-40 object-cover">
+          <div class="p-3">
+            <h4 class="font-semibold text-white">Jeremy Renner</h4>
+            <p class="text-gray-400 text-sm">Clint Barton / Hawkeye</p>
+          </div>
+        </div>
+        
+        <div class="cast-card bg-gray-900 rounded-lg overflow-hidden hover:shadow-lg transition">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSfm0M5GeQJBD77GxQZSr6lvF30TXbWTZK4Q&s" 
+               alt="Hailee Steinfeld" class="w-full h-40 object-cover">
+          <div class="p-3">
+            <h4 class="font-semibold text-white">Hailee Steinfeld</h4>
+            <p class="text-gray-400 text-sm">Kate Bishop</p>
+          </div>
+        </div>
+        
+        <div class="cast-card bg-gray-900 rounded-lg overflow-hidden hover:shadow-lg transition">
+          <img src="https://assets.vogue.com/photos/63bdb17672792f00d9150fa7/master/w_2560%2Cc_limit/GettyImages-1431499838.jpg" 
+               alt="Florence Pugh" class="w-full h-40 object-cover">
+          <div class="p-3">
+            <h4 class="font-semibold text-white">Florence Pugh</h4>
+            <p class="text-gray-400 text-sm">Yelena Belova</p>
+          </div>
+        </div>
+        
+        <div class="cast-card bg-gray-900 rounded-lg overflow-hidden hover:shadow-lg transition">
+          <img src="https://www.televisionacademy.com/files/assets_r/containers/assets/Archives/2013/08/Vera-Farmiga_0_0.jpg/7de2b6cdfcc655e9f1106465f0783067/Vera-Farmiga_0_0.jpg" 
+               alt="Vera Farmiga" class="w-full h-40 object-cover">
+          <div class="p-3">
+            <h4 class="font-semibold text-white">Vera Farmiga</h4>
+            <p class="text-gray-400 text-sm">Eleanor Bishop</p>
+          </div>
+        </div>
+        
+        <div class="cast-card bg-gray-900 rounded-lg overflow-hidden hover:shadow-lg transition">
+          <img src="https://m.media-amazon.com/images/M/MV5BYjNkZDgyZjktYmE0ZC00MzkzLTg3NjctZjEyOGU2ODk5YzE0XkEyXkFqcGc@._V1_.jpg" 
+               alt="Fra Fee" class="w-full h-40 object-cover">
+          <div class="p-3">
+            <h4 class="font-semibold text-white">Fra Fee</h4>
+            <p class="text-gray-400 text-sm">Kazimierz Kazimierczak</p>
+          </div>
+        </div>
+        
+        <div class="cast-card bg-gray-900 rounded-lg overflow-hidden hover:shadow-lg transition">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Festival_de_M%C3%A1laga_-_Tony_Dalton_%28cropped%29.jpg" 
+               alt="Tony Dalton" class="w-full h-40 object-cover">
+          <div class="p-3">
+            <h4 class="font-semibold text-white">Tony Dalton</h4>
+            <p class="text-gray-400 text-sm">Jack Duquesne</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 border-t border-gray-800 mt-16 py-8">
     <div class="container mx-auto px-4">
-      <div class="flex flex-col md:flex-row justify-between items-start">
-        <div class="mb-6 md:mb-0">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
           <div class="flex items-center space-x-2 mb-4">
-            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-[#ff2d75] to-[#7e5bff] rounded-full flex items-center justify-center">
-              <i class="fas fa-play text-white text-xs sm:text-sm"></i>
+            <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
+              <i class="fas fa-bullseye text-black text-sm"></i>
             </div>
-            <h1 class="text-lg sm:text-xl font-bold apple-logo">WondLa<span class="text-white">+</span></h1>
+            <span class="text-xl font-bold gradient-text marvel-font">HAWKEYE</span>
           </div>
-          <p class="text-gray-400 text-xs sm:text-sm">© 2024 Apple TV+ Original Series</p>
+          <p class="text-gray-400 text-sm">© 2023 Marvel Studios Productions. All rights reserved.</p>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
-          <div>
-            <h3 class="text-gray-300 font-semibold mb-2 sm:mb-3 text-sm sm:text-base">Navigation</h3>
-            <ul class="space-y-1 sm:space-y-2">
-              <li><a href="#" class="text-gray-400 hover:text-purple-300 text-xs sm:text-sm transition">Home</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-purple-300 text-xs sm:text-sm transition">Episodes</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-purple-300 text-xs sm:text-sm transition">Characters</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-purple-300 text-xs sm:text-sm transition">Gallery</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="text-gray-300 font-semibold mb-2 sm:mb-3 text-sm sm:text-base">Legal</h3>
-            <ul class="space-y-1 sm:space-y-2">
-              <li><a href="#" class="text-gray-400 hover:text-purple-300 text-xs sm:text-sm transition">Terms</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-purple-300 text-xs sm:text-sm transition">Privacy</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-purple-300 text-xs sm:text-sm transition">Cookies</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="text-gray-300 font-semibold mb-2 sm:mb-3 text-sm sm:text-base">Social</h3>
-            <div class="flex space-x-3 sm:space-x-4">
-              <a href="#" class="text-gray-400 hover:text-purple-300 transition"><i class="fab fa-twitter"></i></a>
-              <a href="#" class="text-gray-400 hover:text-purple-300 transition"><i class="fab fa-instagram"></i></a>
-              <a href="#" class="text-gray-400 hover:text-purple-300 transition"><i class="fab fa-facebook"></i></a>
-            </div>
-          </div>
+        
+        <div>
+          <h4 class="text-white font-semibold mb-4">Navigation</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-yellow-500 transition text-sm">Home</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-yellow-500 transition text-sm">Episodes</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-yellow-500 transition text-sm">Cast</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-yellow-500 transition text-sm">Gallery</a></li>
+          </ul>
         </div>
+        
+        <div>
+          <h4 class="text-white font-semibold mb-4">Legal</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-yellow-500 transition text-sm">Terms of Service</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-yellow-500 transition text-sm">Privacy Policy</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-yellow-500 transition text-sm">Cookie Policy</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-white font-semibold mb-4">Connect</h4>
+          <div class="flex space-x-4 mb-4">
+            <a href="#" class="text-gray-400 hover:text-yellow-500 transition"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-gray-400 hover:text-yellow-500 transition"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-gray-400 hover:text-yellow-500 transition"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-gray-400 hover:text-yellow-500 transition"><i class="fab fa-youtube"></i></a>
+          </div>
+          <button class="bg-gray-800 hover:bg-gray-700 text-white text-sm py-2 px-4 rounded-full transition">
+            <i class="fas fa-envelope mr-2"></i> Subscribe to Newsletter
+          </button>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 mt-8 pt-6 text-center">
+        <p class="text-gray-500 text-xs">Marvel's Hawkeye is a trademark of Marvel Entertainment, LLC. All Marvel characters and the distinctive likeness(es) thereof are Trademarks & Copyright © 1941-2023 Marvel Characters, Inc. ALL RIGHTS RESERVED.</p>
       </div>
     </div>
   </footer>
 
-<script>
-    const episodes = [
-      // Season 1
+  <!-- Playback Modal (hidden by default) -->
+  <div id="playback-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-90 transition-opacity duration-300">
+    <div class="relative w-full max-w-4xl bg-gray-900 rounded-xl overflow-hidden shadow-2xl transform transition-all duration-300 scale-95">
+      <button id="close-modal" class="absolute top-4 right-4 z-50 text-white hover:text-yellow-500 text-2xl bg-black/50 rounded-full p-2 transition">
+        <i class="fas fa-times"></i>
+      </button>
+      
+      <div class="relative">
+        <video id="modal-video" class="w-full" controls poster="https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/3311/1083311-h-9fe5d62a092c">
+          Your browser does not support the video tag.
+        </video>
+        <div id="video-progress" class="progress-bar w-full">
+          <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%"></div>
+        </div>
+      </div>
+      
+      <div class="p-6">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <h3 id="modal-title" class="text-2xl font-bold mb-1"></h3>
+            <div class="flex items-center text-gray-400 text-sm">
+              <span>S1 • E<span id="episode-num"></span></span>
+              <span class="mx-2">•</span>
+              <span id="modal-duration">45 min</span>
+            </div>
+          </div>
+          <label class="watchlist-checkbox">
+            <input type="checkbox" id="watchlist-checkbox">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        
+        <p id="modal-description" class="text-gray-300 mb-6">
+          Loading description...
+        </p>
+        
+        <div class="flex space-x-3">
+          <button id="play-btn" class="bg-yellow-600 hover:bg-yellow-700 text-black font-semibold py-2 px-6 rounded-full transition flex items-center">
+            <i class="fas fa-play mr-2"></i> Play
+          </button>
+          <button class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-6 rounded-full transition flex items-center">
+            <i class="fas fa-info-circle mr-2"></i> Details
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div id="loading-spinner" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 hidden">
+    <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-yellow-500"></div>
+  </div>
+
+  <script>
+    // Enhanced movie data with more details
+    const movies = [
       { 
-        title: "Doors", 
-        season: 1,
-        episode: 1,
-        year: 2024,
-        video: "https://macdn.hakunaymatata.com/resource/42633c62291bd3262f9f0ca167673a92.mp4?Expires=1749773792&Signature=A~f7nNv26OaSRJars7VsmPquuJyvC1oa69o3FtpzoAPqzlElNWgQKdSZdIoOx~q3lDDC94EGLfJ8dtlxN6KXLfCalNl5SzEPtHfe8T0hLAJnkJIURZ~xHMraqlzb8lRlItr~gCMYd3~91fPFhurdAMaeY58vi3KtYes4BUSo6DAHMR-Afvyl9lw69ipCcTcKkCLHvLZ0piY-whYEXvP9jqVN3jqKyMSGDJHOPjlZkP8y0ULw3wSgNdReD8sGbhlDcpJDKPuDlPQjAjwVar5qTfivS~HqSHMuAKWLT8nJCvdbMWTcoBPp-k8MS4ntjtkb-2eoj9R5Re0Ux5BCLlIvrg__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://m.media-amazon.com/images/S/pv-target-images/df9d65a374a436b71648a8c844aa352a3d677a5436e362023af0e62bbb13a12e._BR-6_AC_SX720_FMwebp_.jpg",
-        runtime: "45 min",
-        rating: "9.0/10",
-        description: "An intruder attacks Sanctuary 573, forcing Eva above ground. Alone, she relies on her survival skills and a cryptic note labeled “WondLa.”",
-        director: "Tom Bancroft",
-        cast: "Jeanine Mason, Alan Tudyk, Brad Garrett"
+        title: "Never Meet Your Heroes", 
+        video: "https://macdn.hakunaymatata.com/resource/b43fb703c4335a35d09dd0d9d3fcd6a9.mp4?Expires=1748895375&Signature=SC-efW7n9tY-9RlzCI4EIWbgLDE4mgqYOJIRU3O170jum1PgClSVAQurv8N18DgczdO1lS5ktVrcxCzjMZ1z2JrwvxS33El~UuinQnZ9iSzfgNAMI~ikFAjaPB~Ha4vDYmectecrv1rvA~ZNPVr7H~VDLlZmO4EdVCTC~ZPWujEm0OYL8ubLkMQw2HFelcekM~1QPB11J-nGZWcOuwZo-EPDaTrlpp4cwhpK0ImsmYmA~lo4UTG3rhhdQYQfriBNusdN-1PdTnbm7ZenDY7p-slE2DFZsPHnk4D85CZH67r-2W~n2-plNG~YLX4MjngqgUIcEqSnzI9~qHEABdo~xA__&Key-Pair-Id=KMHN1LQ1HEUPL", 
+        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/3311/1083311-h-9fe5d62a092c",
+        description: "Archer Kate Bishop lands in the middle of a criminal conspiracy, forcing Hawkeye out of retirement.",
+        duration: "48 min",
+        releaseDate: "November 24, 2021",
+        director: "Rhys Thomas",
+        rating: "4.9",
+        inWatchlist: false
       },
       { 
-        title: "Lifeforms", 
-        season: 1,
-        episode: 2,
-        year: 2024,
-        video: "https://scvo.baugherhatchp.sbs:443/v4/m9/vyvtf/index-f1-v1-a1.txt", 
-        image: "https://m.media-amazon.com/images/S/pv-target-images/c020719c46943c6ef124eba57d1e518c6a3264454c8f6bd876961ddf5b6f98b0._BR-6_AC_SX720_FMwebp_.jpg",
-        runtime: "45 min",
-        rating: "8.9/10",
-        description: "Eva discovers she’s on a planet called Orbona, where she meets a telepathic water bear named Otto and a surly alien named Rovender.",
-        director: "Tom Bancroft",
-        cast: "Jeanine Mason, Alan Tudyk, Gary Anthony Williams"
+        title: "Hide and Seek", 
+        video: "https://macdn.hakunaymatata.com/resource/3fb04c6528f2d009819d22085b05ccf9.mp4?Expires=1749275821&Signature=LBAaNBuYu249-HasCitNniBelzIJLDJXkzvIu9oLbx22f44HXdXP6dsdb10~txsVMGvH9EaFxN01DQNhLvJ0bse79xfUkkNIK-1~T6-Qut~czmYepA~EvFoSDZFLtF3LnJXoqxR6jf5FNuiA96z6XYMIwGv9X-q1burIL9mj2bD9xN~LCwQnn~boPsISFvX7lHF3hQuX0LkWVhFF9Y2nRLW-3yCU8JIa9EiEkxOCx9RmLA7z2AMhNqZh381uLNE4rVZRplILUBk579wLam--P9hoPnhYwVHPNHq7qs2Nn2s8dND~2hlOOWOTt1v5BWdv94peuEH5QJwu8vIPHh92FA__&Key-Pair-Id=KMHN1LQ1HEUPL", 
+        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/3313/1083313-h-bf993b77ec2b",
+        description: "Clint has to help Kate disentangle herself from the Tracksuit Mafia and a real-life murder mystery.",
+        duration: "52 min",
+        releaseDate: "November 24, 2021",
+        director: "Rhys Thomas",
+        rating: "4.8",
+        inWatchlist: false
       },
       { 
-        title: "Bargain", 
-        season: 1,
-        episode: 3,
-        year: 2024,
-        video: "https://sj3l.feistjmyrodne.sbs:443/v4/ek/i9igk/index-f2-v1-a1.txt", 
-        image: "https://m.media-amazon.com/images/S/pv-target-images/4d15fe3179cc07df205c593d95785e3e04b93206058b95d39768e024972fad31._BR-6_AC_SX720_FMwebp_.jpg",
-        runtime: "45 min",
-        rating: "9.1/10",
-        description: "Eva discovers she’s on a planet called Orbona, where she meets a telepathic water bear named Otto and a surly alien named Rovender.",
-        director: "Tom Bancroft",
-        cast: "Jeanine Mason, Alan Tudyk, Gary Anthony Williams"
+        title: "Echoes", 
+        video: "https://macdn.hakunaymatata.com/resource/799047cbea9935ec48cd10e803de0196.mp4?Expires=1749295158&Signature=LW1mNMG8vyTDjF6wVVf~msb~79kKu2M5w-~MB1ySXoFdjxWvmGDFcFFltzq0qk2g9uX~Ry69kg2FGF5EWncBzXsbdr0zEti5MRbJAeoj3-UVI3fC-9weF1ejsTozrdl1y6T7kIQMzmQTwimG4qHfG8ImL7nFwFr0f0DFN30Cd9DyoeIXUX94-aTchkSR61K~cPg9EdxmymIHyLMxfwdCZ4mV9qs1sV5gchW03gNE4ZRzoBkz2tFmjIS-let6FfvrH8nas-og9NtLUdu8mJFxZnqYN2Ibzr~samTgiI7LnxMCU05bd~yejLWvscFXSXoo-fbpw9VfARASe-7ffW63uA__&Key-Pair-Id=KMHN1LQ1HEUPL", 
+        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/5917/1085917-h-332e34b95e36",
+        description: "After escaping a new threat, Clint and Kate join forces against an expanding criminal conspiracy.",
+        duration: "49 min",
+        releaseDate: "December 1, 2021",
+        director: "Bert & Bertie",
+        rating: "4.7",
+        inWatchlist: false
       },
       { 
-        title: "Ghosts", 
-        season: 1,
-        episode: 4,
-        year: 2024,
-        video: "https://sdqm.killionorellanacoelho.sbs/v4/m9/eke6o/index-f1-v1-a1.txt", 
-        image: "https://m.media-amazon.com/images/S/pv-target-images/b382da394b710a5c2ed31828a54ab07c9e6701f6ae9ca15ac974e5b4fb7f0feb._BR-6_AC_SX720_FMwebp_.jpg",
-        runtime: "45 min",
-        rating: "9.3/10",
-        description: "Eva visits a sage and learns a grim fact about humans. Undeterred, she doubles down on her quest as Besteel the bounty hunter closes in.",
-        director: "Tom Bancroft",
-        cast: "Jeanine Mason, Alan Tudyk, Brad Garrett"
+        title: "Partners, Am I Right?", 
+        video: "https://macdn.hakunaymatata.com/resource/573d46373fdeceb5ef384a0729285ccd.mp4?Expires=1749299980&Signature=KTichZ50KBs73DyioADsgWlHp9DaHpmyQeXGXyND6bsE6nKVFXjMyZXSdqChlWAxYWVTibb0VDG-N7G8Ynf3C3~3lyqsiiQehvPSB7lpr5hcd2AnTv4WvY4dkn3r6teidohoaISDq9B1Zw191jg6nNL~LHQKoHMv7yovwcBgH-sIsvhj-qMUMd0HAiyemLgmZpgAy3ZSozMWJFgPbZJ9~qFO6jBzSaivONFeAfbioglnc7R9TYp0UyDfJiNKtKfRd5d4q8ClR3KLB4vCVod09ojHUjTzPszbfaYI0JvU8ErwlcVuahDBF1B~DMC2Xyqi57WaCUyXUbI0TUTulVQ7WA__&Key-Pair-Id=KMHN1LQ1HEUPL", 
+        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/8628/1088628-h-e5fa8b859e84",
+        description: "Secrets are revealed and hard truths emerge, culminating in a battle against two opposing forces.",
+        duration: "51 min",
+        releaseDate: "December 8, 2021",
+        director: "Bert & Bertie",
+        rating: "4.8",
+        inWatchlist: false
       },
       { 
-        title: "Captive", 
-        season: 1,
-        episode: 5,
-        year: 2024,
-        video: "https://sdqm.yevettesha.sbs/v4/rw/msmbu/index-f1-v1-a1.txt", 
-        image: "https://m.media-amazon.com/images/S/pv-target-images/72d81aedd78ea05623001edef5d913934c3a0f0810a10aa081065eaeb98d85d7._BR-6_AC_SX720_FMwebp_.jpg",
-        runtime: "45 min",
-        rating: "9.2/10",
-        description: "Despite Muthr’s protests, Eva follows through on a daring plan and forms a friendship with an unlikely ally.",
-        director: "Tom Bancroft",
-        cast: "Jeanine Mason, Alan Tudyk, Gary Anthony Williams"
+        title: "Ronin", 
+        video: "https://macdn.hakunaymatata.com/resource/8746e5d386d7c7896bd057952d5e2535.mp4?Expires=1749299189&Signature=Y8mupHNmWnNxMbJE403fZ8BNq0LrgpOE3Nr23VOEI~P5BABofpCsUjCkSp3DUy2rc2o8GMJ35UXlevWAbxp30Emtbzs0TmnuvDW-33Og9q9-yoA9Ve~AYz7wTO7lwFsHS94KdT0XhS9gWbUD3pmgaPhCTezZJckEL8ZArs4-XR0vkC~kk3zMWOgDpNRjnwNd-7sF0g4TxQcHUkuoHRZNyX1-pJBIPak4cSCTmjiIhZZjKI~6a-r1hZt4IPFU3iP9DvOdFNZlo7smn-XXkjCG3aXPx2loLFy-5m6KshihvLjPKcju~FL8hu9knRd9ei9bB8k77GFxq4qgVHoEEVuJug__&Key-Pair-Id=KMHN1LQ1HEUPL", 
+        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/936/1090936-h-98754bdb6555",
+        description: "After a fallout between Clint and Kate, the latter is ready to abandon her dream of becoming a hero, but Kate makes a discovery that changes everything.",
+        duration: "47 min",
+        releaseDate: "December 15, 2021",
+        director: "Rhys Thomas",
+        rating: "4.9",
+        inWatchlist: false
       },
       { 
-        title: "Bridge", 
-        season: 1,
-        episode: 6,
-        year: 2024,
-        video: "https://spuc.mcgaugheyjyiy.sbs/v4/vz/pdphc/index-f1-v1-a1.txt", 
-        image: "https://m.media-amazon.com/images/S/pv-target-images/2b457b89bad2479fc676314aa2a118cc20d378694df583cd8425416fd3f94f05._BR-6_AC_SX720_FMwebp_.jpg",
-        runtime: "45 min",
-        rating: "9.5/10",
-        description: "With a possible human civilization finally in sight, Eva and her friends face their most dangerous mission yet.",
-        director: "Tom Bancroft",
-        cast: "Jeanine Mason, Alan Tudyk, Brad Garrett, Gary Anthony Williams"
-      },
-      { 
-        title: "Ruins", 
-        season: 1,
-        episode: 7,
-        year: 2024,
-        video: "https://sskt.jungegdh.sbs/v4/m9/r3ro1/index-f1-v1-a1.txt", 
-        image: "https://m.media-amazon.com/images/S/pv-target-images/61f0b6d4931e212586f2a720f0cb38bba2e8a555fe8367f8defa8fc1b3175db6._BR-6_AC_SX720_FMwebp_.jpg",
-        runtime: "45 min",
-        rating: "9.5/10",
-        description: "In the season finale, Eva must rally both humans and aliens to defend Orbona against Queen Ojo's forces and uncover the ultimate secret of WondLa.",
-        director: "Tom Bancroft",
-        cast: "Jeanine Mason, Alan Tudyk, Brad Garrett, Gary Anthony Williams"
-      },
-      // Season 2
-      { 
-        title: "Home", 
-        season: 2,
-        episode: 1,
-        year: 2024,
-        video: "https://macdn.hakunaymatata.com/resource/305e7a8bb563a301da4d6aa572516e2e.mp4?Expires=1749632038&Signature=lAhWceWWaYmG6Zq1Of6yzyhQcWpj7YqBxMrdvc0GiIxSSgbwXwYjQxiqLl4Xscpqs~g89cxRvr6EB5azQHa6Mu4ba8oeweDpZWrVxv4naTX9ISHsDSFLcRgnHCn5jGy99em4veribG9C0llMEOTQ0mD9BuS970swmCaMk0-34h6YOOmnlqFfxzUPM6sxylNFfNc9SDAdn6LF-gpxBO-Pl6PprlmIRrNkPaFJc6eirB3Hi~t4FXzDXs5JB7fq2D3dF9m8XVk7RqWruDzz3MtXI0NDBIvsoQZFJ9n1scdw7Y6O686Fuqw2vU-yEeUcVKREoxzbBoGsJ3Tu57fQrDOwXA__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://m.media-amazon.com/images/S/pv-target-images/eb96e99f73465d4fcc97a1f36139e8a6e96b36e6a6e18b69bd9cfb5d2df81c43._BR-6_AC_SX720_FMwebp_.jpg",
-        runtime: "45 min",
-        rating: "9.1/10",
-        description: "Eva arrives at the hidden city of New Attica, where she learns humans believe the worst about Orbona.",
-        director: "Tom Bancroft",
-        cast: "Jeanine Mason, Alan Tudyk, Brad Garrett"
-      },
-      { 
-        title: "Family", 
-        season: 2,
-        episode: 2,
-        year: 2024,
-        video: "https://macdn.hakunaymatata.com/resource/7ed86b8b6907b30b71d6e6b334379cab.mp4?Expires=1749631370&Signature=oYXV3TOkJbbF8ZCNnzfcqoi3zO-WZ6dU9CXZ6aDlgsmewePmM2~q~FSKO0IscQ20p~kseYKf8b~xr6a4occAoQhy3Vsxe35VYGSlzKn6MaN6wbL55XJbjwdIoMoPrYrUIilgzjkxGJBqShGejilPXNBV40rfrUj50olh4rOrWgM33RHchz2i-XGlDd4F~7KoxNZQwavQumre~oh2-CfvpGdBx0aDWjHfRf5nybqrgc1Ulzt-O~nMpVuIY5vUnylPB0Og2ayyw1o1zO3JyBHqW5~NTpQPeNLrWtdk0MuvgKhTPooyoovr1G8Rr0eSprIsPYQfAT3cGahmsV6u8NNuug__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://m.media-amazon.com/images/S/pv-target-images/04f96a32c3055c7fe47d006191a936f222e8469c179a3809dcbd781437bd1344._BR-6_AC_SX720_FMwebp_.jpg",
-        runtime: "45 min",
-        rating: "9.0/10",
-        description: "Eva chases a mysterious figure deep into New Attica, leading to the discovery of a group of outsiders.",
-        director: "Tom Bancroft",
-        cast: "Jeanine Mason, Alan Tudyk, Gary Anthony Williams"
-      },
-      { 
-        title: "Discovery", 
-        season: 2,
-        episode: 3,
-        year: 2024,
-        video: "https://macdn.hakunaymatata.com/resource/606b02e0b7362f80192310444d69cfa4.mp4?Expires=1749630618&Signature=bbfEYCYoUFDmmBkKzuxRs1b0JWg6f2E1DyAgjDv3nyxcZcBlc2dq9-vSizMp832fmerRgjxeVi2-BRJ7n71UraNTo63NUtDFa8F0kUlyZAVHhEg8TDe3M4eEO4p5AsSkxILjlPhL4Pt4sWtLFUH~5KNn6gB1UI1Ew-vVFGuBKrnM4RjxQ2JZlbYyR69hjjXYTD96U00zYDZLV2S5942fauyG-nzeNlxvYjaj-Sjh6TxWQIDX-~DbKNNFkLwJLs-09q-88BPPYjgLZpMApt9-hB33QPtGrsT9FZlguszQ177D4N8hMbUbna5-dfkROf-iOlhf9cUdPOEaw8X7rgB3KQ__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://m.media-amazon.com/images/S/pv-target-images/65f2cd89b134bde1fd10f26276b3c6715b89d8466baf56f2335a57a7b995c30d._BR-6_AC_SX720_FMwebp_.jpg",
-        runtime: "45 min",
-        rating: "9.2/10",
-        description: "Desperate to locate her friends, Eva is horrified to find them in the clutches of a sinister threat.",
-        director: "Tom Bancroft",
-        cast: "Jeanine Mason, Alan Tudyk, Gary Anthony Williams"
-      },
-      { 
-        title: "Lesson", 
-        season: 2,
-        episode: 4,
-        year: 2024,
-        video: "https://vgorigin.hakunaymatata.com/resource/085a88977c1a44be5223220cef54fad5.mp4?Expires=1749632090&KeyName=wefeed&Signature=y5ap68sI-ZrzpiUQQcUW5J6_zzdmuxBwciBrf7yYSD1OsmSAs9Dbg2OM8EJmWVg-5kJbaD6Ni6rDqjBKLweDDg", 
-        image: "https://m.media-amazon.com/images/S/pv-target-images/61acd7aa12a553dcb086c098619869df8483506d6ad4197cefd5c36ef6258cae._BR-6_AC_SX720_FMwebp_.jpg",
-        runtime: "45 min",
-        rating: "9.3/10",
-        description: "After a narrow escape, Eva, Eight, and Hailey trek the perilous wastelands to bring an injured Rovender home.",
-        director: "Tom Bancroft",
-        cast: "Jeanine Mason, Alan Tudyk, Brad Garrett"
-      },
-      { 
-        title: "Truth", 
-        season: 2,
-        episode: 5,
-        year: 2024,
-        video: "https://macdn.hakunaymatata.com/resource/455af0c81476b7af6a267fb657beafc1.mp4?Expires=1749632569&Signature=daQUe1JAvq~exqk1DagA95yVYHWFGUfjc5CPAWPm2yZAnFywyZmPboxaDsWe2jhi540JLQtErS~ejwx5UEhxsMkaeyxeFJfcV9OcMYibaqEHwLJYliwozBba1qmALeYvsy7kJv5FHUJ4QpfLNHG3UyJPkFbfxdZZvcrzsHQkl0Lale6lEdr02AOJRdoiYDApGwa-Dw92peeleA1Jg6BfU~69nayHdpbybGY8Jw5Y2Z6PKmcjrr~6TB1UmLaMPww-1ETtA6iXBFDukHfLzNGRFan78G225eH7GQBnMO6Nya-~00XfXl35~RhNltNvw3GzBTBNQOyW5PngxZxiSQ7cpg__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://m.media-amazon.com/images/S/pv-target-images/3d203b94bb63b33b0de3a23f37cd252eead72728c14017d36c368ff08d290940._BR-6_AC_SX720_FMwebp_.jpg",
-        runtime: "45 min",
-        rating: "9.4/10",
-        description: "The Caeruleans refuse to let a dying Rovender back into their community. To save him, Eva seeks a mystical creature to restore his honor.",
-        director: "Tom Bancroft",
-        cast: "Jeanine Mason, Alan Tudyk, Brad Garrett, Gary Anthony Williams"
-      },
-      { 
-        title: "Connection", 
-        season: 2,
-        episode: 6,
-        year: 2024,
-        video: "https://macdn.hakunaymatata.com/resource/797f9570a258685a1382f4b8fcf7319d.mp4?Expires=1749629978&Signature=hEspdFzC4om6kIEghQdVBURJtUHsY5ZL6s5x9CSM4OZnQt3uROI2tRWFK-ykhe34tCJ6s3wdtGdfAxM-Fh3SI2Pc3UP0zzUStulyPMVyd2ULzf1-PwSLaOL0TkPk-TzS4hix-i2ced5HHyzF92Np~w~5~hhEzw02-Ooj6PGNxCdsHF1t5fqBi44d11s~MMmhwAbbzhq28BPa0bve3hyWtS~AvEtD7Y1sqklHAPlrvl4AD-OG7wNPxbphKzJk4XV~h~q9brEn6~xMLPOiuejL1gk8G9VteBcdTt-myrWOvW1zwJ7dlLQhswdjOnpvf8obxvL98vKwJKq68gVhGOYB7A__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://m.media-amazon.com/images/S/pv-target-images/66bbac616dbaa6aba65ce3db7252cc348f94a236c271aace3855d91e67dd2416._BR-6_AC_SX720_FMwebp_.jpg",
-        runtime: "45 min",
-        rating: "9.6/10",
-        description: "During a Caerulean celebration, Eva connects with a powerful entity. Cadmus and his warbots bear down on Faunas.",
-        director: "Tom Bancroft",
-        cast: "Jeanine Mason, Alan Tudyk, Brad Garrett, Gary Anthony Williams"
-      },
-      { 
-        title: "Heart", 
-        season: 2,
-        episode: 7,
-        year: 2024,
-        video: "https://macdn.hakunaymatata.com/resource/bd041c95638968bb40425a066df9fdd6.mp4?Expires=1749633062&Signature=vYSCtfPw2xZtqOOAhaRPWyth8VsrRzy8hC3pm2GSK3IrWdYKRtYSk8ySbHbJ5UNSr6GEd-Zm1W2OiRS2QAiOuiGQ9KRYsFMKBwkMHi9m9yA0FiU~AvMLS00Tdjqxr6r0XSU5ZxdgIZqNq2XG7WPw~Tc0d-uMuVqfWOcCgIR2Swz3CXVTVJJ2hPGBhuyGvEPRCxbqxMKYz65wT3eOxpQvRZQ9c~q3S2PniL~EGhkKUpCHiA6UpOTVPff7i-NkNDSKTyb52aNDP4lkEiDnuVmMCtmmbOIeuyM7FZGfXgKlHEQZwl~UQkXjclnLjLL4wnk7APaeA3LQ5HW8gGkhRYbQYA__&Key-Pair-Id=KMHN1LQ1HEUPL", 
-        image: "https://m.media-amazon.com/images/S/pv-target-images/4957d82410ad8896a66c68260d9b8756434a43fd2db4a905acf2f1c7fe9dbecc._BR-6_AC_SX720_FMwebp_.jpg",
-        runtime: "45 min",
-        rating: "9.5/10",
-        description: "Season finale. Eva risks her life to protect the Heart of the Forest.",
-        director: "Tom Bancroft",
-        cast: "Jeanine Mason, Alan Tudyk, Brad Garrett, Gary Anthony Williams"
+        title: "So This Is Christmas?", 
+        video: "https://macdn.hakunaymatata.com/resource/8131f4e1e05c78015c3a0a4839272f22.mp4?Expires=1749315281&Signature=tAZpNZQQ92~Fdi9nSFQJtns2qRVAUxsrqzS5cOH9e8aqM3zvYwo~sNRfhscpdoE8Pj5BsZAQaL9BEKJ7Xw0GAEZUg5K-ubqziDzrrnYCP-Kas90XudJTNt~-zjeFqpR1CwiqLBtAZhyS0anJRE20avxQcf8TCEx9r6Sw9C557aPdxYUCdYXS0uYLUWKG-orYn0mg8~eS2OickwPtAyCZHgj6YMzvc2yp~1nPo1dzNEGEksFeFV0AD6Go2ybcmniQQjfM4Ukx2XIe0fUEFL~AdNGg0~DEbhusFGDu2vQzr57v~On0U1MH75ltZxzSCm5u-cy0yYudfBRP7WczkRba4w__&Key-Pair-Id=KMHN1LQ1HEUPL",
+        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/3337/1093337-h-694eec385ef2",
+        description: "Clint and Kate's partnership is tested as they face the consequences of exposing the conspiracy.",
+        duration: "58 min",
+        releaseDate: "December 22, 2021",
+        director: "Rhys Thomas",
+        rating: "4.9",
+        inWatchlist: false
       },
     ];
 
-    const container = document.getElementById('episodes');
+    // DOM elements
+    const container = document.getElementById('movies');
+    const searchBtn = document.getElementById('search-btn');
+    const searchBar = document.getElementById('search-bar');
+    const themeToggle = document.getElementById('theme-toggle');
+    const watchlistBtn = document.getElementById('watchlist-btn');
+    const watchlistDropdown = document.getElementById('watchlist-dropdown');
+    const watchlistItems = document.getElementById('watchlist-items');
     const playbackModal = document.getElementById('playback-modal');
     const closeModal = document.getElementById('close-modal');
     const modalVideo = document.getElementById('modal-video');
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
     const episodeNum = document.getElementById('episode-num');
-    const seasonNum = document.getElementById('season-num');
+    const modalDuration = document.getElementById('modal-duration');
+    const playBtn = document.getElementById('play-btn');
+    const watchlistCheckbox = document.getElementById('watchlist-checkbox');
+    const progressBarFill = document.getElementById('progress-bar-fill');
+    const scrollDownBtn = document.getElementById('scroll-down');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const seasonBtns = document.querySelectorAll('.season-btn');
 
-    function isStream(url) {
-      return url.includes('.m3u8') || url.includes('.txt');
+    // Initialize the page
+    function initPage() {
+      // Create movie cards
+      movies.forEach((movie, index) => {
+        const card = document.createElement('div');
+        card.className = `movie-card fade-in delay-${index % 5} glow-effect`;
+        card.innerHTML = `
+          <div class="relative group overflow-hidden rounded-xl cursor-pointer">
+            <img src="${movie.image}" alt="${movie.title}" 
+                 class="w-full h-48 sm:h-56 md:h-64 object-cover rounded-xl transition duration-500 group-hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+              <div>
+                <h3 class="text-white font-semibold text-lg">${movie.title}</h3>
+                <p class="text-gray-300 text-sm">${movie.duration}</p>
+              </div>
+            </div>
+            <div class="absolute top-3 right-3 bg-black bg-opacity-70 text-yellow-500 rounded-full w-10 h-10 flex items-center justify-center">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="absolute top-3 left-3 flex items-center bg-black/70 px-2 py-1 rounded-full">
+              <i class="fas fa-star text-yellow-500 text-xs mr-1"></i>
+              <span class="text-white text-xs">${movie.rating}</span>
+            </div>
+          </div>
+          <div class="mt-3">
+            <h3 class="text-white font-medium">${movie.title}</h3>
+            <div class="flex items-center text-gray-400 text-sm mt-1">
+              <span>S1 • E${index + 1}</span>
+              <span class="mx-2">•</span>
+              <span>${movie.duration}</span>
+            </div>
+          </div>
+        `;
+        
+        card.addEventListener('click', () => {
+          openModal(movie, index + 1);
+        });
+        
+        container.appendChild(card);
+      });
+
+      // Filter buttons
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelector('.filter-btn.active').classList.remove('active', 'bg-yellow-600', 'text-black');
+          this.classList.add('active', 'bg-yellow-600', 'text-black');
+          // In a real app, you would filter the content here
+        });
+      });
+
+      // Season buttons
+      seasonBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelector('.season-btn.active').classList.remove('active', 'bg-yellow-600', 'text-black');
+          this.classList.add('active', 'bg-yellow-600', 'text-black');
+          // In a real app, you would load the selected season here
+        });
+      });
+
+      // Initialize watchlist from localStorage
+      updateWatchlist();
     }
 
-    function openModal(episode) {
-      modalTitle.textContent = episode.title;
-      modalDescription.textContent = episode.description;
-      episodeNum.textContent = episode.episode;
-      seasonNum.textContent = episode.season;
-      modalVideo.src = episode.video;
-
-      playbackModal.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-      modalVideo.play();
+    // Open modal with movie details
+    function openModal(movie, episodeNumber) {
+      loadingSpinner.classList.remove('hidden');
+      
+      setTimeout(() => {
+        modalTitle.textContent = movie.title;
+        modalDescription.textContent = movie.description;
+        episodeNum.textContent = episodeNumber;
+        modalDuration.textContent = movie.duration;
+        modalVideo.src = movie.video;
+        watchlistCheckbox.checked = movie.inWatchlist;
+        
+        // Set progress bar to 0
+        progressBarFill.style.width = '0%';
+        
+        playbackModal.classList.remove('hidden');
+        loadingSpinner.classList.add('hidden');
+        
+        // Focus the modal for better accessibility
+        playbackModal.focus();
+      }, 500);
     }
 
+    // Close modal
     function closeModalHandler() {
       playbackModal.classList.add('hidden');
       modalVideo.pause();
-      modalVideo.src = "";
       document.body.style.overflow = '';
     }
 
-    closeModal.addEventListener('click', closeModalHandler);
-
-    // Render episode cards
-    episodes.forEach((episode) => {
-      const card = document.createElement('div');
-      card.className = 'episode-card cursor-pointer bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 relative';
-      card.innerHTML = `
-        <div class="relative">
-          <img src="${episode.image}" alt="${episode.title}" class="w-full h-48 md:h-56 object-cover">
-          <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 transition">
-            <div class="play-icon absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-[#ff2d75] to-[#7e5bff] bg-opacity-90 rounded-full w-12 h-12 flex items-center justify-center opacity-0 transition">
-              <i class="fas fa-play text-white"></i>
-            </div>
+    // Update watchlist display
+    function updateWatchlist() {
+      watchlistItems.innerHTML = '';
+      
+      const watchlistMovies = movies.filter(movie => movie.inWatchlist);
+      
+      if (watchlistMovies.length === 0) {
+        watchlistItems.innerHTML = '<div class="px-4 py-3 text-center text-gray-400">Your watchlist is empty</div>';
+        return;
+      }
+      
+      watchlistMovies.forEach((movie, index) => {
+        const item = document.createElement('div');
+        item.className = 'px-4 py-3 hover:bg-gray-800 transition cursor-pointer flex items-center justify-between';
+        item.innerHTML = `
+          <div class="flex items-center">
+            <span class="text-yellow-500 text-sm mr-2">${index + 1}.</span>
+            <span class="text-white text-sm truncate">${movie.title}</span>
           </div>
-          <span class="absolute top-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">${episode.runtime}</span>
-          <span class="absolute top-2 left-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">S${episode.season}E${episode.episode}</span>
-        </div>
-        <div class="p-4">
-          <div class="flex justify-between items-start mb-1">
-            <h2 class="text-lg font-semibold">${episode.title}</h2>
-            <span class="text-purple-300 text-sm">${episode.rating}</span>
-          </div>
-          <p class="text-sm text-gray-400">Season ${episode.season} • Episode ${episode.episode}</p>
-        </div>
-      `;
-      card.addEventListener('click', () => {
-        if (isStream(episode.video)) {
-          const url = `player.html?title=${encodeURIComponent(episode.title)}&video=${encodeURIComponent(episode.video)}&index=${episode.episode}`;
-          window.location.href = url;
-        } else {
-          openModal(episode);
-        }
+          <button class="remove-from-watchlist text-gray-400 hover:text-red-500" data-index="${movies.indexOf(movie)}">
+            <i class="fas fa-times"></i>
+          </button>
+        `;
+        
+        item.querySelector('.remove-from-watchlist').addEventListener('click', (e) => {
+          e.stopPropagation();
+          removeFromWatchlist(movies.indexOf(movie));
+        });
+        
+        item.addEventListener('click', () => {
+          openModal(movie, movies.indexOf(movie) + 1);
+          watchlistDropdown.classList.add('hidden');
+        });
+        
+        watchlistItems.appendChild(item);
       });
-      container.appendChild(card);
+    }
+
+    // Add to watchlist
+    function addToWatchlist(index) {
+      movies[index].inWatchlist = true;
+      updateWatchlist();
+      // In a real app, you would save to localStorage here
+    }
+
+    // Remove from watchlist
+    function removeFromWatchlist(index) {
+      movies[index].inWatchlist = false;
+      updateWatchlist();
+      // In a real app, you would update localStorage here
+    }
+
+    // Event listeners
+    searchBtn.addEventListener('click', () => {
+      searchBar.classList.toggle('hidden');
+      watchlistDropdown.classList.add('hidden');
     });
+
+    watchlistBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      watchlistDropdown.classList.toggle('hidden');
+      searchBar.classList.add('hidden');
+    });
+
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('bg-gray-100');
+      document.body.classList.toggle('text-gray-900');
+      document.body.classList.toggle('bg-black');
+      document.body.classList.toggle('text-gray-100');
+      
+      const icon = themeToggle.querySelector('i');
+      if (document.body.classList.contains('bg-black')) {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      } else {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      }
+    });
+
+    closeModal.addEventListener('click', closeModalHandler);
+    playbackModal.addEventListener('click', function(e) {
+      if (e.target === this) closeModalHandler();
+    });
+
+    playBtn.addEventListener('click', () => {
+      if (modalVideo.paused) {
+        modalVideo.play();
+        playBtn.innerHTML = '<i class="fas fa-pause mr-2"></i> Pause';
+      } else {
+        modalVideo.pause();
+        playBtn.innerHTML = '<i class="fas fa-play mr-2"></i> Play';
+      }
+    });
+
+    watchlistCheckbox.addEventListener('change', function() {
+      const episodeIndex = parseInt(episodeNum.textContent) - 1;
+      if (this.checked) {
+        addToWatchlist(episodeIndex);
+      } else {
+        removeFromWatchlist(episodeIndex);
+      }
+    });
+
+    modalVideo.addEventListener('timeupdate', function() {
+      const progress = (modalVideo.currentTime / modalVideo.duration) * 100;
+      progressBarFill.style.width = `${progress}%`;
+    });
+
+    modalVideo.addEventListener('ended', function() {
+      playBtn.innerHTML = '<i class="fas fa-redo mr-2"></i> Replay';
+    });
+
+    scrollDownBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: document.querySelector('#movies').offsetTop - 20,
+        behavior: 'smooth'
+      });
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!watchlistBtn.contains(e.target) && !watchlistDropdown.contains(e.target)) {
+        watchlistDropdown.classList.add('hidden');
+      }
+      
+      if (!searchBtn.contains(e.target) && !searchBar.contains(e.target)) {
+        searchBar.classList.add('hidden');
+      }
+    });
+
+    // Initialize the page when loaded
+    window.addEventListener('DOMContentLoaded', initPage);
   </script>
 </body>
 </html>
