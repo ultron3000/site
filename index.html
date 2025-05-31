@@ -8,41 +8,89 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Rubik:wght@700&display=swap');
+    
+    :root {
+      --primary: #f6d365;
+      --secondary: #fda085;
+    }
+    
     body {
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(to bottom, #000000, #1a1a2e);
       min-height: 100vh;
+      color: #fff;
     }
+    
+    .title-font {
+      font-family: 'Rubik', sans-serif;
+    }
+    
+    .episode-card {
+      transition: all 0.3s ease;
+      perspective: 1000px;
+    }
+    
+    .episode-card:hover {
+      transform: translateY(-8px);
+    }
+    
+    .episode-card:hover .episode-image {
+      transform: scale(1.05);
+    }
+    
+    .episode-image-container {
+      overflow: hidden;
+      border-radius: 12px 12px 0 0;
+    }
+    
+    .episode-image {
+      transition: transform 0.5s ease;
+    }
+    
+    .play-icon {
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(246, 211, 101, 0.5);
+    }
+    
     .episode-card:hover .play-icon {
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1.1);
+      transform: translate(-50%, -50%) scale(1.2);
     }
+    
     .gradient-text {
-      background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
+      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
-    .modal-enter {
-      animation: modalEnter 0.3s ease-out forwards;
+    
+    .gradient-bg {
+      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
     }
+    
+    .modal-enter {
+      animation: modalEnter 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    
     @keyframes modalEnter {
       from {
         opacity: 0;
-        transform: scale(0.95);
+        transform: scale(0.9) translateY(20px);
       }
       to {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1) translateY(0);
       }
     }
+    
     .video-header {
       position: relative;
-      height: 70vh;
-      min-height: 500px;
+      height: 80vh;
+      min-height: 600px;
       overflow: hidden;
     }
+    
     .video-header video {
       position: absolute;
       top: 50%;
@@ -55,15 +103,17 @@
       z-index: 0;
       object-fit: cover;
     }
+    
     .video-overlay {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 100%);
       z-index: 1;
     }
+    
     .header-content {
       position: relative;
       z-index: 2;
@@ -71,19 +121,151 @@
       display: flex;
       flex-direction: column;
     }
+    
     .pixar-logo {
       width: 120px;
       filter: drop-shadow(0 0 8px rgba(0,0,0,0.5));
+      transition: transform 0.3s ease;
     }
+    
+    .pixar-logo:hover {
+      transform: scale(1.05);
+    }
+    
     .nav-container {
       background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+      backdrop-filter: blur(5px);
+    }
+    
+    .nav-link {
+      position: relative;
+    }
+    
+    .nav-link:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover:after {
+      width: 100%;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(246, 211, 101, 0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(246, 211, 101, 0.4);
+    }
+    
+    .btn-secondary {
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    .episode-badge {
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+    }
+    
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) translateX(-50%);
+      }
+      40% {
+        transform: translateY(-20px) translateX(-50%);
+      }
+      60% {
+        transform: translateY(-10px) translateX(-50%);
+      }
+    }
+    
+    .character-card {
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(5px);
+    }
+    
+    .character-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .section-title {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title:after {
+      content: '';
+      position: absolute;
+      width: 50%;
+      height: 3px;
+      bottom: -5px;
+      left: 0;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: 3px;
+    }
+    
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+    }
+    
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    .footer-link {
+      transition: all 0.2s ease;
+    }
+    
+    .footer-link:hover {
+      color: var(--primary);
+      transform: translateX(3px);
+    }
+    
+    @media (max-width: 768px) {
+      .video-header {
+        height: 70vh;
+        min-height: 500px;
+      }
+      
+      .header-content h1 {
+        font-size: 3rem;
+      }
     }
   </style>
 </head>
 <body>
   <!-- Video Header -->
   <div class="video-header">
-    <video autoplay muted loop>
+    <video autoplay muted loop playsinline>
       <source src="https://imdb-video.media-imdb.com/vi3477260569/1434659607842-pgv4ql-1743751952194.mp4?Expires=1748782279&Signature=Gr-K6-EO-IBiwcdj0chU83GFnXF9BCpuNw0nnfZTkt-hctmbd8T22u~DLp0IJ~zkXafwO-QmPWhGuF3w~fWc05MR6XIIBblKqoG-ZVr4qBteCmDhPd8TRAKh68A8qrW5kIG6CGNogjAziVpnhnSp3hpeNebwNq7m3gjjLqDsGVvxwnePRx6cbIgVMn6rB5brauJpUHEyUZV74rYneU03bLlAjHvOpQLjYHeWwQQXYQvjwsnnz~zEV3hVZ8Sw63Ztxr-Nh8xb4E9eIt7iG1pwjHSD5PAUpWW~ljeb4K47WH8cHQiwvZBpDk55CCCPHMHrgC~UIabkfFOOrr9-rDu6hA__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA" type="video/mp4">
       Your browser does not support the video tag.
     </video>
@@ -95,13 +277,13 @@
         <div class="container mx-auto flex justify-between items-center">
           <div class="flex items-center space-x-4">
             <img src="https://images.squarespace-cdn.com/content/v1/60241cb68df65b530cd84d95/1613495438818-408JDVSTB7NWSHVC20M7/logo.png?format=1500w" alt="Pixar" class="pixar-logo">
-            <h1 class="text-yellow-500">Win or Lose<span class="text-yellow-500">+</span></h1>
+            <h1 <span class="text-yellow-500">+</span></h1>
           </div>
-          <nav class="hidden md:flex space-x-6">
-            <a href="#" class="hover:text-yellow-400 transition">Home</a>
-            <a href="#" class="hover:text-yellow-400 transition">Episodes</a>
-            <a href="#" class="hover:text-yellow-400 transition">Characters</a>
-            <a href="#" class="hover:text-yellow-400 transition">Gallery</a>
+          <nav class="hidden md:flex space-x-8">
+            <a href="#" class="text-white nav-link hover:text-yellow-400 transition">Home</a>
+            <a href="#episodes" class="text-white nav-link hover:text-yellow-400 transition">Episodes</a>
+            <a href="#characters" class="text-white nav-link hover:text-yellow-400 transition">Characters</a>
+            <a href="#about" class="text-white nav-link hover:text-yellow-400 transition">About</a>
           </nav>
           <button class="md:hidden text-2xl text-white">
             <i class="fas fa-bars"></i>
@@ -112,56 +294,118 @@
       <!-- Title Content -->
       <div class="container mx-auto px-4 flex-1 flex items-center">
         <div class="max-w-4xl">
-          <h1 class="text-5xl md:text-6xl font-bold mb-4 gradient-text">Win or Lose</h1>
+          <div class="flex items-center mb-4">
+            <img src="https://images.squarespace-cdn.com/content/v1/60241cb68df65b530cd84d95/1613495438818-408JDVSTB7NWSHVC20M7/logo.png?format=1500w" alt="Pixar" class="h-8 mr-4">
+            <span class="text-white font-semibold">ORIGINAL SERIES</span>
+          </div>
+          <h1 class="text-5xl md:text-7xl font-bold mb-4 gradient-text title-font tracking-tight">WIN OR LOSE</h1>
           <div class="flex items-center space-x-4 mb-6">
-            <span class="bg-yellow-500 text-black px-3 py-1 rounded-full text-sm font-semibold">Season 1</span>
+            <span class="bg-yellow-500 text-black px-3 py-1 rounded-full text-sm font-semibold">NEW SEASON</span>
             <span class="text-gray-300">2025</span>
             <span class="text-gray-300">•</span>
-            <span class="text-gray-300">8 Episodes</span>
+            <span class="text-gray-300">8 EPISODES</span>
             <span class="text-gray-300">•</span>
             <span class="text-gray-300">TV-PG</span>
           </div>
-          <p class="text-lg text-gray-300 mb-6">
-            A Pixar original series following a middle school softball team in the week leading up to their championship game. 
-            Each episode is told from the perspective of a different character, revealing their unique struggles and triumphs.
+          <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl">
+            A groundbreaking Pixar original series following a middle school softball team's journey to the championship. 
+            Each episode reveals the unique perspective of a different character, blending humor, heart, and Pixar's signature storytelling.
           </p>
           <div class="flex space-x-4">
-            <button class="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-3 px-8 rounded-full flex items-center transition transform hover:scale-105">
-              <i class="fas fa-play mr-2"></i> Play All
+            <button class="btn-primary text-black font-bold py-3 px-8 rounded-full flex items-center transition">
+              <i class="fas fa-play mr-2"></i> WATCH NOW
             </button>
-            <button class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 px-8 rounded-full flex items-center transition">
-              <i class="fas fa-plus mr-2"></i> My List
+            <button class="btn-secondary text-white font-semibold py-3 px-8 rounded-full flex items-center transition">
+              <i class="fas fa-plus mr-2"></i> MY LIST
             </button>
           </div>
         </div>
       </div>
+      
+      <div class="scroll-indicator">
+        <i class="fas fa-chevron-down text-white text-2xl animate-bounce"></i>
+      </div>
     </div>
   </div>
 
-  <main class="container mx-auto px-4 pb-16">
-    <h2 class="text-3xl font-bold mb-8 flex items-center">
-      <span class="mr-4">Episodes</span>
-      <span class="text-yellow-500 text-xl">Season 1</span>
-    </h2>
+  
     
-    <div id="episodes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    <!-- Characters Section -->
+    <section id="characters" class="py-16">
+      <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center section-title">MEET THE CHARACTERS</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="character-card rounded-xl p-4 text-center">
+          <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-2 border-yellow-500">
+            <img src="https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/1993/1739759771993-h" alt="Coach Dan" class="w-full h-full object-cover">
+          </div>
+          <h3 class="font-bold text-lg">Coach Dan</h3>
+          <p class="text-gray-400 text-sm">Voiced by Will Forte</p>
+        </div>
+        <div class="character-card rounded-xl p-4 text-center">
+          <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-2 border-yellow-500">
+            <img src="https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/7707/1739769007707-h" alt="Frank" class="w-full h-full object-cover">
+          </div>
+          <h3 class="font-bold text-lg">Frank</h3>
+          <p class="text-gray-400 text-sm">Voiced by Charlie Day</p>
+        </div>
+        <div class="character-card rounded-xl p-4 text-center">
+          <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-2 border-yellow-500">
+            <img src="https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/5260/1740105095260-h" alt="Rochelle" class="w-full h-full object-cover">
+          </div>
+          <h3 class="font-bold text-lg">Rochelle</h3>
+          <p class="text-gray-400 text-sm">Voiced by Carrie Brownstein</p>
+        </div>
+        <div class="character-card rounded-xl p-4 text-center">
+          <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-2 border-yellow-500">
+            <img src="https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/8578/1740105338578-h" alt="Vanessa" class="w-full h-full object-cover">
+          </div>
+          <h3 class="font-bold text-lg">Vanessa</h3>
+          <p class="text-gray-400 text-sm">Voiced by Mia Fowler</p>
+        </div>
+      </div>
+    </section>
+    
+    
+    
+    <!-- Episodes Section -->
+    <section id="episodes" class="py-16">
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-3xl md:text-4xl font-bold section-title">EPISODES</h2>
+        <div class="flex items-center space-x-2">
+          <span class="text-gray-400">SEASON</span>
+          <div class="relative">
+            <select class="bg-gray-800 border border-gray-700 text-white rounded-full px-4 py-2 appearance-none focus:outline-none focus:ring-2 focus:ring-yellow-500">
+              <option>1</option>
+              <option disabled>2 (Coming Soon)</option>
+            </select>
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <i class="fas fa-chevron-down text-gray-400"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="episodes-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+    </section>
   </main>
 
   <!-- Modal -->
-  <div id="playback-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-90">
-    <div class="relative w-full max-w-4xl bg-gray-900 rounded-xl overflow-hidden modal-enter">
-      <button id="close-modal" class="absolute top-4 right-4 z-50 text-white hover:text-yellow-500 text-2xl transition">
+  <div id="playback-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-90 p-4">
+    <div class="relative w-full max-w-4xl bg-gray-900 rounded-xl overflow-hidden shadow-2xl modal-enter">
+      <button id="close-modal" class="absolute top-4 right-4 z-50 text-white hover:text-yellow-500 text-2xl transition bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center">
         <i class="fas fa-times"></i>
       </button>
       <div class="aspect-w-16 aspect-h-9">
-        <video id="modal-video" class="w-full" controls poster="https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/5760/1665760-h-84d351053326"></video>
+        <video id="modal-video" class="w-full" controls poster="https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/5760/1665760-h-84d351053326">
+          Your browser does not support the video element.
+        </video>
       </div>
       <div class="p-6">
         <div class="flex justify-between items-start mb-4">
           <div>
             <h3 id="modal-title" class="text-2xl font-bold mb-1"></h3>
             <div class="text-gray-400 text-sm">
-              <span>S1 • E<span id="episode-num"></span></span> • 20 min • <span class="text-yellow-500">★ 8.5/10</span>
+              <span>S1 • E<span id="episode-num"></span></span> • <span id="episode-runtime"></span> • <span class="text-yellow-500">★ <span id="episode-rating"></span></span>
             </div>
           </div>
           <div class="flex space-x-3">
@@ -175,59 +419,68 @@
         </div>
         <p id="modal-description" class="text-gray-300 mb-6"></p>
         <div class="flex space-x-4">
-          <button class="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-3 px-8 rounded-full flex items-center transition transform hover:scale-105">
-            <i class="fas fa-play mr-2"></i> Play
+          <button id="play-episode" class="btn-primary text-black font-bold py-3 px-8 rounded-full flex items-center transition">
+            <i class="fas fa-play mr-2"></i> PLAY EPISODE
           </button>
-          <button class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 px-8 rounded-full flex items-center transition">
-            <i class="fas fa-plus mr-2"></i> Watchlist
+          <button class="btn-secondary text-white font-semibold py-3 px-8 rounded-full flex items-center transition">
+            <i class="fas fa-plus mr-2"></i> WATCHLIST
           </button>
-          <button class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 px-4 rounded-full transition">
+          <button class="btn-secondary text-white font-semibold py-3 px-4 rounded-full transition">
             <i class="fas fa-thumbs-up"></i>
           </button>
         </div>
         <div class="mt-6 pt-6 border-t border-gray-800">
-          <h4 class="text-sm font-semibold text-gray-400 mb-2">Starring</h4>
-          <p class="text-gray-300 text-sm">Charlie Day, Carrie Brownstein, Will Forte, Mia Fowler</p>
+          <h4 class="text-sm font-semibold text-gray-400 mb-2">STARRING</h4>
+          <p class="text-gray-300 text-sm" id="modal-cast">Charlie Day, Carrie Brownstein, Will Forte, Mia Fowler</p>
+          <h4 class="text-sm font-semibold text-gray-400 mt-4 mb-2">CREATED BY</h4>
+          <p class="text-gray-300 text-sm">Brendan Beesley, Brandon Kern, Tom Zach</p>
         </div>
       </div>
     </div>
   </div>
 
-  <footer class="bg-gray-900 py-12">
+  <footer class="bg-gray-900 py-12 border-t border-gray-800">
     <div class="container mx-auto px-4">
-      <div class="flex flex-col md:flex-row justify-between items-center">
-        <div class="mb-6 md:mb-0">
-          <div class="flex items-center space-x-4 mb-4">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Pixar_logo.svg/1280px-Pixar_logo.svg.png" alt="Pixar" class="pixar-logo">
+      <div class="flex flex-col md:flex-row justify-between items-start">
+        <div class="mb-8 md:mb-0">
+          <div class="flex items-center space-x-4 mb-6">
+            <img src="https://images.squarespace-cdn.com/content/v1/60241cb68df65b530cd84d95/1613495438818-408JDVSTB7NWSHVC20M7/logo.png?format=1500w" alt="Pixar" class="pixar-logo">
             <h1 class="text-xl font-bold">Win or Lose<span class="text-yellow-500">+</span></h1>
           </div>
-          <p class="text-gray-400 text-sm">© 2025 Pixar Original Series</p>
+          <div class="flex space-x-4 mb-6">
+            <a href="#" class="text-gray-400 hover:text-yellow-400 transition"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-gray-400 hover:text-yellow-400 transition"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-gray-400 hover:text-yellow-400 transition"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-gray-400 hover:text-yellow-400 transition"><i class="fab fa-youtube"></i></a>
+          </div>
+          <p class="text-gray-400 text-sm">© 2025 Disney/Pixar. All Rights Reserved.</p>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-16">
           <div>
-            <h3 class="text-gray-300 font-semibold mb-3">Navigation</h3>
-            <ul class="space-y-2">
-              <li><a href="#" class="text-gray-400 hover:text-yellow-400 text-sm transition">Home</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-yellow-400 text-sm transition">Episodes</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-yellow-400 text-sm transition">Characters</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-yellow-400 text-sm transition">Gallery</a></li>
+            <h3 class="text-gray-300 font-semibold mb-4">NAVIGATION</h3>
+            <ul class="space-y-3">
+              <li><a href="#" class="text-gray-400 footer-link hover:text-yellow-400 text-sm transition">Home</a></li>
+              <li><a href="#episodes" class="text-gray-400 footer-link hover:text-yellow-400 text-sm transition">Episodes</a></li>
+              <li><a href="#characters" class="text-gray-400 footer-link hover:text-yellow-400 text-sm transition">Characters</a></li>
+              <li><a href="#about" class="text-gray-400 footer-link hover:text-yellow-400 text-sm transition">About</a></li>
             </ul>
           </div>
           <div>
-            <h3 class="text-gray-300 font-semibold mb-3">Legal</h3>
-            <ul class="space-y-2">
-              <li><a href="#" class="text-gray-400 hover:text-yellow-400 text-sm transition">Terms</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-yellow-400 text-sm transition">Privacy</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-yellow-400 text-sm transition">Cookies</a></li>
+            <h3 class="text-gray-300 font-semibold mb-4">LEGAL</h3>
+            <ul class="space-y-3">
+              <li><a href="#" class="text-gray-400 footer-link hover:text-yellow-400 text-sm transition">Terms of Use</a></li>
+              <li><a href="#" class="text-gray-400 footer-link hover:text-yellow-400 text-sm transition">Privacy Policy</a></li>
+              <li><a href="#" class="text-gray-400 footer-link hover:text-yellow-400 text-sm transition">Cookie Policy</a></li>
+              <li><a href="#" class="text-gray-400 footer-link hover:text-yellow-400 text-sm transition">Accessibility</a></li>
             </ul>
           </div>
           <div>
-            <h3 class="text-gray-300 font-semibold mb-3">Social</h3>
-            <div class="flex space-x-4">
-              <a href="#" class="text-gray-400 hover:text-yellow-400 transition"><i class="fab fa-twitter"></i></a>
-              <a href="#" class="text-gray-400 hover:text-yellow-400 transition"><i class="fab fa-instagram"></i></a>
-              <a href="#" class="text-gray-400 hover:text-yellow-400 transition"><i class="fab fa-facebook"></i></a>
-            </div>
+            <h3 class="text-gray-300 font-semibold mb-4">CONTACT</h3>
+            <ul class="space-y-3">
+              <li><a href="#" class="text-gray-400 footer-link hover:text-yellow-400 text-sm transition">Press Inquiries</a></li>
+              <li><a href="#" class="text-gray-400 footer-link hover:text-yellow-400 text-sm transition">Careers</a></li>
+              <li><a href="#" class="text-gray-400 footer-link hover:text-yellow-400 text-sm transition">Help Center</a></li>
+            </ul>
           </div>
         </div>
       </div>
@@ -243,53 +496,58 @@
         image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/1993/1739759771993-h",
         runtime: "20 min",
         rating: "8.2/10",
-        description: "Laurie, the Coach's kid, struggles with insecurity that manifests into a creature only she can see.",
+        description: "Laurie, the Coach's kid, struggles with insecurity that manifests into a creature only she can see. As the championship approaches, she must confront her self-doubt and find her place on the team.",
         animators: "Brendan Beesley; Brandon Kern; Tom Zach",
-        music: "Ramin Djawadi; Campfire"
+        music: "Ramin Djawadi; Campfire",
+        cast: "Will Forte, Mia Fowler, Charlie Day"
       },
       { 
         title: "Blue", 
         year: 2025,
         video: "https://sh9f.haltermanieddiel.sbs/v4/6s/urcszx/index-f1-v1-a1.txt", 
         image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/7707/1739769007707-h",
-        runtime: "20 min",
+        runtime: "22 min",
         rating: "8.4/10",
-        description: "Frank, the umpire for the local softball league, surprises himself with newfound confidence when he tries a dating app.",
+        description: "Frank, the umpire for the local softball league, surprises himself with newfound confidence when he tries a dating app. But when game day arrives, he must balance his personal life with his professional responsibilities.",
         animators: "Brendan Beesley; Brandon Kern; Tom Zach",
-        music: "Ramin Djawadi; Campfire"
+        music: "Ramin Djawadi; Campfire",
+        cast: "Charlie Day, Carrie Brownstein"
       },
       { 
         title: "Raspberry", 
         year: 2025,
         video: "https://sh9f.mooringcarmel.sbs/v4/ck/6hej1j/cf-master.txt?v=1740570485", 
         image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/5260/1740105095260-h",
-        runtime: "20 min",
+        runtime: "21 min",
         rating: "8.6/10",
-        description: "Star catcher Rochelle knows money is tight - when she gets a chance to earn some cash, she's all in.",
+        description: "Star catcher Rochelle knows money is tight - when she gets a chance to earn some cash, she's all in. But her side hustle threatens to distract her from the big game and her responsibilities to the team.",
         animators: "Brendan Beesley; Brandon Kern; Tom Zach",
-        music: "Ramin Djawadi; Campfire"
+        music: "Ramin Djawadi; Campfire",
+        cast: "Carrie Brownstein, Will Forte"
       },
       { 
         title: "Pickle", 
         year: 2025,
         video: "https://sj3l.wesleykqpg.sbs:443/v4/ox/x6gdwl/index-f2-v1-a1.txt", 
         image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/8578/1740105338578-h",
-        runtime: "20 min",
+        runtime: "19 min",
         rating: "8.8/10",
-        description: "Hard-working single mom Vanessa adores her kids and the love she gets for her social media posts.",
+        description: "Hard-working single mom Vanessa adores her kids and the love she gets for her social media posts. When her online persona clashes with her real-life responsibilities, she must decide what truly matters.",
         animators: "Brendan Beesley; Brandon Kern; Tom Zach",
-        music: "Ramin Djawadi; Campfire"
+        music: "Ramin Djawadi; Campfire",
+        cast: "Mia Fowler, Charlie Day"
       },
       { 
         title: "Steal", 
         year: 2025,
         video: "https://sskt.mcgaugheyjyiy.sbs/v4/36/3vaoan/index-f1-v1.txt", 
         image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/8465/1740574098465-h",
-        runtime: "20 min",
+        runtime: "23 min",
         rating: "9.0/10",
-        description: "Stuck at big sister Taylor's boring softball games, imaginative Ira befriends troublemaking teens.",
+        description: "Stuck at big sister Taylor's boring softball games, imaginative Ira befriends troublemaking teens. As he gets drawn into their world, he must choose between fitting in and doing what's right.",
         animators: "Brendan Beesley; Brandon Kern; Tom Zach",
-        music: "Ramin Djawadi; Campfire"
+        music: "Ramin Djawadi; Campfire",
+        cast: "Newcomer Jacob Tremblay"
       },
       { 
         title: "Mixed Signals", 
@@ -298,41 +556,48 @@
         image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/8388/1740574278388-h",
         runtime: "20 min",
         rating: "9.2/10",
-        description: "Cool and confident, pitcher Yuwen is in conflict with Little Yuwen - his childlike, vulnerable self.",
+        description: "Cool and confident, pitcher Yuwen is in conflict with Little Yuwen - his childlike, vulnerable self. As pressure mounts before the championship, he must reconcile these two sides of himself.",
         animators: "Brendan Beesley; Brandon Kern; Tom Zach",
-        music: "Ramin Djawadi; Campfire"
+        music: "Ramin Djawadi; Campfire",
+        cast: "Newcomer Ryan Potter"
       },
       { 
         title: "I Got It", 
         year: 2025,
         video: "https://sh9f.hurlbertb.sbs/v4/61/is95ri/cf-master.txt?v=1741873961", 
         image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/8785/1740574478785-h",
-        runtime: "20 min",
+        runtime: "22 min",
         rating: "8.4/10",
-        description: "The team's star player faces unexpected challenges when she's put in an unfamiliar position.",
+        description: "The team's star player faces unexpected challenges when she's put in an unfamiliar position. Her struggle to adapt teaches her valuable lessons about teamwork and humility.",
         animators: "Brendan Beesley; Brandon Kern; Tom Zach",
-        music: "Ramin Djawadi; Campfire"
+        music: "Ramin Djawadi; Campfire",
+        cast: "Carrie Brownstein, Mia Fowler"
       },
       { 
         title: "Home", 
         year: 2025,
         video: "https://sxic.hershpdelah.sbs/v4/36/6hrdw1/cf-master.txt?v=1744257820", 
         image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/1810/1740574651810-h",
-        runtime: "20 min",
-        rating: "8.4/10",
-        description: "Coach Dan's leadership is crucial as the team stumbles their way toward their championship game.",
+        runtime: "24 min",
+        rating: "9.4/10",
+        description: "Coach Dan's leadership is crucial as the team stumbles their way toward their championship game. In this emotional finale, each character's journey comes to a satisfying conclusion.",
         animators: "Brendan Beesley; Brandon Kern; Tom Zach",
-        music: "Ramin Djawadi; Campfire"
+        music: "Ramin Djawadi; Campfire",
+        cast: "Will Forte, Charlie Day, Carrie Brownstein, Mia Fowler"
       }
     ];
 
-    const container = document.getElementById('episodes');
+    const container = document.getElementById('episodes-container');
     const playbackModal = document.getElementById('playback-modal');
     const closeModal = document.getElementById('close-modal');
     const modalVideo = document.getElementById('modal-video');
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
     const episodeNum = document.getElementById('episode-num');
+    const episodeRuntime = document.getElementById('episode-runtime');
+    const episodeRating = document.getElementById('episode-rating');
+    const episodeCast = document.getElementById('modal-cast');
+    const playEpisodeBtn = document.getElementById('play-episode');
 
     function isStream(url) {
       return url.includes('.m3u8') || url.includes('.txt');
@@ -342,65 +607,101 @@
       modalTitle.textContent = episode.title;
       modalDescription.textContent = episode.description;
       episodeNum.textContent = episodeNumber;
-      modalVideo.src = episode.video;
+      episodeRuntime.textContent = episode.runtime;
+      episodeRating.textContent = episode.rating;
+      episodeCast.textContent = episode.cast;
+      
+      // Set video source
+      if (isStream(episode.video)) {
+        // For streaming URLs, we'd typically use a player like HLS.js
+        // Here we'll just show a placeholder
+        modalVideo.innerHTML = '<source src="" type="video/mp4">';
+      } else {
+        modalVideo.src = episode.video;
+      }
 
       playbackModal.classList.remove('hidden');
       document.body.style.overflow = 'hidden';
-      modalVideo.play();
+      
+      // Play the video when Play Episode button is clicked
+      playEpisodeBtn.addEventListener('click', () => {
+        modalVideo.play();
+      });
     }
 
     function closeModalHandler() {
       playbackModal.classList.add('hidden');
       modalVideo.pause();
-      modalVideo.src = "";
+      modalVideo.currentTime = 0;
       document.body.style.overflow = '';
     }
 
     closeModal.addEventListener('click', closeModalHandler);
 
+    // Close modal when clicking outside
+    playbackModal.addEventListener('click', (e) => {
+      if (e.target === playbackModal) {
+        closeModalHandler();
+      }
+    });
+
     // Render episode cards
     episodes.forEach((episode, index) => {
       const card = document.createElement('div');
-      card.className = 'episode-card cursor-pointer bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 relative';
+      card.className = 'episode-card bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition';
       card.innerHTML = `
-        <div class="relative">
-          <img src="${episode.image}" alt="${episode.title}" class="w-full h-48 md:h-56 object-cover">
+        <div class="episode-image-container">
+          <img src="${episode.image}" alt="${episode.title}" class="episode-image w-full h-48 object-cover">
           <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 transition">
             <div class="play-icon absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-500 bg-opacity-90 rounded-full w-12 h-12 flex items-center justify-center opacity-0 transition">
               <i class="fas fa-play text-black"></i>
             </div>
           </div>
-          <span class="absolute top-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">${episode.runtime}</span>
+          <span class="absolute top-2 right-2 episode-badge text-white text-xs px-2 py-1 rounded">${episode.runtime}</span>
         </div>
         <div class="p-4">
           <div class="flex justify-between items-start mb-1">
-            <h2 class="text-lg font-semibold">${episode.title}</h2>
+            <h2 class="font-semibold">${episode.title}</h2>
             <span class="text-yellow-500 text-sm">${episode.rating}</span>
           </div>
-          <p class="text-sm text-gray-400">Episode ${index + 1}</p>
+          <div class="flex items-center justify-between">
+            <p class="text-sm text-gray-400">Episode ${index + 1}</p>
+            <button class="text-gray-400 hover:text-yellow-500 transition">
+              <i class="fas fa-ellipsis-h"></i>
+            </button>
+          </div>
         </div>
       `;
       card.addEventListener('click', () => {
-        if (isStream(episode.video)) {
-          const url = `player.html?title=${encodeURIComponent(episode.title)}&video=${encodeURIComponent(episode.video)}&index=${index}`;
-          window.location.href = url;
-        } else {
-          openModal(episode, index + 1);
-        }
+        openModal(episode, index + 1);
       });
       container.appendChild(card);
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
     });
 
     // Make video header play/pause on hover
     const headerVideo = document.querySelector('.video-header video');
     const videoHeader = document.querySelector('.video-header');
     
-    videoHeader.addEventListener('mouseenter', () => {
-      headerVideo.play();
+    // Autoplay is handled by the autoplay attribute, but we'll ensure it plays
+    headerVideo.play().catch(e => {
+      console.log("Autoplay prevented, showing fallback");
     });
     
-    videoHeader.addEventListener('mouseleave', () => {
-      headerVideo.pause();
+    // Mobile menu toggle (would need additional implementation)
+    const mobileMenuButton = document.querySelector('button.md\\:hidden');
+    mobileMenuButton.addEventListener('click', () => {
+      alert('Mobile menu would open here in a full implementation');
     });
   </script>
 </body>
