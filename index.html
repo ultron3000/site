@@ -42,6 +42,21 @@
                 width: 95% !important;
             }
         }
+        /* Custom scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-white min-h-screen">
@@ -60,7 +75,7 @@
         <!-- Channel Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             <!-- Willow Cricket SD -->
-            <div class="channel-card bg-gray-800 rounded-xl overflow-hidden shadow-lg cursor-pointer" onclick="playStream('https://a201aivottlinear-a.akamaihd.net/OTTB/lhr-nitro/clients/dash/enc/f60kqesunw/out/v1/a435ed7a00f947deb4369b46d8f2fb70/cenc.mpd', 'Willow Cricket SD')">
+            <div class="channel-card bg-gray-800 rounded-xl overflow-hidden shadow-lg cursor-pointer" onclick="playStream('https://d2e1asqsl8ewcv.cloudfront.net/HLS/CH1_720p.m3u8', 'Willow Cricket SD')">
                 <div class="relative">
                     <img src="https://www.willow.tv/images/willow-channel-poster.jpg" alt="Willow Cricket" class="w-full h-64 object-cover">
                     <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
@@ -76,14 +91,14 @@
                     <h2 class="text-xl font-bold mb-1">Willow Cricket</h2>
                     <p class="text-gray-400 text-sm">Standard Definition</p>
                     <div class="flex items-center mt-3 text-sm">
-                        <span class="bg-blue-900 text-blue-300 px-2 py-1 rounded-full mr-2">MPD</span>
+                        <span class="bg-purple-900 text-purple-300 px-2 py-1 rounded-full mr-2">HLS</span>
                         <span class="text-gray-500">Cricket Live</span>
                     </div>
                 </div>
             </div>
 
             <!-- Willow Cricket HD -->
-            <div class="channel-card bg-gray-800 rounded-xl overflow-hidden shadow-lg cursor-pointer" onclick="playStream('https://a201aivottlinear-a.akamaihd.net/OTTB/lhr-nitro/clients/dash/enc/f60kqesunw/out/v1/a435ed7a00f947deb4369b46d8f2fb70/cenc.mpd', 'Willow Cricket HD')">
+            <div class="channel-card bg-gray-800 rounded-xl overflow-hidden shadow-lg cursor-pointer" onclick="playStream('https://d2e1asqsl8ewcv.cloudfront.net/HLS/CH1_1080p.m3u8', 'Willow Cricket HD')">
                 <div class="relative">
                     <img src="https://www.willow.tv/images/willow-hd-poster.jpg" alt="Willow Cricket HD" class="w-full h-64 object-cover">
                     <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
@@ -99,7 +114,7 @@
                     <h2 class="text-xl font-bold mb-1">Willow Cricket HD</h2>
                     <p class="text-gray-400 text-sm">High Definition</p>
                     <div class="flex items-center mt-3 text-sm">
-                        <span class="bg-blue-900 text-blue-300 px-2 py-1 rounded-full mr-2">MPD</span>
+                        <span class="bg-purple-900 text-purple-300 px-2 py-1 rounded-full mr-2">HLS</span>
                         <span class="text-gray-500">Cricket Live</span>
                     </div>
                 </div>
@@ -148,10 +163,14 @@
                     class="w-full h-full" 
                     controls
                     autoplay
+                    playsinline
                 ></video>
                 
                 <div id="loadingSpinner" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
-                    <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+                    <div class="flex flex-col items-center">
+                        <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500 mb-4"></div>
+                        <p class="text-gray-300">Loading stream...</p>
+                    </div>
                 </div>
                 
                 <div id="errorDisplay" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 hidden">
@@ -159,7 +178,10 @@
                         <i class="fas fa-exclamation-triangle text-red-500 text-4xl mb-4"></i>
                         <h3 class="text-xl font-semibold mb-2">Playback Error</h3>
                         <p id="errorMessage" class="text-gray-300 mb-4">Failed to load the stream. Please try again later.</p>
-                        <button id="retryBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg">Retry</button>
+                        <div class="flex gap-4 justify-center">
+                            <button id="retryBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg">Retry</button>
+                            <button id="tryFallbackBtn" class="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg hidden">Try Fallback</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -168,7 +190,7 @@
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
                     <h2 id="streamTitle" class="text-xl font-semibold truncate max-w-xs">Willow Cricket</h2>
                     <div class="flex items-center gap-2 text-sm text-gray-400">
-                        <span id="streamTypeBadge" class="px-2 py-1 rounded-full bg-blue-900 text-blue-300">MPD</span>
+                        <span id="streamTypeBadge" class="px-2 py-1 rounded-full bg-purple-900 text-purple-300">HLS</span>
                         <span id="streamInfo" class="hidden sm:inline">Loading...</span>
                     </div>
                 </div>
@@ -209,7 +231,7 @@
                         <button id="qualityBtn" class="p-2 bg-gray-700 hover:bg-gray-600 rounded-full hidden">
                             <i class="fas fa-cog"></i>
                         </button>
-                        <div id="qualityMenu" class="absolute bg-gray-800 rounded-lg shadow-lg py-1 z-10 hidden">
+                        <div id="qualityMenu" class="absolute bg-gray-800 rounded-lg shadow-lg py-1 z-10 hidden max-h-60 overflow-y-auto custom-scrollbar">
                             <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer">Auto</div>
                             <!-- Quality options will be added here dynamically -->
                         </div>
@@ -224,17 +246,42 @@
             // Initialize Shaka Player
             if (!shaka.Player.isBrowserSupported()) {
                 console.error('Browser not supported for Shaka Player');
+                showBrowserNotSupported();
                 return;
             }
 
             const video = document.getElementById('videoElement');
             const player = new shaka.Player(video);
-            const ui = video.ui;
-            const controls = ui.getControls();
-            const playerElement = ui.getControls().getPlayerElement();
-
-            // Hide default controls and use our custom ones
-            playerElement.classList.add('no-fullscreen');
+            
+            // Configure player with better error handling
+            player.configure({
+                streaming: {
+                    bufferingGoal: 60,
+                    rebufferingGoal: 2,
+                    bufferBehind: 30,
+                    ignoreTextStreamFailures: true,
+                    failureCallback: (error) => {
+                        console.error('Streaming error:', error);
+                        handlePlayerError(error);
+                    }
+                },
+                abr: {
+                    enabled: true,
+                    defaultBandwidthEstimate: 500000,
+                    switchInterval: 2,
+                    bandwidthUpgradeTarget: 0.85,
+                    bandwidthDowngradeTarget: 0.95
+                },
+                drm: {
+                    retryParameters: {
+                        maxAttempts: 3,
+                        baseDelay: 1000,
+                        backoffFactor: 2,
+                        fuzzFactor: 0.5,
+                        timeout: 0
+                    }
+                }
+            });
 
             // Elements
             const playerModal = document.getElementById('playerModal');
@@ -243,6 +290,7 @@
             const errorDisplay = document.getElementById('errorDisplay');
             const errorMessage = document.getElementById('errorMessage');
             const retryBtn = document.getElementById('retryBtn');
+            const tryFallbackBtn = document.getElementById('tryFallbackBtn');
             const fullscreenBtn = document.getElementById('fullscreenBtn');
             const playPauseBtn = document.getElementById('playPauseBtn');
             const muteBtn = document.getElementById('muteBtn');
@@ -260,6 +308,8 @@
             let isFullscreen = false;
             let isQualityMenuOpen = false;
             let currentStreamUrl = '';
+            let currentStreamTitle = '';
+            let fallbackStreams = [];
             let qualityOptions = [];
 
             // Close modal
@@ -271,6 +321,9 @@
                     loadStream(currentStreamUrl);
                 }
             });
+
+            // Try fallback button
+            tryFallbackBtn.addEventListener('click', tryFallbackStream);
 
             // Fullscreen button
             fullscreenBtn.addEventListener('click', toggleFullscreen);
@@ -307,7 +360,7 @@
             video.addEventListener('volumechange', updateVolumeControls);
             video.addEventListener('waiting', () => loadingSpinner.classList.remove('hidden'));
             video.addEventListener('playing', () => loadingSpinner.classList.add('hidden'));
-            video.addEventListener('error', handlePlayerError);
+            video.addEventListener('error', () => handlePlayerError(video.error));
 
             // Keyboard shortcuts
             document.addEventListener('keydown', (e) => {
@@ -334,7 +387,15 @@
             // Global function to play stream (called from channel cards)
             window.playStream = function(url, title) {
                 currentStreamUrl = url;
-                streamTitle.textContent = title;
+                currentStreamTitle = title;
+                
+                // Set fallback streams (different resolutions/bitrates)
+                fallbackStreams = [
+                    url.replace('1080p', '720p'),
+                    url.replace('720p', '480p'),
+                    url.replace('480p', '360p')
+                ].filter(fbUrl => fbUrl !== url);
+                
                 openPlayerModal();
                 loadStream(url);
             };
@@ -344,6 +405,8 @@
                 playerModal.classList.remove('opacity-0', 'pointer-events-none');
                 playerModal.classList.add('opacity-100', 'pointer-events-auto');
                 document.body.style.overflow = 'hidden';
+                
+                streamTitle.textContent = currentStreamTitle;
                 
                 // Set stream type badge
                 if (currentStreamUrl.includes('.mpd')) {
@@ -368,6 +431,7 @@
                 // Reset UI
                 loadingSpinner.classList.add('hidden');
                 errorDisplay.classList.add('hidden');
+                tryFallbackBtn.classList.add('hidden');
                 progressBar.value = 0;
                 currentTime.textContent = '0:00';
                 duration.textContent = '0:00';
@@ -379,25 +443,30 @@
                 try {
                     loadingSpinner.classList.remove('hidden');
                     errorDisplay.classList.add('hidden');
+                    tryFallbackBtn.classList.add('hidden');
                     
                     player.detach();
-                    player.resetConfiguration();
                     
-                    // Configure player
-                    player.configure({
+                    // Configure player for this specific stream
+                    const config = {
                         streaming: {
                             bufferingGoal: 60,
                             rebufferingGoal: 2,
                             bufferBehind: 30,
                             ignoreTextStreamFailures: true
-                        },
-                        abr: {
-                            enabled: true,
-                            defaultBandwidthEstimate: 500000,
-                            switchInterval: 2
                         }
-                    });
-
+                    };
+                    
+                    if (url.includes('.m3u8')) {
+                        // HLS specific configuration
+                        config.manifest = {
+                            dash: { ignoreMinBufferTime: true },
+                            hls: { ignoreManifestProgramDateTime: true }
+                        };
+                    }
+                    
+                    player.configure(config);
+                    
                     // Attach player to video element
                     await player.attach(video);
                     
@@ -413,6 +482,22 @@
                     loadingSpinner.classList.add('hidden');
                     errorDisplay.classList.remove('hidden');
                     errorMessage.textContent = error.message || 'Failed to load the stream. Please try again later.';
+                    
+                    // Show fallback option if available
+                    if (fallbackStreams.length > 0) {
+                        tryFallbackBtn.classList.remove('hidden');
+                    }
+                }
+            }
+
+            function tryFallbackStream() {
+                if (fallbackStreams.length > 0) {
+                    const fallbackUrl = fallbackStreams.shift(); // Get next fallback and remove it from array
+                    errorMessage.textContent = `Trying fallback stream (${fallbackUrl.split('/').pop()})...`;
+                    loadStream(fallbackUrl);
+                } else {
+                    errorMessage.textContent = 'No more fallback streams available.';
+                    tryFallbackBtn.classList.add('hidden');
                 }
             }
 
@@ -442,7 +527,8 @@
                         option.className = 'px-4 py-2 hover:bg-gray-700 cursor-pointer';
                         
                         const height = track.height || Math.round(track.width * 9/16);
-                        option.textContent = `${height}p (${Math.round(track.bandwidth / 1000)} kbps)`;
+                        const bandwidth = Math.round(track.bandwidth / 1000);
+                        option.textContent = `${height}p (${bandwidth} kbps)`;
                         
                         option.addEventListener('click', () => {
                             player.configure({ abr: { enabled: false } });
@@ -485,7 +571,10 @@
 
             function togglePlayPause() {
                 if (video.paused) {
-                    video.play();
+                    video.play().catch(e => {
+                        console.error('Play error:', e);
+                        handlePlayerError(e);
+                    });
                 } else {
                     video.pause();
                 }
@@ -517,7 +606,9 @@
             }
 
             function updateVideoInfo() {
-                streamInfo.textContent = `${video.videoWidth}x${video.videoHeight} @ ${Math.round(video.bitrate / 1000)} kbps`;
+                const resolution = `${video.videoWidth}x${video.videoHeight}`;
+                const bitrate = Math.round(player.getStats().streamBandwidth / 1000);
+                streamInfo.textContent = `${resolution} @ ${bitrate} kbps`;
                 streamInfo.classList.remove('hidden');
             }
 
@@ -539,16 +630,46 @@
                 }
             }
 
-            function handlePlayerError() {
+            function handlePlayerError(error) {
+                console.error('Player error:', error);
                 loadingSpinner.classList.add('hidden');
                 errorDisplay.classList.remove('hidden');
-                errorMessage.textContent = video.error ? video.error.message : 'An unknown playback error occurred.';
+                
+                let errorMsg = 'An error occurred during playback.';
+                if (error) {
+                    errorMsg = error.message || errorMsg;
+                    if (error.code === 1002) errorMsg = 'Network error. Please check your connection.';
+                    if (error.code === 1006) errorMsg = 'Stream not available. Try again later.';
+                }
+                
+                errorMessage.textContent = errorMsg;
+                
+                // Show fallback option if available
+                if (fallbackStreams.length > 0) {
+                    tryFallbackBtn.classList.remove('hidden');
+                }
             }
 
             function formatTime(seconds) {
                 const minutes = Math.floor(seconds / 60);
                 const secs = Math.floor(seconds % 60);
                 return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+            }
+
+            function showBrowserNotSupported() {
+                const container = document.querySelector('.container');
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'bg-red-900 text-white p-4 rounded-lg mb-8';
+                errorDiv.innerHTML = `
+                    <h2 class="text-xl font-bold mb-2">Browser Not Supported</h2>
+                    <p>Your browser doesn't support the required video playback technology. Please try using:</p>
+                    <ul class="list-disc pl-5 mt-2">
+                        <li>Google Chrome (latest version)</li>
+                        <li>Mozilla Firefox (latest version)</li>
+                        <li>Microsoft Edge (latest version)</li>
+                    </ul>
+                `;
+                container.insertBefore(errorDiv, container.firstChild);
             }
 
             // Close quality menu when clicking outside
