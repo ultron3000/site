@@ -476,7 +476,15 @@
                             <span class="text-yellow-400 text-sm">★ ${ep.rating}/10</span>
                         </div>
                         <p class="text-gray-300 mb-4">${ep.description}</p>
-                        <div class="flex justify-between items-center">
+                        
+        <div class="flex justify-between items-center mb-4">
+          <button class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded-full transition"
+                  data-video="${ep.video}" data-title="${ep.title}" data-description="${ep.description}">
+            <i class='fas fa-play mr-2'></i> Play
+          </button>
+        </div>
+        <div class="flex justify-between items-center">
+        
                             <button class="text-yellow-400 hover:text-yellow-300 text-sm flex items-center">
                                 <i class="fas fa-info-circle mr-1"></i> Details
                             </button>
