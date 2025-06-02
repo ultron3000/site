@@ -50,19 +50,6 @@
     .episode-card:hover .play-icon {
       opacity: 1;
     }
-    .modal {
-      transition: opacity 0.3s ease;
-    }
-    .modal-overlay {
-      background-color: rgba(0, 0, 0, 0.8);
-    }
-    .modal-container {
-      max-width: 90%;
-      width: 800px;
-    }
-    .aspect-ratio-16-9 {
-      aspect-ratio: 16/9;
-    }
   </style>
 </head>
 <body class="bg-dark text-white font-sans">
@@ -115,25 +102,6 @@
     </div>
   </main>
 
-  <!-- Video Modal -->
-  <div id="video-modal" class="modal fixed inset-0 z-50 flex items-center justify-center opacity-0 pointer-events-none">
-    <div class="modal-overlay absolute inset-0"></div>
-    <div class="modal-container relative bg-dark rounded-xl overflow-hidden shadow-2xl mx-4">
-      <button id="modal-close" class="absolute right-4 top-4 z-10 bg-black bg-opacity-50 rounded-full p-2 hover:bg-opacity-70 transition">
-        <i class="fas fa-times text-white text-xl"></i>
-      </button>
-      <div class="aspect-ratio-16-9 w-full">
-        <video id="modal-video" controls class="w-full h-full">
-          Your browser does not support the video tag.
-        </video>
-      </div>
-      <div class="p-6">
-        <h3 id="modal-title" class="text-2xl font-bold mb-2"></h3>
-        <p id="modal-description" class="text-gray-300"></p>
-      </div>
-    </div>
-  </div>
-
   <!-- Footer -->
   <footer class="gradient-bg py-12">
     <div class="container mx-auto px-4 md:px-6 text-center">
@@ -180,6 +148,57 @@
         { title: "The Compass Points Home", episode: 8, duration: "65m", description: "The explosive season finale with consequences that will change the team forever.", video: "https://macdn.hakunaymatata.com/resource/f21d496049e4c4debbec8460b008adad.mp4?Expires=1750068067&Signature=3z8NasVJ8GVikCrYlusSdj4bNwbF5HWozYCKmyONi-og2nkfZtaXfFYeZ3w0uvWO0D2FwzlkdLuOAmiq3HrCZWHNi1dVcrsy5fhTGTeqaw8kAkWF1Qt6I-uip2xNi6oxmyRJC8nu7gs04X0J~VZDUd9ue508NPGqwWueTIf5pNAAYEnu0K4bOli8IfXyDPYWageKosPd1MOizvHywxz5HFC4a4oFZ09CAu9nED0GukWaiRcSeUAhJjjijI3SVyoGVn~YRH0LfAuFVvnlR9GyKMjH5oCe-MLP1TAelLCx-gza19BsWIDET3AAvvFT0PbQVhmhBovvJRsC-ou2Vm6Smg__&Key-Pair-Id=KMHN1LQ1HEUPL", image: "https://resizing.flixster.com/4HnNwmDcl6IPSvrEZRgJfeB3nis=/270x160/v2/https://statcdn.fandango.com/MPX/image/NBCU_Fandango/89/886/thumb_2F508CE6-EF23-49C3-8D79-00F619D189EC.jpg" }
       ]
     };
+
+    function loadSeason(season, button) {
+      // Update active season button
+      document.querySelectorAll('.season-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-primary', 'bg-opacity-20', 'border-primary');
+        btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
+      });
+      
+      if (button) {
+        button.classList.add('active', 'bg-primary', 'bg-opacity-20', 'border-primary');
+        button.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+      }
+      
+      // Load episodes
+      const grid = document.getElementById('episode-grid');
+      grid.innerHTML = '';
+
+      episodes[season].forEach(ep => {
+        const card = document.createElement('div');
+        card.className = 'episode-card bg-light rounded-xl overflow-hidden shadow-lg relative';
+        card.innerHTML = `
+          <div class="relative">
+            <img src="${ep.image}" alt="${ep.title}" class="w-full h-56 object-cover">
+            <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center play-icon">
+              <div class="bg-primary bg-opacity-90 rounded-full p-4 cursor-pointer transform hover:scale-110 transition">
+                <i class="fas fa-play text-xl"></i>
+              </div>
+            </div>
+            <div class="absolute top-3 right-3 bg-black bg-opacity-70 px-2 py-1 rounded text-sm">
+              ${ep.duration}
+            </div>
+          </div>
+          <div class="p-5">
+            <div class="text-primary font-semibold mb-1">Episode ${ep.episode}</div>
+            <h3 class="text-xl font-bold mb-2">${ep.title}</h3>
+            <p class="text-gray-300 text-sm mb-4 line-clamp-2">${ep.description}</p>
+            <a href="player.html?video=${encodeURIComponent(ep.video)}&title=${encodeURIComponent(ep.title)}" 
+              class="w-full bg-primary hover:bg-purple-800 text-center px-4 py-3 rounded-lg font-medium block">
+              Watch Now
+            </a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Load first season by default
+    window.onload = function() {
+      loadSeason('season1');
+    };
+  </script>
 
     // Modal functionality
     const videoModal = document.getElementById('video-modal');
