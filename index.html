@@ -149,150 +149,43 @@
       ]
     };
 
-    function loadSeason(season, button) {
-      // Update active season button
-      document.querySelectorAll('.season-btn').forEach(btn => {
-        btn.classList.remove('active', 'bg-primary', 'bg-opacity-20', 'border-primary');
-        btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
-      });
-      
-      if (button) {
-        button.classList.add('active', 'bg-primary', 'bg-opacity-20', 'border-primary');
-        button.classList.remove('bg-gray-700', 'hover:bg-gray-600');
-      }
-      
-      // Load episodes
-      const grid = document.getElementById('episode-grid');
-      grid.innerHTML = '';
-
-      episodes[season].forEach(ep => {
-        const card = document.createElement('div');
-        card.className = 'episode-card bg-light rounded-xl overflow-hidden shadow-lg relative';
-        card.innerHTML = `
-          <div class="relative">
-            <img src="${ep.image}" alt="${ep.title}" class="w-full h-56 object-cover">
-            <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center play-icon">
-              <div class="bg-primary bg-opacity-90 rounded-full p-4 cursor-pointer transform hover:scale-110 transition">
-                <i class="fas fa-play text-xl"></i>
-              </div>
-            </div>
-            <div class="absolute top-3 right-3 bg-black bg-opacity-70 px-2 py-1 rounded text-sm">
-              ${ep.duration}
-            </div>
-          </div>
-          <div class="p-5">
-            <div class="text-primary font-semibold mb-1">Episode ${ep.episode}</div>
-            <h3 class="text-xl font-bold mb-2">${ep.title}</h3>
-            <p class="text-gray-300 text-sm mb-4 line-clamp-2">${ep.description}</p>
-            <a href="player.html?video=${encodeURIComponent(ep.video)}&title=${encodeURIComponent(ep.title)}" 
-              class="w-full bg-primary hover:bg-purple-800 text-center px-4 py-3 rounded-lg font-medium block">
-              Watch Now
-            </a>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
+    function isStreamLink(url) {
+      return url.endsWith('.m3u8') || url.endsWith('.txt');
     }
 
-    // Load first season by default
-    window.onload = function() {
-      loadSeason('season1');
-    };
-  </script>
-
-    // Modal functionality
-    const videoModal = document.getElementById('video-modal');
-    const modalVideo = document.getElementById('modal-video');
-    const modalTitle = document.getElementById('modal-title');
-    const modalDescription = document.getElementById('modal-description');
-    const modalClose = document.getElementById('modal-close');
-
-    function openModal(videoUrl, title, description) {
-      modalVideo.src = videoUrl;
-      modalTitle.textContent = title;
-      modalDescription.textContent = description;
-      videoModal.classList.remove('opacity-0', 'pointer-events-none');
-      videoModal.classList.add('opacity-100');
-      document.body.style.overflow = 'hidden';
-      modalVideo.play();
+    function loadSeason(season) {
+      const grid = document.getElementById('episode-grid');
+      grid.innerHTML = '';
+      episodes[season].forEach((ep, i) => {
+        const card = document.createElement('div');
+        card.className = 'episode-card bg-gray-700 p-4 rounded shadow hover:shadow-lg';
+        card.innerHTML = `
+          <img src="${ep.poster}" class="rounded mb-2 w-full" alt="Episode ${i + 1}">
+          <h2 class="text-xl font-semibold mb-2">Episode ${i + 1}</h2>
+          <button class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded w-full">Play</button>
+        `;
+        card.querySelector('button').onclick = () => {
+          if (isStreamLink(ep.url)) {
+            window.location.href = `player.html?video=${encodeURIComponent(ep.url)}`;
+          } else {
+            const video = document.getElementById('modal-video');
+            video.src = ep.url;
+            video.poster = ep.poster;
+            document.getElementById('modal').classList.remove('hidden');
+          }
+        };
+        grid.appendChild(card);
+      });
     }
 
     function closeModal() {
-      videoModal.classList.remove('opacity-100');
-      videoModal.classList.add('opacity-0', 'pointer-events-none');
-      document.body.style.overflow = 'auto';
-      modalVideo.pause();
-      modalVideo.currentTime = 0;
+      const video = document.getElementById('modal-video');
+      video.pause();
+      video.src = '';
+      document.getElementById('modal').classList.add('hidden');
     }
 
-    modalClose.addEventListener('click', closeModal);
-    videoModal.addEventListener('click', (e) => {
-      if (e.target === videoModal) {
-        closeModal();
-      }
-    });
-
-    // Handle video playback based on file type
-    function handleVideoPlayback(videoUrl, title, description) {
-      const isMP4 = videoUrl.toLowerCase().endsWith('.mp4');
-      
-      if (isMP4) {
-        openModal(videoUrl, title, description);
-      } else {
-        // For .m3u8 and .txt files, open in player.html
-        window.open(`player.html?video=${encodeURIComponent(videoUrl)}&title=${encodeURIComponent(title)}`, '_blank');
-      }
-    }
-
-    function loadSeason(season, button) {
-      // Update active season button
-      document.querySelectorAll('.season-btn').forEach(btn => {
-        btn.classList.remove('active', 'bg-primary', 'bg-opacity-20', 'border-primary');
-        btn.classList.add('bg-gray-700', 'hover:bg-gray-600');
-      });
-      
-      if (button) {
-        button.classList.add('active', 'bg-primary', 'bg-opacity-20', 'border-primary');
-        button.classList.remove('bg-gray-700', 'hover:bg-gray-600');
-      }
-      
-      // Load episodes
-      const grid = document.getElementById('episode-grid');
-      grid.innerHTML = '';
-
-      episodes[season].forEach(ep => {
-        const card = document.createElement('div');
-        card.className = 'episode-card bg-light rounded-xl overflow-hidden shadow-lg relative';
-        card.innerHTML = `
-          <div class="relative">
-            <img src="${ep.image}" alt="${ep.title}" class="w-full h-56 object-cover">
-            <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center play-icon">
-              <div class="bg-primary bg-opacity-90 rounded-full p-4 cursor-pointer transform hover:scale-110 transition">
-                <i class="fas fa-play text-xl"></i>
-              </div>
-            </div>
-            <div class="absolute top-3 right-3 bg-black bg-opacity-70 px-2 py-1 rounded text-sm">
-              ${ep.duration}
-            </div>
-          </div>
-          <div class="p-5">
-            <div class="text-primary font-semibold mb-1">Episode ${ep.episode}</div>
-            <h3 class="text-xl font-bold mb-2">${ep.title}</h3>
-            <p class="text-gray-300 text-sm mb-4 line-clamp-2">${ep.description}</p>
-            <button onclick="handleVideoPlayback('${ep.video}', '${ep.title}', '${ep.description}')" 
-              class="w-full bg-primary hover:bg-purple-800 text-center px-4 py-3 rounded-lg font-medium">
-              Watch Now
-            </button>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    // Load first season by default
-    window.onload = function() {
-      loadSeason('season1');
-    };
+    loadSeason(1);
   </script>
 </body>
 </html>
