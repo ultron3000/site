@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -295,249 +295,7 @@
         </div>
     </footer>
 
-    <script>
-        // Episodes data
-        const episodes = {
-            season1: [
-                {
-                    title: "Sacrificial Soldiers",
-                    episode: 1,
-                    duration: "54m",
-                    description: "Cruz Manuelos joins the Lioness program under Joe's guidance for her first undercover mission.",
-                    video: "https://1.isonline.pro/stream_66709fea8aa76/uwu.m3u8",
-                    image: "https://f.woowoowoowoo.net/resize/300x200/b6/5a/b65a3700f99462eca3fcae4e0aa280eb/b65a3700f99462eca3fcae4e0aa280eb.jpg",
-                    rating: 8.5
-                },
-                {
-                    title: "The Beating",
-                    episode: 2,
-                    duration: "48m",
-                    description: "The team works to identify their new target as Cruz struggles with the demands of the program.",
-                    video: "https://1.isonline.pro/stream_66709fa740128/uwu.m3u8",
-                    image: "https://f.woowoowoowoo.net/resize/300x200/e9/17/e917950ea5af07537224cb0d9718cd70/e917950ea5af07537224cb0d9718cd70.jpg",
-                    rating: 8.7
-                },
-                {
-                    title: "Bruise Like a Fist",
-                    episode: 3,
-                    duration: "52m",
-                    description: "Cruz goes deeper undercover while Joe faces personal challenges at home.",
-                    video: "https://1.isonline.pro/stream_66709fc0ebc27/uwu.m3u8",
-                    image: "https://f.woowoowoowoo.net/resize/300x200/ac/a9/aca9dfad9d8d9676281762755579b7be/aca9dfad9d8d9676281762755579b7be.jpg",
-                    rating: 8.9
-                },
-                {
-                    title: "The Choice of Failure",
-                    episode: 4,
-                    duration: "49m",
-                    description: "Tensions rise as the mission progresses and relationships become more complicated.",
-                    video: "https://1.isonline.pro/stream_6670a05817482/uwu.m3u8",
-                    image: "https://f.woowoowoowoo.net/resize/300x200/93/8c/938c3ed731a51e61d80eee50736ab08a/938c3ed731a51e61d80eee50736ab08a.jpg",
-                    rating: 9.0
-                },
-                {
-                    title: "Truth Is the Shrewdest Lie",
-                    episode: 5,
-                    duration: "51m",
-                    description: "The team faces new challenges as the operation takes an unexpected turn.",
-                    video: "https://1.isonline.pro/stream_66709ffdb9730/uwu.m3u8",
-                    image: "https://f.woowoowoowoo.net/resize/300x200/b1/66/b1664faaf4d8dfdf971384dc030e76fa/b1664faaf4d8dfdf971384dc030e76fa.jpg",
-                    rating: 9.1
-                },
-                {
-                    title: "The Lie Is the Truth",
-                    episode: 6,
-                    duration: "53m",
-                    description: "Loyalties are tested as the operation reaches a critical point.",
-                    video: "https://1.isonline.pro/stream_6670a16d5f99b/uwu.m3u8",
-                    image: "https://f.woowoowoowoo.net/resize/300x200/54/52/545210466cb13b2832b835c1ab1dc8a6/545210466cb13b2832b835c1ab1dc8a6.jpg",
-                    rating: 9.2
-                },
-                {
-                    title: "Wish the Fight Away",
-                    episode: 7,
-                    duration: "56m",
-                    description: "The stakes escalate as the team prepares for the final phase of the operation.",
-                    video: "https://1.isonline.pro/stream_6670a09cd4441/uwu.m3u8",
-                    image: "https://f.woowoowoowoo.net/resize/300x200/38/15/3815904b80c875423449b0063d88164c/3815904b80c875423449b0063d88164c.jpg",
-                    rating: 9.3
-                },
-                {
-                    title: "Gone Is the Illusion of Order",
-                    episode: 8,
-                    duration: "62m",
-                    description: "The explosive season finale where all secrets are revealed and sacrifices made.",
-                    video: "https://1.isonline.pro/stream_6670a11d5ddac/uwu.m3u8",
-                    image: "https://f.woowoowoowoo.net/resize/300x200/4b/04/4b04977db68e4df7e320b19e0e6a9dc8/4b04977db68e4df7e320b19e0e6a9dc8.jpg",
-                    rating: 9.5
-                }
-            ],
-            season2: [
-                {
-                    title: "Beware the Old Soldier",
-                    episode: 1,
-                    duration: "58m",
-                    description: "The Lioness team returns with a new mission and new challenges to overcome.",
-                    video: "https://macdn.hakunaymatata.com/resource/03ad7ea66e23813c8bcc62d0dc408d36.mp4?Expires=1750071399&Signature=17QbOWFbsCBWSMcyYeM5amP9HvhfCpGTUoydQYB6MkJ3a8LJRPuHMGIu7uW5RJX8dMvKmMVmMSPQjnRqM6sFUAvGPwNHqXvblCQek9-9JexyDysmO6ZE8cxoFCNjDZjk7RQvZ9E9FdScBatrWbMXCD2MI0Ul2XbbYElvyqGCt76IE90RbiHTWkM3RH899UVeV4D3ei6r0TaHI16IzP8TmAS4YWM9wI4sIERkAhnm1TmDe3Z5q0rZ8mo7j7uLp6bXjxULPUq9RsNk1Rg1ln0PAZ2mNpQEXfwPmdGbrS~HvpacCowAzijM3sbP9CQ9e1Ke6ARvSBRrvjLBXDWn11KRsg__&Key-Pair-Id=KMHN1LQ1HEUPL",
-                    image: "https://f.woowoowoowoo.net/resize/300x200/12/3d/123d5ecfa139860c69883a00c7c4d2a5/123d5ecfa139860c69883a00c7c4d2a5.jpg",
-                    rating: 9.0
-                },
-                {
-                    title: "I Love My Country",
-                    episode: 2,
-                    duration: "52m",
-                    description: "New alliances form as the team goes deeper undercover in dangerous territory.",
-                    video: "https://macdn.hakunaymatata.com/resource/52ad138548e4f8bbb481bb05c3e5a396.mp4?Expires=1750068179&Signature=b1ZKZuICJTdpLCdE2G4yCm7hO~Gwnv9dahBIQJNNchkMMQv1wdctjnP5rAyVIOb0dIghVRi7OSbJTn-VYMCzmeyxnhQwGf89RVEAwmVPw~tonqUXXODJlG~XoMAUZVuM6i1RoZyyJppgMsYNQpgYhzsPdouEsZC8mFMuTJAAw-YPFcjIcCKWqx7ERXJJs4XEcl~2hpAHfDV25fpvbp9cVJn-S1JI-VDb05mwSqDgsabGlsLnOVj2IfhwvF2zlAAaL5oqWF3e6BMBPk-UQM~6XiXSkRiCjfXIwsGvXE6qbIf58nWSHqEa3H3tKSPT4qD4uNyBK4ab1BmVx86-J4~Y6g__&Key-Pair-Id=KMHN1LQ1HEUPL",
-                    image: "https://f.woowoowoowoo.net/resize/300x200/e7/f6/e7f6c479ca7367da6214086d6e2b2490/e7f6c479ca7367da6214086d6e2b2490.jpg",
-                    rating: 8.9
-                },
-                {
-                    title: "Along Came a Spider",
-                    episode: 3,
-                    duration: "55m",
-                    description: "A mysterious figure from Joe's past threatens the entire operation.",
-                    video: "https://macdn.hakunaymatata.com/resource/b3142f6508044cff3fc608bb95b3fe34.mp4?Expires=1750065758&Signature=kRdu1CVB2T31ttSVvYAE34JJCecOlCIY6-buKtoVkgeQEMqpTSbupin66m4gXF0TcJt9TzbLqt0ai9KYMrFxwe59YCAdYT2hWdjlARJUv0bk0elvt7Ed5OeHAImG9YL12ncUFCthlWrALz-wzQ7aLXh3rjsi2tcBnt5ihOzyppwVuKUlI2ZFOniMHOR08cHyV9KrJyPWnTnrCYMduskigucpJCx2nprq-2X1otzonoz-2OzWbRyddk2fEzlj8L~HaMEQxddnJLJYS3EKloZYHdcAZmMmecvnSHYtkD0~abhB0a8sT7ucRiLaFr1W1TMefkZq7UW7SpWHJ3TOs47jdA__&Key-Pair-Id=KMHN1LQ1HEUPL",
-                    image: "https://f.woowoowoowoo.net/resize/300x200/8f/7d/8f7db02e88f345897d4026c6f13931b9/8f7db02e88f345897d4026c6f13931b9.jpg",
-                    rating: 9.1
-                },
-                {
-                    title: "Five Hundred Children",
-                    episode: 4,
-                    duration: "59m",
-                    description: "The mission takes an emotional turn when innocent lives are put in danger.",
-                    video: "https://macdn.hakunaymatata.com/resource/f62e82e4324786eec7b1828ddf348fdc.mp4?Expires=1750068453&Signature=v~xddCrWaROs9MwoSDKH-ngks32~2eWt0zbQiqgA7QS6RZhePAEZ1smxzrWL52MtRZlWSy3yv6QRnEijwgRv2ucvGxmnStN9XNHl3QPv855jDgDb1hWF78eUpWj~P0RSQHhVgTt2le3DRWuyIgj8ZVc7Br6UHQcwAFsKcLRc5ZvCzZYp7JFSqfwxgqRpB9PSlx7O2imh1BSJaeXf4UdXAiLraqnk1XvJP543scKj2We~5m969G7SCnHuS3DN2ieHbsQ5VYff3KiWO2cPUHLwfWld4AU14gqyEgLHTk7oA3FE3L9adAmeS9hlX7ChrAbk641R4OTaiRD2wAfnx507tA__&Key-Pair-Id=KMHN1LQ1HEUPL",
-                    image: "https://f.woowoowoowoo.net/resize/300x200/dd/e1/dde18fdad79a426e0fbf3d55fbc47f59/dde18fdad79a426e0fbf3d55fbc47f59.jpg",
-                    rating: 9.2
-                },
-                {
-                    title: "Shatter the Moon",
-                    episode: 5,
-                    duration: "57m",
-                    description: "Plans go awry when a key team member's cover is nearly blown.",
-                    video: "https://macdn.hakunaymatata.com/resource/3291a0461479730993e8aa1a6c79cef9.mp4?Expires=1750071507&Signature=Ms13xlztkcVMXP1WXrPML6JnHU9WUi0WLlyuqDbyUigFSPOZLUVvU6YpLsg8FqA~KXoXB005p8yMq5gkWXvmxZgIayT0XZfu1ogN2hUkCAD31caQa2kqVvBm2Lh~mlrakRK2n~q6MOYIsfT8WH31P6S6eg2q5BUNUC7RQAf6goMGH2MLs76T00dyTdiiwZ-7EPXcZAJpvPnCzojiRsPms7opluToQ48rH0TR5JBgAQsRBfQRqPI73A47stAfiNd5qyLH1hGpnYRhNibfw7K0GsOfDvwMOXrolTGMqQjrlT-MAfVzDgOzzPElmECID2Cug5Y26JramJ-m04qk4K71cg__&Key-Pair-Id=KMHN1LQ1HEUPL",
-                    image: "https://f.woowoowoowoo.net/resize/300x200/9d/4b/9d4be54d546cf158fdd335471d3851d2/9d4be54d546cf158fdd335471d3851d2.jpg",
-                    rating: 9.3
-                },
-                {
-                    title: "2381",
-                    episode: 6,
-                    duration: "53m",
-                    description: "A shocking betrayal puts the entire Lioness program at risk.",
-                    video: "https://macdn.hakunaymatata.com/resource/724849c088bfea3cbffd0526e70caf78.mp4?Expires=1750071129&Signature=rAopQo98cC8f65C6c-4Xc6RKQAahxCXVGAxkHYFqi09oout8JnaDAZrr-hDooJUnIHtr8vLn3oLRwFn4r1jG81PPOXDS7X-bqRrm2M~u2asIctaYm2TMaq4g1Ks5eYRzB-WAadG5OSQIrWiDJZPF8229cFPiyJCHS5ySFNnV1vw-fk-xtgRg8dkawSviIC5cxdhzPrgTYE2C0o9iKivoaK7tzoeZddAhfmqsrrvYX4TtPFYaTYAwOw1K-leOcNsYV2k7yBlt~jZL6YmhS0kpFXQgpgfc5q8cUcY93Zt8pkkI~n-DlSz4B-fjMFlKYmC8~JlDDLtu8KjE-CaEZSZ2eg__&Key-Pair-Id=KMHN1LQ1HEUPL",
-                    image: "https://f.woowoowoowoo.net/resize/300x200/89/56/8956e67bd4fda019095657e8f531c27e/8956e67bd4fda019095657e8f531c27e.jpg",
-                    rating: 9.4
-                },
-                {
-                    title: "The Devil Has Aces",
-                    episode: 7,
-                    duration: "60m",
-                    description: "With time running out, the team takes desperate measures to complete their mission.",
-                    video: "https://macdn.hakunaymatata.com/resource/00574ef4c684e957d7779c476453a62a.mp4?Expires=1750071604&Signature=5mYkFngI3eVM7nuFZ4bFfkV7cCcpwhHsUDPf63YhHWDjAPJWApNMbBBEq8~lTKQzsQ1V3w-H-C0SQk~KYM30PJigfI2g0VtTH~4z9qMBsSB6kjDAJTYl2ptDV~skEEcZ0qC7fTkKwOGEv0A1YuckO1rVcol26ixlPssBdkwYGf5nA-3LkkzGO9vZUFnwaBWft3h5HXhJSqVi9~-o9F-U2YgiVFWH2m-mJu8Zvxy8A7Nn-DMWphM4YReEWkTafeorQ71JvpadW~8nkGCDNoNUseUpKImRMLVxxl73ujxtzqyNygATFskovWD0k-NubrwRoK4GeVoabYBuDT2bgxhuSQ__&Key-Pair-Id=KMHN1LQ1HEUPL",
-                    image: "https://f.woowoowoowoo.net/resize/300x200/bb/c3/bbc3a6ea1d28b368d8155ac26708ff43/bbc3a6ea1d28b368d8155ac26708ff43.jpg",
-                    rating: 9.5
-                },
-                {
-                    title: "The Compass Points Home",
-                    episode: 8,
-                    duration: "65m",
-                    description: "The explosive season finale with consequences that will change the team forever.",
-                    video: "https://macdn.hakunaymatata.com/resource/f21d496049e4c4debbec8460b008adad.mp4?Expires=1750068067&Signature=3z8NasVJ8GVikCrYlusSdj4bNwbF5HWozYCKmyONi-og2nkfZtaXfFYeZ3w0uvWO0D2FwzlkdLuOAmiq3HrCZWHNi1dVcrsy5fhTGTeqaw8kAkWF1Qt6I-uip2xNi6oxmyRJC8nu7gs04X0J~VZDUd9ue508NPGqwWueTIf5pNAAYEnu0K4bOli8IfXyDPYWageKosPd1MOizvHywxz5HFC4a4oFZ09CAu9nED0GukWaiRcSeUAhJjjijI3SVyoGVn~YRH0LfAuFVvnlR9GyKMjH5oCe-MLP1TAelLCx-gza19BsWIDET3AAvvFT0PbQVhmhBovvJRsC-ou2Vm6Smg__&Key-Pair-Id=KMHN1LQ1HEUPL",
-                    image: "https://resizing.flixster.com/4HnNwmDcl6IPSvrEZRgJfeB3nis=/270x160/v2/https://statcdn.fandango.com/MPX/image/NBCU_Fandango/89/886/thumb_2F508CE6-EF23-49C3-8D79-00F619D189EC.jpg",
-                    rating: 9.7
-                }
-            ]
-        };
-
-        // Function to render episodes
-        function renderEpisodes(season) {
-            const container = document.getElementById('episodesContainer');
-            container.innerHTML = '';
-            
-            episodes[season].forEach(ep => {
-                const ratingColor = ep.rating >= 9.0 ? 'bg-green-500' : 
-                                   ep.rating >= 8.0 ? 'bg-yellow-500' : 'bg-red-500';
-                
-                const episodeCard = document.createElement('div');
-                episodeCard.className = 'episode-card bg-gray-800 rounded-lg overflow-hidden transition duration-300';
-                episodeCard.innerHTML = `
-                    <div class="relative">
-                        <img src="${ep.image}" alt="${ep.title}" class="w-full h-48 object-cover">
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                            <span class="text-yellow-400 font-bold">S${ep.episode <= 8 ? 1 : 2} • E${ep.episode}</span>
-                            <h3 class="text-xl font-bold">${ep.title}</h3>
-                        </div>
-                        <div class="absolute top-2 right-2 ${ratingColor} rating-circle text-white">
-                            ${ep.rating}
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-gray-400">${ep.duration}</span>
-                            <span class="text-yellow-400 text-sm">★ ${ep.rating}/10</span>
-                        </div>
-                        <p class="text-gray-300 mb-4">${ep.description}</p>
-                        <div class="flex justify-between items-center">
-        <button class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded-full transition"
-                data-video="${ep.video}" data-title="${ep.title}" data-description="${ep.description}">
-          <i class="fas fa-play mr-2"></i> Play
-        </button>
-        
-                            <button class="text-yellow-400 hover:text-yellow-300 text-sm flex items-center">
-                                <i class="fas fa-info-circle mr-1"></i> Details
-                            </button>
-                            <button class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded-full flex items-center transition text-sm">
-                                <i class="fas fa-play mr-1"></i> Play
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                container.appendChild(episodeCard);
-            });
-        }
-
-        // Initialize with Season 1
-        document.addEventListener('DOMContentLoaded', () => {
-            renderEpisodes('season1');
-            
-            // Season tab switching
-            document.getElementById('season1Btn').addEventListener('click', () => {
-                document.getElementById('season1Btn').classList.add('bg-yellow-500', 'text-black');
-                document.getElementById('season1Btn').classList.remove('bg-gray-700', 'hover:bg-gray-600');
-                document.getElementById('season2Btn').classList.remove('bg-yellow-500', 'text-black');
-                document.getElementById('season2Btn').classList.add('bg-gray-700', 'hover:bg-gray-600');
-                renderEpisodes('season1');
-            });
-            
-            document.getElementById('season2Btn').addEventListener('click', () => {
-                document.getElementById('season2Btn').classList.add('bg-yellow-500', 'text-black');
-                document.getElementById('season2Btn').classList.remove('bg-gray-700', 'hover:bg-gray-600');
-                document.getElementById('season1Btn').classList.remove('bg-yellow-500', 'text-black');
-                document.getElementById('season1Btn').classList.add('bg-gray-700', 'hover:bg-gray-600');
-                renderEpisodes('season2');
-            });
-        });
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Trailer button functionality
-        const trailerBtn = document.querySelector('.trailer-btn');
-        if (trailerBtn) {
-            trailerBtn.addEventListener('click', () => {
-                alert('Trailer would play here!');
-                // In a real implementation, this would open a modal or replace the image with an iframe
-            });
-        }
-    </script>
-
+    
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('playback-modal');
@@ -548,12 +306,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('[data-video]').forEach(button => {
     button.addEventListener('click', () => {
-      modalVideo.src = button.getAttribute('data-video');
-      modalTitle.textContent = button.getAttribute('data-title') || '';
-      modalDesc.textContent = button.getAttribute('data-description') || '';
-      modal.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-      modalVideo.play();
+      const videoUrl = button.getAttribute('data-video');
+      const title = button.getAttribute('data-title') || '';
+      const desc = button.getAttribute('data-description') || '';
+
+      if (videoUrl.endsWith('.mp4')) {
+        modalVideo.src = videoUrl;
+        modalTitle.textContent = title;
+        modalDesc.textContent = desc;
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        modalVideo.play();
+      } else if (videoUrl.endsWith('.m3u8') || videoUrl.endsWith('.txt')) {
+        window.location.href = 'player.html?video=' + encodeURIComponent(videoUrl);
+      }
     });
   });
 
@@ -565,6 +331,45 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('playback-modal');
+  const modalVideo = document.getElementById('modal-video');
+  const closeModal = document.getElementById('close-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalDesc = document.getElementById('modal-description');
+
+  document.querySelectorAll('[data-video]').forEach(button => {
+    button.addEventListener('click', () => {
+      const videoUrl = button.getAttribute('data-video');
+      const title = button.getAttribute('data-title') || '';
+      const desc = button.getAttribute('data-description') || '';
+
+      if (videoUrl.endsWith('.mp4')) {
+        modalVideo.src = videoUrl;
+        modalTitle.textContent = title;
+        modalDesc.textContent = desc;
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        modalVideo.play();
+      } else if (videoUrl.endsWith('.m3u8') || videoUrl.endsWith('.txt')) {
+        window.location.href = 'player.html?video=' + encodeURIComponent(videoUrl);
+      }
+    });
+  });
+
+  closeModal.addEventListener('click', () => {
+    modal.classList.add('hidden');
+    modalVideo.pause();
+    modalVideo.src = '';
+    document.body.style.overflow = '';
+  });
+});
+</script>
+
 
 </body>
 </html>
