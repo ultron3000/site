@@ -295,7 +295,8 @@
         </div>
     </footer>
 
-    <script>
+    
+<script>
 // Episodes data
         const episodes = {
             season1: [
@@ -476,15 +477,7 @@
                             <span class="text-yellow-400 text-sm">★ ${ep.rating}/10</span>
                         </div>
                         <p class="text-gray-300 mb-4">${ep.description}</p>
-                        
-        <div class="flex justify-between items-center mb-4">
-          <button class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded-full transition"
-                  data-video="${ep.video}" data-title="${ep.title}" data-description="${ep.description}">
-            <i class='fas fa-play mr-2'></i> Play
-          </button>
-        </div>
-        <div class="flex justify-between items-center">
-        
+                        <div class="flex justify-between items-center">
                             <button class="text-yellow-400 hover:text-yellow-300 text-sm flex items-center">
                                 <i class="fas fa-info-circle mr-1"></i> Details
                             </button>
@@ -539,7 +532,9 @@
                 // In a real implementation, this would open a modal or replace the image with an iframe
             });
         }
+</script>
 
+<script>
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('playback-modal');
   const modalVideo = document.getElementById('modal-video');
@@ -547,23 +542,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalTitle = document.getElementById('modal-title');
   const modalDesc = document.getElementById('modal-description');
 
-  document.querySelectorAll('[data-video]').forEach(button => {
-    button.addEventListener('click', () => {
-      const videoUrl = button.getAttribute('data-video');
-      const title = button.getAttribute('data-title') || '';
-      const desc = button.getAttribute('data-description') || '';
+  document.body.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-video]');
+    if (!btn) return;
 
-      if (videoUrl.endsWith('.mp4')) {
-        modalVideo.src = videoUrl;
-        modalTitle.textContent = title;
-        modalDesc.textContent = desc;
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-        modalVideo.play();
-      } else if (videoUrl.endsWith('.m3u8') || videoUrl.endsWith('.txt')) {
-        window.location.href = 'player.html?video=' + encodeURIComponent(videoUrl);
-      }
-    });
+    const videoUrl = btn.getAttribute('data-video');
+    const title = btn.getAttribute('data-title') || '';
+    const desc = btn.getAttribute('data-description') || '';
+
+    if (videoUrl.endsWith('.mp4')) {
+      modalVideo.src = videoUrl;
+      modalTitle.textContent = title;
+      modalDesc.textContent = desc;
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      modalVideo.play();
+    } else if (videoUrl.endsWith('.m3u8') || videoUrl.endsWith('.txt')) {
+      window.location.href = 'player.html?video=' + encodeURIComponent(videoUrl);
+    }
   });
 
   closeModal.addEventListener('click', () => {
@@ -574,5 +570,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+
 </body>
 </html>
