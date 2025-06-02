@@ -450,25 +450,43 @@
         };
 
         // Function to render episodes
-        function renderEpisodes(season) {
-            const container = document.getElementById('episodesContainer');
-            container.innerHTML = '';
-            
-            episodes[season].forEach(ep => {
-                const ratingColor = ep.rating >= 9.0 ? 'bg-green-500' : 
-                                   ep.rating >= 8.0 ? 'bg-yellow-500' : 'bg-red-500';
-                
-                const episodeCard = document.createElement('div');
-                episodeCard.className = 'episode-card bg-gray-800 rounded-lg overflow-hidden transition duration-300';
-                episodeCard.innerHTML = `
-                    <div class="relative">
-                        <img src="${ep.image}" alt="${ep.title}" class="w-full h-48 object-cover">
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                            <span class="text-yellow-400 font-bold">S${ep.episode <= 8 ? 1 : 2} • E${ep.episode}</span>
-                            <h3 class="text-xl font-bold">${ep.title}</h3>
-                        </div>
-                        <div class="absolute top-2 right-2 ${ratingColor} rating-circle text-white">
-                            ${ep.rating}
+        
+function renderEpisodes(season) {
+    const container = document.getElementById('episodesContainer');
+    container.innerHTML = '';
+
+    episodes[season].forEach(ep => {
+        const ratingColor = ep.rating >= 9.0 ? 'bg-green-500' :
+                            ep.rating >= 8.0 ? 'bg-yellow-500' : 'bg-red-500';
+
+        const episodeCard = document.createElement('div');
+        episodeCard.className = 'episode-card bg-gray-800 rounded-lg overflow-hidden transition duration-300';
+        episodeCard.innerHTML = `
+            <div class="relative">
+                <img src="${ep.image}" alt="${ep.title}" class="w-full h-48 object-cover">
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                    <span class="text-yellow-400 font-bold">S${season === 'season1' ? 1 : 2} • E${ep.episode}</span>
+                    <h3 class="text-xl font-bold">${ep.title}</h3>
+                </div>
+                <div class="absolute top-2 right-2 ${ratingColor} rating-circle text-white">
+                    ${ep.rating}
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-gray-400">${ep.duration}</span>
+                    <span class="text-yellow-400 text-sm">★ ${ep.rating}/10</span>
+                </div>
+                <p class="text-gray-300 mb-4">${ep.description}</p>
+                <button class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded-full transition"
+                        data-video="${ep.video}" data-title="${ep.title}" data-description="${ep.description}">
+                    <i class="fas fa-play mr-2"></i> Play
+                </button>
+            </div>
+        `;
+        container.appendChild(episodeCard);
+    });
+}
                         </div>
                     </div>
                     <div class="p-6">
