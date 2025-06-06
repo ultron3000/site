@@ -4,7 +4,72 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cloud Streaming Hub</title>
-<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script src="https://cdn.tailwindcss.com/3.4.16">
+// Dark mode toggle with localStorage
+const darkModeToggle = document.getElementById('darkModeToggle');
+const body = document.body;
+
+if (localStorage.getItem('theme') === 'dark') {
+  body.classList.add('dark');
+  darkModeToggle.innerHTML = '<i class="ri-moon-line text-gray-300"></i>';
+  body.style.backgroundColor = '#1A1A2E';
+}
+
+darkModeToggle.addEventListener('click', () => {
+  body.classList.toggle('dark');
+  if (body.classList.contains('dark')) {
+    localStorage.setItem('theme', 'dark');
+    darkModeToggle.innerHTML = '<i class="ri-moon-line text-gray-300"></i>';
+    body.style.backgroundColor = '#1A1A2E';
+  } else {
+    localStorage.setItem('theme', 'light');
+    darkModeToggle.innerHTML = '<i class="ri-sun-line text-gray-700"></i>';
+    body.style.backgroundColor = '#F9F9FB';
+  }
+});
+
+// Search functionality
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+const resultsList = document.getElementById('resultsList');
+const noResults = document.getElementById('noResults');
+const searchLoading = document.getElementById('searchLoading');
+
+const content = [
+  { title: 'Marvel Studios', type: 'Studio', url: 'https://ultron3000.github.io/marvel' },
+  { title: 'Sony Animation', type: 'Animation', url: 'https://ultron3000.github.io/sony' },
+  { title: 'Live TV', type: 'Live', url: 'https://tv.garden' },
+  { title: 'Radio', type: 'Live', url: 'https://radio.garden' },
+];
+
+searchInput.addEventListener('input', function () {
+  const query = this.value.trim().toLowerCase();
+  if (!query) {
+    searchResults.classList.add('hidden');
+    return;
+  }
+  searchLoading.classList.remove('hidden');
+  setTimeout(() => {
+    const filtered = content.filter(item => item.title.toLowerCase().includes(query));
+    resultsList.innerHTML = '';
+    searchLoading.classList.add('hidden');
+    if (filtered.length > 0) {
+      noResults.classList.add('hidden');
+      filtered.forEach(item => {
+        const el = document.createElement('a');
+        el.href = item.url;
+        el.className = 'block px-4 py-2 hover:bg-gray-50 transition rounded-lg';
+        el.innerHTML = `<div class="font-semibold">${item.title}</div><div class="text-xs text-gray-400">${item.type}</div>`;
+        resultsList.appendChild(el);
+      });
+    } else {
+      noResults.classList.remove('hidden');
+    }
+    searchResults.classList.remove('hidden');
+  }, 300);
+});
+
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
@@ -184,6 +249,18 @@ html {
 </head>
 <body class="bg-gray-50 min-h-screen transition-colors duration-200">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+<!-- CircularText Component Placeholder -->
+<!-- Replace this with rendered output or React integration -->
+<div id="circular-logo" class="my-4 flex justify-center">
+  <CircularText
+    text="Cloud*Hub*"
+    onHover="speedUp"
+    spinDuration={20}
+    className="custom-class"
+  />
+</div>
+
 <!-- Nav Bar -->
 <nav class="sticky top-0 w-full bg-white shadow-sm z-50 backdrop-blur-sm bg-opacity-90">
   <div class="flex items-center justify-between px-4 py-3">
@@ -992,47 +1069,37 @@ html {
 
 <!-- Tab Bar -->
 <nav class="fixed bottom-0 w-full bg-white border-t border-gray-200 z-50 sm:hidden">
-  <div class="grid grid-cols-5 h-16 relative">
+  <div class="flex justify-between px-4 h-16 items-center w-full relative">
     <div class="tab-indicator" style="width: 20%; left: 0;"></div>
     <a href="#home" class="tab-item flex flex-col items-center justify-center text-primary cursor-pointer" data-section="home">
-      <div class="flex items-center justify-center w-full h-full">
-        <div class="flex flex-col items-center">
-          <i class="ri-home-5-fill ri-lg"></i>
-          <span class="text-xs mt-0.5">Home</span>
-        </div>
+      <div class="w-6 h-6 flex items-center justify-center">
+        <i class="ri-home-5-fill ri-lg"></i>
       </div>
+      <span class="text-xs mt-1">Home</span>
     </a>
     <a href="#explore" class="tab-item flex flex-col items-center justify-center text-gray-500 cursor-pointer" data-section="explore">
-      <div class="flex items-center justify-center w-full h-full">
-        <div class="flex flex-col items-center">
-          <i class="ri-compass-line ri-lg"></i>
-          <span class="text-xs mt-0.5">Explore</span>
-        </div>
+      <div class="w-6 h-6 flex items-center justify-center">
+        <i class="ri-compass-line ri-lg"></i>
       </div>
+      <span class="text-xs mt-1">Explore</span>
     </a>
     <a href="#watch" class="tab-item flex flex-col items-center justify-center text-gray-500 cursor-pointer" data-section="watch">
-      <div class="flex items-center justify-center w-full h-full">
-        <div class="flex flex-col items-center">
-          <i class="ri-play-circle-line ri-lg"></i>
-          <span class="text-xs mt-0.5">Watch</span>
-        </div>
+      <div class="w-6 h-6 flex items-center justify-center">
+        <i class="ri-play-circle-line ri-lg"></i>
       </div>
+      <span class="text-xs mt-1">Watch</span>
     </a>
     <a href="#favorites" class="tab-item flex flex-col items-center justify-center text-gray-500 cursor-pointer" data-section="favorites">
-      <div class="flex items-center justify-center w-full h-full">
-        <div class="flex flex-col items-center">
-          <i class="ri-heart-line ri-lg"></i>
-          <span class="text-xs mt-0.5">Favorites</span>
-        </div>
+      <div class="w-6 h-6 flex items-center justify-center">
+        <i class="ri-heart-line ri-lg"></i>
       </div>
+      <span class="text-xs mt-1">Favorites</span>
     </a>
     <a href="#downloads" class="tab-item flex flex-col items-center justify-center text-gray-500 cursor-pointer" data-section="downloads">
-      <div class="flex items-center justify-center w-full h-full">
-        <div class="flex flex-col items-center">
-          <i class="ri-download-line ri-lg"></i>
-          <span class="text-xs mt-0.5">Downloads</span>
-        </div>
+      <div class="w-6 h-6 flex items-center justify-center">
+        <i class="ri-download-line ri-lg"></i>
       </div>
+      <span class="text-xs mt-1">Downloads</span>
     </a>
   </div>
 </nav>
@@ -1044,39 +1111,20 @@ html {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Dark mode toggle with saved preference
+  // Dark mode toggle
   const darkModeToggle = document.getElementById('darkModeToggle');
   const body = document.body;
   
-  // Check for saved preference or use system preference
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-  const savedMode = localStorage.getItem('ultronDarkMode');
-  
-  if (savedMode === 'dark' || (!savedMode && prefersDark.matches)) {
-    enableDarkMode();
-  }
-  
   darkModeToggle.addEventListener('click', function() {
+    body.classList.toggle('dark');
     if (body.classList.contains('dark')) {
-      disableDarkMode();
+      darkModeToggle.innerHTML = '<i class="ri-moon-line text-gray-700"></i>';
+      body.style.backgroundColor = '#1A1A2E';
     } else {
-      enableDarkMode();
+      darkModeToggle.innerHTML = '<i class="ri-sun-line text-gray-700"></i>';
+      body.style.backgroundColor = '#F9F9FB';
     }
   });
-  
-  function enableDarkMode() {
-    body.classList.add('dark');
-    darkModeToggle.innerHTML = '<i class="ri-moon-line text-gray-300"></i>';
-    body.style.backgroundColor = '#1A1A2E';
-    localStorage.setItem('ultronDarkMode', 'dark');
-  }
-  
-  function disableDarkMode() {
-    body.classList.remove('dark');
-    darkModeToggle.innerHTML = '<i class="ri-sun-line text-gray-700"></i>';
-    body.style.backgroundColor = '#F9F9FB';
-    localStorage.setItem('ultronDarkMode', 'light');
-  }
 
   // Account menu toggle
   const accountBtn = document.getElementById('accountBtn');
@@ -1238,19 +1286,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Close search results when clicking elsewhere or pressing Esc
   document.addEventListener('click', (e) => {
-    if (!searchInput.contains(e.target) && 
-        !searchResults.contains(e.target) && 
-        !e.target.closest('.fab')) {
+    if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
       searchResults.classList.add('hidden');
-    }
-  });
-  
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      searchResults.classList.add('hidden');
-      searchInput.blur();
     }
   });
 
@@ -1352,6 +1390,71 @@ document.addEventListener('DOMContentLoaded', function() {
     section.style.animationDelay = `${index * 0.1}s`;
   });
 });
+
+// Dark mode toggle with localStorage
+const darkModeToggle = document.getElementById('darkModeToggle');
+const body = document.body;
+
+if (localStorage.getItem('theme') === 'dark') {
+  body.classList.add('dark');
+  darkModeToggle.innerHTML = '<i class="ri-moon-line text-gray-300"></i>';
+  body.style.backgroundColor = '#1A1A2E';
+}
+
+darkModeToggle.addEventListener('click', () => {
+  body.classList.toggle('dark');
+  if (body.classList.contains('dark')) {
+    localStorage.setItem('theme', 'dark');
+    darkModeToggle.innerHTML = '<i class="ri-moon-line text-gray-300"></i>';
+    body.style.backgroundColor = '#1A1A2E';
+  } else {
+    localStorage.setItem('theme', 'light');
+    darkModeToggle.innerHTML = '<i class="ri-sun-line text-gray-700"></i>';
+    body.style.backgroundColor = '#F9F9FB';
+  }
+});
+
+// Search functionality
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+const resultsList = document.getElementById('resultsList');
+const noResults = document.getElementById('noResults');
+const searchLoading = document.getElementById('searchLoading');
+
+const content = [
+  { title: 'Marvel Studios', type: 'Studio', url: 'https://ultron3000.github.io/marvel' },
+  { title: 'Sony Animation', type: 'Animation', url: 'https://ultron3000.github.io/sony' },
+  { title: 'Live TV', type: 'Live', url: 'https://tv.garden' },
+  { title: 'Radio', type: 'Live', url: 'https://radio.garden' },
+];
+
+searchInput.addEventListener('input', function () {
+  const query = this.value.trim().toLowerCase();
+  if (!query) {
+    searchResults.classList.add('hidden');
+    return;
+  }
+  searchLoading.classList.remove('hidden');
+  setTimeout(() => {
+    const filtered = content.filter(item => item.title.toLowerCase().includes(query));
+    resultsList.innerHTML = '';
+    searchLoading.classList.add('hidden');
+    if (filtered.length > 0) {
+      noResults.classList.add('hidden');
+      filtered.forEach(item => {
+        const el = document.createElement('a');
+        el.href = item.url;
+        el.className = 'block px-4 py-2 hover:bg-gray-50 transition rounded-lg';
+        el.innerHTML = `<div class="font-semibold">${item.title}</div><div class="text-xs text-gray-400">${item.type}</div>`;
+        resultsList.appendChild(el);
+      });
+    } else {
+      noResults.classList.remove('hidden');
+    }
+    searchResults.classList.remove('hidden');
+  }, 300);
+});
+
 </script>
 </div>
 </body>
