@@ -5,6 +5,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cloud Streaming Hub</title>
 <script src="https://cdn.tailwindcss.com/3.4.16">
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  const body = document.body;
+
+  // Load mode from localStorage
+  if (localStorage.getItem('theme') === 'dark') {
+    body.classList.add('dark');
+    body.style.backgroundColor = '#1A1A2E';
+    darkModeToggle.innerHTML = '<i class="ri-moon-line text-gray-300"></i>';
+  }
+
+  darkModeToggle.addEventListener('click', function () {
+    body.classList.toggle('dark');
+    if (body.classList.contains('dark')) {
+      localStorage.setItem('theme', 'dark');
+      darkModeToggle.innerHTML = '<i class="ri-moon-line text-gray-300"></i>';
+      body.style.backgroundColor = '#1A1A2E';
+    } else {
+      localStorage.setItem('theme', 'light');
+      darkModeToggle.innerHTML = '<i class="ri-sun-line text-gray-700"></i>';
+      body.style.backgroundColor = '#F9F9FB';
+    }
+  });
+
+
+  const searchInput = document.getElementById('searchInput');
+  const searchResults = document.getElementById('searchResults');
+  const resultsList = document.getElementById('resultsList');
+  const noResults = document.getElementById('noResults');
+  const searchLoading = document.getElementById('searchLoading');
+
+  const content = [
+    {title: 'Marvel Studios', type: 'Studio', url: 'https://ultron3000.github.io/marvel'},
+    {title: 'Warner Bros', type: 'Studio', url: 'https://ultron3000.github.io/wb'},
+    {title: 'Disney Animation', type: 'Animation', url: 'https://ultron3000.github.io/disney'},
+    {title: 'Sony Animation', type: 'Animation', url: 'https://ultron3000.github.io/sony'},
+    {title: 'Pixar', type: 'Animation', url: 'https://ultron3000.github.io/pixar'},
+    {title: 'X-MEN', type: 'Franchise', url: 'https://ultron3000.github.io/x-men'},
+    {title: 'Live TV', type: 'Live', url: 'https://tv.garden'},
+    {title: 'Radio', type: 'Live', url: 'https://radio.garden'},
+  ];
+
   searchInput.addEventListener("input", function() {
     const query = this.value.trim().toLowerCase();
     if (!query) {
@@ -29,7 +70,7 @@
         noResults.classList.remove("hidden");
       }
       searchResults.classList.remove("hidden");
-    }, 500);
+    }, 300);
   });
 
 </script>
@@ -1019,7 +1060,7 @@ html {
   </section>
 
 <!-- Tab Bar -->
-<nav class="fixed bottom-0 w-full bg-white border-t border-gray-200 z-50 sm:hidden flex justify-center">
+<nav class="fixed bottom-0 w-full bg-white border-t border-gray-200 z-50 sm:hidden">
   <div class="flex justify-around items-center h-16 w-full relative space-x-1">
     <div class="tab-indicator" style="width: 20%; left: 0;"></div>
     <a href="#home" class="tab-item flex flex-col items-center justify-center text-primary cursor-pointer" data-section="home">
@@ -1342,6 +1383,47 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  const body = document.body;
+
+  // Load mode from localStorage
+  if (localStorage.getItem('theme') === 'dark') {
+    body.classList.add('dark');
+    body.style.backgroundColor = '#1A1A2E';
+    darkModeToggle.innerHTML = '<i class="ri-moon-line text-gray-300"></i>';
+  }
+
+  darkModeToggle.addEventListener('click', function () {
+    body.classList.toggle('dark');
+    if (body.classList.contains('dark')) {
+      localStorage.setItem('theme', 'dark');
+      darkModeToggle.innerHTML = '<i class="ri-moon-line text-gray-300"></i>';
+      body.style.backgroundColor = '#1A1A2E';
+    } else {
+      localStorage.setItem('theme', 'light');
+      darkModeToggle.innerHTML = '<i class="ri-sun-line text-gray-700"></i>';
+      body.style.backgroundColor = '#F9F9FB';
+    }
+  });
+
+
+  const searchInput = document.getElementById('searchInput');
+  const searchResults = document.getElementById('searchResults');
+  const resultsList = document.getElementById('resultsList');
+  const noResults = document.getElementById('noResults');
+  const searchLoading = document.getElementById('searchLoading');
+
+  const content = [
+    {title: 'Marvel Studios', type: 'Studio', url: 'https://ultron3000.github.io/marvel'},
+    {title: 'Warner Bros', type: 'Studio', url: 'https://ultron3000.github.io/wb'},
+    {title: 'Disney Animation', type: 'Animation', url: 'https://ultron3000.github.io/disney'},
+    {title: 'Sony Animation', type: 'Animation', url: 'https://ultron3000.github.io/sony'},
+    {title: 'Pixar', type: 'Animation', url: 'https://ultron3000.github.io/pixar'},
+    {title: 'X-MEN', type: 'Franchise', url: 'https://ultron3000.github.io/x-men'},
+    {title: 'Live TV', type: 'Live', url: 'https://tv.garden'},
+    {title: 'Radio', type: 'Live', url: 'https://radio.garden'},
+  ];
+
   searchInput.addEventListener("input", function() {
     const query = this.value.trim().toLowerCase();
     if (!query) {
@@ -1366,7 +1448,7 @@ document.addEventListener('DOMContentLoaded', function() {
         noResults.classList.remove("hidden");
       }
       searchResults.classList.remove("hidden");
-    }, 500);
+    }, 300);
   });
 
 </script>
