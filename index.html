@@ -83,24 +83,8 @@
   </style>
   <script>
     function playVideo(url) {
-      if (url.endsWith('.txt') || url.endsWith('.m3u8')) {
-        // Open in iframe for txt/m3u8 files
-        const iframe = document.createElement('iframe');
-        iframe.src = 'player.html?movie=' + encodeURIComponent(url);
-        iframe.style.width = '80%';
-        iframe.style.height = '80%';
-        iframe.style.position = 'absolute';
-        iframe.style.top = '50%';
-        iframe.style.left = '50%';
-        iframe.style.transform = 'translate(-50%, -50%)';
-        iframe.style.border = 'none';
-        
-        const modal = document.getElementById('videoModal');
-        modal.innerHTML = '';
-        modal.appendChild(iframe);
-        modal.style.display = 'block';
-      } else {
-        // Show video in modal for mp4/pcloud links
+      if (url.endsWith('.mp4')) {
+        // Show MP4 videos directly in modal
         const modal = document.getElementById('videoModal');
         modal.innerHTML = `
           <span class="close" onclick="document.getElementById('videoModal').style.display='none'">&times;</span>
@@ -112,6 +96,9 @@
           </div>
         `;
         modal.style.display = 'block';
+      } else if (url.endsWith('.txt') || url.endsWith('.m3u8')) {
+        // Open TXT/M3U8 links in player.html within the page
+        window.open('player.html?movie=' + encodeURIComponent(url), '_blank');
       }
     }
 
@@ -129,13 +116,13 @@
   <!-- The Modal -->
   <div id="videoModal" class="modal"></div>
   <div class="grid">
-    <a href="#" onclick="playVideo('https://u.pcloud.link/publink/show?code=XZXo8b5ZhyhTB7cHmBjXQ4q8w55TMJXoSni7'); return false;">
+    <a href="#" onclick="playVideo('https://sskt.ghwillawkn.sbs/v4/qu/rdjqv/index-f1-v1-a1.txt'); return false;">
       <div class="card">
         <img src="https://static.toiimg.com/photo/63321834.cms?imgsize=40197" alt="Raid (2018)">
         <div class="card-title">Raid (2018)</div>
       </div>
     </a>
-    <a href="#" onclick="playVideo('https://u.pcloud.link/publink/show?code=XZ2c8b5ZdUBvfeiRoELpjUAL7lh7ymJyDLv7'); return false;">
+    <a href="#" onclick="playVideo('https://cdn4505.loane359jil.com:443/stream2/i-cdn-0/464b62ba6b90e85df275c28f050d72f1/MJTMsp1RshGTygnMNRUR2N2MSlnWXZEdMNDZzQWe5MDZzMmdZJTO1R2RWVHZDljekhkSsl1VwYnWtx2cihVT2planBTTtVVeadkRqlVbVJTTEZEaNp3Zzo1RZNzTHl1MadlTs1EVa1mTEVUP:1749574557:213.232.235.66:ae52e97e9113c2855e35d7227c598d97d10e491b4a60ea0361bf2872e4eb6bca/./1080/index.m3u8'); return false;">
       <div class="card">
         <img src="https://bollyspice.com/wp-content/uploads/2025/04/30x40-RAID2-FACEOFF-ENSMBLE_AW1-scaled.jpeg" alt="Raid 2 (2025)">
         <div class="card-title">Raid 2 (2025)</div>
