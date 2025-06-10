@@ -5,6 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hindi Movies</title>
   <style>
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+    }
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 800px;
+    }
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    video {
+      width: 100%;
+    }
+    
     body {
       margin: 0;
       background-color: #000;
@@ -52,16 +84,50 @@
   <script>
     function playVideo(url) {
       if (url.endsWith('.txt') || url.endsWith('.m3u8')) {
-        window.open('player.html?movie=' + encodeURIComponent(url), '_blank');
+        // Open in iframe for txt/m3u8 files
+        const iframe = document.createElement('iframe');
+        iframe.src = 'player.html?movie=' + encodeURIComponent(url);
+        iframe.style.width = '80%';
+        iframe.style.height = '80%';
+        iframe.style.position = 'absolute';
+        iframe.style.top = '50%';
+        iframe.style.left = '50%';
+        iframe.style.transform = 'translate(-50%, -50%)';
+        iframe.style.border = 'none';
+        
+        const modal = document.getElementById('videoModal');
+        modal.innerHTML = '';
+        modal.appendChild(iframe);
+        modal.style.display = 'block';
       } else {
-        // Show modal for regular mp4/pcloud links
-        window.open(url, '_blank');
+        // Show video in modal for mp4/pcloud links
+        const modal = document.getElementById('videoModal');
+        modal.innerHTML = `
+          <span class="close" onclick="document.getElementById('videoModal').style.display='none'">&times;</span>
+          <div class="modal-content">
+            <video controls autoplay>
+              <source src="${url}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        `;
+        modal.style.display = 'block';
+      }
+    }
+
+    // Close modal when clicking outside the content
+    window.onclick = function(event) {
+      const modal = document.getElementById('videoModal');
+      if (event.target == modal) {
+        modal.style.display = 'none';
       }
     }
   </script>
 </head>
 <body>
   <header>Movies</header>
+  <!-- The Modal -->
+  <div id="videoModal" class="modal"></div>
   <div class="grid">
     <a href="#" onclick="playVideo('https://u.pcloud.link/publink/show?code=XZXo8b5ZhyhTB7cHmBjXQ4q8w55TMJXoSni7'); return false;">
       <div class="card">
