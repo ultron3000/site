@@ -2,72 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Player</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .video-container {
-            width: 100%;
-            max-width: 1200px;
-        }
-        video {
-            width: 100%;
-        }
-    </style>
-</head>
-<body>
-    <div class="video-container">
-        <video id="player" controls autoplay>
-            <source id="video-source" type="application/x-mpegURL">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-
-    <script>
-        // Parse URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const videoSrc = decodeURIComponent(urlParams.get('src'));
-        const videoTitle = decodeURIComponent(urlParams.get('title'));
-
-        document.title = videoTitle + ' - Video Player';
-
-        const player = document.getElementById('player');
-        if (videoSrc) {
-            if (videoSrc.endsWith('.txt')) {
-                // For .txt files, we'll assume it contains a direct video URL
-                fetch(videoSrc)
-                    .then(response => response.text())
-                    .then(url => {
-                        player.src = url.trim();
-                        player.load();
-                    });
-            } else {
-                // Directly play .m3u8 or other video URLs
-                player.src = videoSrc;
-                player.load();
-            }
-        }
-    </script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
   <meta charset="UTF-8">
   <title>Mission: Impossible Film Series</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <style>
     /* Custom scrollbar */
     ::-webkit-scrollbar {
@@ -392,7 +332,7 @@
         card.addEventListener('click', () => {
           // For .txt and .m3u8 links, open in player.html
           if(movie.video.endsWith('.txt') || movie.video.endsWith('.m3u8')) {
-            window.open(`player.html?src=${encodeURIComponent(movie.video)}&title=${encodeURIComponent(movie.title)}`, '_blank');
+            window.location.href = `player.html?src=${encodeURIComponent(movie.video)}&title=${encodeURIComponent(movie.title)}`;
           } else {
             openModal(movie, index + 1);
           }
