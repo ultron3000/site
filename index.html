@@ -7,6 +7,18 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    /* Loading skeleton animation */
+    @keyframes shimmer {
+      0% { background-position: -468px 0 }
+      100% { background-position: 468px 0 }
+    }
+    
+    .skeleton {
+      background: linear-gradient(to right, #1f2937 8%, #374151 18%, #1f2937 33%);
+      background-size: 800px 104px;
+      animation: shimmer 1.5s infinite linear;
+    }
+
     /* Custom scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
@@ -164,13 +176,17 @@
     // Display all movies initially
     displayMovies(movies);
 
-    // Search functionality
+    // Debounced search functionality
+    let searchTimeout;
     searchInput.addEventListener('input', (e) => {
-      const searchTerm = e.target.value.toLowerCase();
-      const filteredMovies = movies.filter(movie => 
-        movie.title.toLowerCase().includes(searchTerm)
-      );
-      displayMovies(filteredMovies);
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        const searchTerm = e.target.value.toLowerCase().trim();
+        const filteredMovies = movies.filter(movie => 
+          movie.title.toLowerCase().includes(searchTerm)
+        );
+        displayMovies(filteredMovies);
+      }, 300);
     });
 
     function displayMovies(moviesToDisplay) {
@@ -197,10 +213,12 @@
               <div class="movie-card group relative overflow-hidden rounded-xl border-2 border-amber-400/30 bg-gray-800 shadow-xl transition-all duration-300 hover:scale-105 hover:glow hover:border-amber-400/60">
                 <img 
                   src="${movie.image}" 
-                  alt="${movie.title}" 
+                  alt="${movie.title} movie poster" 
                   class="absolute inset-0 h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-90"
                   loading="lazy"
+                  onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450/111827/FFD700?text=Poster+Not+Available';"
                 >
+                <div class="skeleton absolute inset-0" aria-hidden="true"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4 text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                   <h3 class="font-bold text-lg truncate">${movie.title}</h3>
@@ -216,7 +234,7 @@
             
             div.querySelector('.play-button').addEventListener('click', (e) => {
               e.stopPropagation();
-              const url = `player.html?title=${encodeURIComponent(movie.title)}&video=${encodeURIComponent(movie.video)}&index=${index}`;
+              const url = `player.html?title=${encodeURIComponent(movie.title)}&video=${encodeURIComponent(movie.video)}&image=${encodeURIComponent(movie.image)}&index=${index}`;
               window.location.href = url;
             });
             
