@@ -1,259 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>007 Cinematic Universe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta name="description" content="Watch all seasons of Panchayat web series online. Stream Panchayat Season 1, 2, 3 and get updates about upcoming seasons.">
+  <title>Panchayat Series Viewer | Watch All Seasons Online</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2503/2503508.png" type="image/png">
+  <meta property="og:title" content="Panchayat Series Viewer">
+  <meta property="og:description" content="Watch all seasons of Panchayat web series online">
+  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/en/thumb/1/1a/Panchayat_logo.jpg/250px-Panchayat_logo.jpg">
+  <meta property="og:url" content="https://panchayat-series-viewer.example.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Loading skeleton animation */
-    @keyframes shimmer {
-      0% { background-position: -468px 0 }
-      100% { background-position: 468px 0 }
-    }
-    
-    .skeleton {
-      background: linear-gradient(to right, #1f2937 8%, #374151 18%, #1f2937 33%);
-      background-size: 800px 104px;
-      animation: shimmer 1.5s infinite linear;
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background: #0f2027;
+      background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+      color: #fff;
     }
 
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+    header {
+      background: #111;
+      text-align: center;
+      padding: 3rem 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     }
-    ::-webkit-scrollbar-track {
-      background: #111827;
+
+    header h1 {
+      margin: 0;
+      font-size: 3rem;
+      letter-spacing: 2px;
+      color: #ffcc00;
     }
-    ::-webkit-scrollbar-thumb {
-      background: #f59e0b;
-      border-radius: 4px;
+
+    .season-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: auto;
+      opacity: 0;
+      animation: fadeIn 1s ease-in forwards;
     }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #d97706;
-    }
-    
-    /* Custom animations */
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .fade-in {
-      animation: fadeIn 0.5s ease-out forwards;
-    }
-    
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
-    .delay-3 { animation-delay: 0.3s; }
-    
-    /* Custom glow effect */
-    .glow {
-      box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
-    }
-    
-    /* Aspect ratio for movie cards */
-    .movie-card {
-      aspect-ratio: 2/3;
-    }
-    
-    /* For older browsers that don't support aspect-ratio */
-    @supports not (aspect-ratio: 2/3) {
-      .movie-card::before {
-        content: "";
-        display: block;
-        padding-top: 150%;
+      to {
+        opacity: 1;
       }
+    }
+
+    .season-card {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .season-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .poster {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-bottom: 2px solid #ffd700;
+    }
+
+    .season-content {
+      padding: 1rem;
+    }
+
+    .season-content h2 {
+      margin-top: 0.5rem;
+      font-size: 1.6rem;
+      color: #ffd700;
+      text-align: center;
+    }
+
+    iframe {
+      width: 100%;
+      height: 220px;
+      border: none;
+      border-radius: 12px;
+    }
+
+    .coming-soon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 220px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: #ccc;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      background-color: #111;
+      font-size: 0.9rem;
+      color: #aaa;
+      margin-top: 3rem;
+    }
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .social-links {
+      margin-top: 1rem;
+    }
+    .social-links a {
+      color: #ffd700;
+      margin: 0 10px;
+      font-size: 1.2rem;
+      transition: color 0.3s ease;
+    }
+    .social-links a:hover {
+      color: #fff;
     }
   </style>
 </head>
-<body class="bg-gray-900 text-amber-400 min-h-screen">
-  <!-- Header with search -->
-  <header class="sticky top-0 z-50 bg-gray-900/90 backdrop-blur-sm border-b border-amber-400/20">
-    <div class="container mx-auto px-4 py-6">
-      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-        <div class="flex items-center gap-4 hover:scale-105 transition-transform duration-200">
-          <i class="fas fa-gun text-3xl text-amber-400"></i>
-          <h1 class="text-3xl md:text-4xl font-bold tracking-wider bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent">007 CINEMATIC UNIVERSE</h1>
-        </div>
-        
-        <div class="relative w-full md:w-80">
-          <input 
-            type="text" 
-            id="search" 
-            placeholder="Search movies..." 
-            class="w-full bg-gray-800 text-white px-4 py-2 rounded-full border border-amber-400/30 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
-          >
-          <i class="fas fa-search absolute right-3 top-2.5 text-amber-400/70"></i>
-        </div>
-      </div>
-    </div>
+
+<body>
+  <header>
+    <h1>Panchayat Series - Watch All Seasons</h1>
   </header>
 
-  <!-- Main content -->
-  <main class="container mx-auto px-4 py-8">
-    <!-- Stats bar -->
-    <div class="flex flex-wrap justify-between items-center mb-10 gap-6 bg-gradient-to-r from-gray-800/80 to-gray-900/80 p-6 rounded-2xl border border-amber-400/30 shadow-lg">
-      <div class="flex items-center gap-3 bg-gray-800/60 px-4 py-3 rounded-lg border border-amber-400/20">
-        <i class="fas fa-film text-xl text-amber-400"></i>
-        <span class="font-medium">Total Movies: <span id="total-movies" class="font-bold text-white">24</span></span>
-      </div>
-      <div class="flex items-center gap-3 bg-gray-800/60 px-4 py-3 rounded-lg border border-amber-400/20">
-        <i class="fas fa-calendar-alt text-xl text-amber-400"></i>
-        <span class="font-medium">Years: <span class="font-bold text-white">1962 - 2021</span></span>
-      </div>
-      <div class="flex items-center gap-3 bg-gray-800/60 px-4 py-3 rounded-lg border border-amber-400/20">
-        <i class="fas fa-user-secret text-xl text-amber-400"></i>
-        <span class="font-medium">Actors: <span class="font-bold text-white">6</span></span>
+  <main class="season-container">
+    <div class="season-card">
+      <img class="poster" src="https://m.media-amazon.com/images/S/pv-target-images/2cda5e3fee6c153bbb44468f925b32718635b7a5fb40a6943ad9e79cfb9a5039.jpg" alt="Panchayat Season 1 Poster" loading="lazy" aria-label="Panchayat Season 1">
+      <div class="season-content">
+        <h2>Season 1</h2>
+        <iframe src="https://mega.nz/embed/XloGRC7J#a8Jvnq5K2dDZYyj_auXAf5AqSttvwFz82zHXZU1pM9o" allowfullscreen></iframe>
       </div>
     </div>
-    
-    <!-- Movies grid -->
-    <div id="movies" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6"></div>
-    
-    <!-- Loading spinner (hidden by default) -->
-    <div id="loading" class="hidden flex flex-col justify-center items-center py-16 gap-4">
-      <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-amber-400"></div>
-      <p class="text-amber-400/80 font-medium">Loading 007 movies...</p>
+
+    <div class="season-card">
+      <img class="poster" src="https://upload.wikimedia.org/wikipedia/en/thumb/1/1a/Panchayat_logo.jpg/250px-Panchayat_logo.jpg" alt="Panchayat Season 2 Poster">
+      <div class="season-content">
+        <h2>Season 2</h2>
+        <iframe src="https://mega.nz/embed/q45yTLpA#a_RLK5B5W5NrFeDiAMtPNDY79imd6_urXshlk2h6le8" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div class="season-card">
+      <img class="poster" src="https://www.deccanchronicle.com/h-upload/2024/05/02/1087279-panchayat.webp" alt="Panchayat Season 3 Poster">
+      <div class="season-content">
+        <h2>Season 3</h2>
+        <iframe src="https://mega.nz/embed/yl4BCLYY#7HEZiYZX-nmKRb8RTFdzJGX93cL-xaKBKyDZJynEJ8A" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div class="season-card">
+      <img class="poster" src="https://english.cdn.zeenews.com/sites/default/files/2024/10/29/1565535-panchayat.jpg" alt="Panchayat Season 4 Coming Soon">
+      <div class="season-content">
+        <h2>Season 4 (Coming Soon)</h2>
+        <div class="coming-soon">
+          Expected to release next month.<br />Stay tuned!
+        </div>
+      </div>
     </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-gradient-to-t from-gray-900 to-gray-800 border-t border-amber-400/30 py-8 mt-16">
-    <div class="container mx-auto px-4 text-center">
-      <div class="flex justify-center gap-6 mb-6">
-        <a href="#" class="text-amber-400 hover:text-white transition-all duration-300 hover:scale-110">
-          <i class="fab fa-imdb text-3xl"></i>
-        </a>
-        <a href="#" class="text-amber-400 hover:text-white transition-all duration-300 hover:scale-110">
-          <i class="fab fa-wikipedia-w text-3xl"></i>
-        </a>
-        <a href="#" class="text-amber-400 hover:text-white transition-all duration-300 hover:scale-110">
-          <i class="fab fa-github text-3xl"></i>
-        </a>
-      </div>
-      <p class="text-gray-400 text-sm max-w-2xl mx-auto leading-relaxed">
-        © 2023 007 Cinematic Universe. All rights reserved. James Bond and related elements are trademarks of EON Productions.
-        This is a fan-made project and is not affiliated with EON Productions or MGM.
-      </p>
-    </div>
+  <footer>
+    &copy; 2025 Panchayat Series Viewer. Designed for fans by fans. All rights reserved.
   </footer>
-
-  <script>
-    const movies = [
-      { title: "Dr. No", video: "https://sxic.madrigalcajig.sbs:443/v4/ox/itaov/index-f1-v1-a1.txt", image: "https://alternativemovieposters.com/wp-content/uploads/2023/06/Ash-Weaver_DRNO.jpg" },
-      { title: "From Russia with Love", video: "https://scvo.sperlinglayma.sbs:443/v4/xq/bnb5s/index-f2-v1-a1.txt", image: "https://m.media-amazon.com/images/I/71M+yet93tL.jpg" },
-      { title: "Goldfinger", video: "https://sr81.griseldakro.sbs:443/v4/xq/vluy1/index-f2-v1-a1.txt", image: "https://i.etsystatic.com/14140434/r/il/f4e478/1486444070/il_fullxfull.1486444070_20a2.jpg" },
-      { title: "Thunderball", video: "https://sskt.ulrikeumdqputm.sbs/v4/db/pvsif/cf-master.txt?v=1734931054", image: "https://posterspy.com/wp-content/uploads/2023/06/TB_WEB_TEMPLATE_1000x1500px.jpg" },
-      { title: "You Only Live Twice", video: "https://ye0r0rrinu.cdn-centaurus.com:443/hls2/01/03827/pmwas2v2vma0_n/index-v1-a1.m3u8?t=VBgAeAsIkjkeInjv5Kh5EPKoVpu5gHhF0t8wSAm6Vno&s=1748110531&e=129600&f=19139213&srv=7npihg0ee2yuu&i=0.4&sp=500&p1=7npihg0ee2yuu&p2=7npihg0ee2yuu&asn=24554", image: "https://goauctionomega.blob.core.windows.net/stock/35781-1-medium.jpg?v=63826656829657" },
-      { title: "On Her Majesty's Secret Service", video: "https://cdn-1.celestialodyssey.site/video-stream/dc5f07a0/playlist.m3u8", image: "https://media-cache.cinematerial.com/p/500x/ztunectl/on-her-majestys-secret-service-movie-poster.jpg?v=1456639344" },
-      { title: "Diamonds Are Forever", video: "https://cdn-1.celestialodyssey.site/video-stream/fbca131b/playlist.m3u8", image: "https://posterspy.com/wp-content/uploads/2023/06/DAF_WEB_TEMPLATE_1000x1500px.jpg" },
-      { title: "Live and Let Die", video: "https://cdn-1.celestialodyssey.site/video-stream/4372f73a/playlist.m3u8", image: "https://alternativemovieposters.com/wp-content/uploads/2022/12/Robert-Watts_LiveLetDie.jpg" },
-      { title: "The Man with the Golden Gun", video: "https://cdn-1.celestialodyssey.site/video-stream/d44801f0/playlist.m3u8", image: "https://image.tmdb.org/t/p/original/itH4xI6TbJtJSqcZ43B3MkpL1gy.jpg" },
-      { title: "The Spy Who Loved Me", video: "https://cdn-1.celestialodyssey.site/video-stream/cee76b74/playlist.m3u8", image: "https://posterspy.com/wp-content/uploads/2022/11/tswlm-poster.jpg" },
-      { title: "Moonraker", video: "https://cdn-1.celestialodyssey.site/video-stream/61ec181f/playlist.m3u8", image: "https://image.tmdb.org/t/p/original/uYLS9uMZmP6iXAh0jhWUZI2Nk3e.jpg" },
-      { title: "For Your Eyes Only", video: "https://cdn-1.celestialodyssey.site/video-stream/ebd9fd6c/playlist.m3u8", image: "https://i.pinimg.com/736x/9e/16/41/9e1641d6057cfae2e77879866f54a8a3.jpg" },
-      { title: "Octopussy", video: "https://cdn-1.celestialodyssey.site/video-stream/4dbe366b/playlist.m3u8", image: "https://cdn.posteritati.com/posters/000/000/061/237/octopussy-md-web.jpg" },  
-      { title: "A View to a Kill", video: "https://s3ae.mazedukhkortfj.sbs:443/v4/ox/p3xcs/index-f1-v1-a1.txt", image: "https://i.pinimg.com/736x/cb/36/82/cb3682872fc7b9042b505e884f5e5d54.jpg" },
-      { title: "The Living Daylights", video: "https://s9dz.carbajalgpsh.sbs:443/v4/us/mdcl9/index-f2-v1-a1.txt", image: "https://posterspy.com/wp-content/uploads/2023/06/TLD_WEB_TEMPLATE_1000x1500px.jpg" },
-      { title: "Licence to Kill", video: "https://vip.opstream15.com:443/20220316/1458_8d9b0ac7/3000k/hls/mixed.m3u8", image: "https://i.pinimg.com/736x/d8/45/27/d84527d6f1c4cba168b690a59454bf36.jpg" },
-      { title: "GoldenEye", video: "https://s3ae.killionorellanacoelho.sbs/v4/61/56psf/index-f1-v1-a1.txt", image: "https://i.pinimg.com/736x/96/0e/f3/960ef3339761fc03969d9e37ec60d2d5.jpg" },
-      { title: "Tomorrow Never Dies", video: "https://sdqm.womblebren.sbs/v4/db/xu9fz/index-f1-a1.txt", image: "https://cdn11.bigcommerce.com/s-yzgoj/images/stencil/1280x1280/products/3234392/6220705/GBEFPO431__06020.1709712291.jpg?c=2" },
-      { title: "The World Is Not Enough", video: "https://spuc.mcentirecajigas.sbs/v4/sc/mubax/index-f1-v1.txt", image: "https://i.pinimg.com/474x/a5/fc/8f/a5fc8fa3feb3ea9f3f6316cb8c01e9b6.jpg" },
-      { title: "Die Another Day", video: "https://s3ae.wrendresslerle.sbs:443/v4/ho/5x9ce/index-f2-v1-a1.txt", image: "https://cdn11.bigcommerce.com/s-yzgoj/images/stencil/500x659/products/2911891/5955577/MOVAJ0534__87882.1679599595.jpg?c=2" },
-      { title: "Casino Royale", video: "https://spok.southerlandeya.sbs:443/v4/xq/lzkzf/index-f1-v1-a1.txt", image: "https://i.redd.it/6tkj6vkehct81.jpg" },
-      { title: "Quantum of Solace", video: "https://s3ae.alenapark.sbs:443/v4/ox/xqia6/index-f2-v1-a1.txt", image: "https://artofthemovies.co.uk/cdn/shop/files/IMG_4340_300x300.jpg?v=1697040084" },
-      { title: "Skyfall", video: "https://spuc.bradburyg.sbs:443/v4/us/6nbg3/index-f2-v1-a1.txt", image: "https://i.pinimg.com/736x/d2/b2/ff/d2b2ffa2fb20976ae211f1d473128d2c.jpg" },
-      { title: "No Time to Die", video: "https://slob.koontzhittpittman.sbs/v4/il/vmfjt/index-f1-v1-a1.txt", image: "https://preview.redd.it/4a8rd5658g161.jpg?width=640&crop=smart&auto=webp&s=8c16f3cd4b0a985f791de5507f7d2b1c411eda02" },
-    ];
-
-    const container = document.getElementById('movies');
-    const searchInput = document.getElementById('search');
-    const loadingSpinner = document.getElementById('loading');
-
-    // Display all movies initially
-    displayMovies(movies);
-
-    // Debounced search functionality
-    let searchTimeout;
-    searchInput.addEventListener('input', (e) => {
-      clearTimeout(searchTimeout);
-      searchTimeout = setTimeout(() => {
-        const searchTerm = e.target.value.toLowerCase().trim();
-        const filteredMovies = movies.filter(movie => 
-          movie.title.toLowerCase().includes(searchTerm)
-        );
-        displayMovies(filteredMovies);
-      }, 300);
-    });
-
-    function displayMovies(moviesToDisplay) {
-      // Show loading spinner
-      container.innerHTML = '';
-      loadingSpinner.classList.remove('hidden');
-      
-      // Simulate loading delay for better UX
-      setTimeout(() => {
-        if (moviesToDisplay.length === 0) {
-          container.innerHTML = `
-            <div class="col-span-full text-center py-12">
-              <i class="fas fa-search text-4xl text-amber-400/50 mb-4"></i>
-              <h3 class="text-xl font-medium text-gray-400">No movies found</h3>
-              <p class="text-gray-500">Try a different search term</p>
-            </div>
-          `;
-        } else {
-          moviesToDisplay.forEach((movie, index) => {
-            const delayClass = `delay-${index % 3 + 1}`;
-            const div = document.createElement('div');
-            div.className = `fade-in ${delayClass}`;
-            div.innerHTML = `
-              <div class="movie-card group relative overflow-hidden rounded-xl border-2 border-amber-400/30 bg-gray-800 shadow-xl transition-all duration-300 hover:scale-105 hover:glow hover:border-amber-400/60">
-                <img 
-                  src="${movie.image}" 
-                  alt="${movie.title} movie poster" 
-                  class="absolute inset-0 h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-90"
-                  loading="lazy"
-                  onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450/111827/FFD700?text=Poster+Not+Available';"
-                >
-                <div class="skeleton absolute inset-0" aria-hidden="true"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="absolute bottom-0 left-0 right-0 p-4 text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                  <h3 class="font-bold text-lg truncate">${movie.title}</h3>
-                  <div class="flex justify-between items-center mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span class="text-xs bg-amber-400/90 text-gray-900 px-2 py-1 rounded">007</span>
-                    <button class="play-button bg-amber-400 hover:bg-amber-500 text-gray-900 rounded-full w-8 h-8 flex items-center justify-center">
-                      <i class="fas fa-play text-xs"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            `;
-            
-            div.querySelector('.play-button').addEventListener('click', (e) => {
-              e.stopPropagation();
-              const url = `player.html?title=${encodeURIComponent(movie.title)}&video=${encodeURIComponent(movie.video)}&image=${encodeURIComponent(movie.image)}&index=${index}`;
-              window.location.href = url;
-            });
-            
-            div.addEventListener('click', () => {
-              const url = `player.html?title=${encodeURIComponent(movie.title)}&video=${encodeURIComponent(movie.video)}&index=${index}`;
-              window.location.href = url;
-            });
-            
-            container.appendChild(div);
-          });
-        }
-        
-        // Hide loading spinner
-        loadingSpinner.classList.add('hidden');
-      }, 300);
-    }
-
-    // Update total movies count
-    document.getElementById('total-movies').textContent = movies.length;
-  </script>
 </body>
+
 </html>
