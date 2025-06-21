@@ -1138,24 +1138,19 @@
   </script>
 
 <script>
-  const movieList = [...document.querySelectorAll(".movie-card")];
   const modal = document.getElementById("playback-modal");
   let videoPlayer = document.getElementById("modal-video");
   const closeModalBtn = document.getElementById("close-modal");
 
-  function isMegaLink(url) {
-    return url.includes("mega.nz/embed");
-  }
+  const movieCards = document.querySelectorAll(".movie-card");
 
-  const movieData = JSON.parse(localStorage.getItem("movieData")) || [];
-
-  movieList.forEach(card => {
+  movieCards.forEach(card => {
     card.addEventListener("click", () => {
       const title = card.querySelector("h2").textContent.trim();
-      const movie = movieData.find(m => m.title === title);
+      const movie = window.movies.find(m => m.title === title);
       if (!movie) return;
 
-      const isMega = isMegaLink(movie.video);
+      const isMega = movie.video.includes("mega.nz/embed");
 
       if (isMega) {
         videoPlayer.outerHTML = '<iframe id="modal-video" src="' + movie.video + '" class="w-full aspect-video" allowfullscreen></iframe>';
