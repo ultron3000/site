@@ -1186,6 +1186,52 @@
     }
   });
 </script>
+<script>
+  const modal = document.getElementById("playback-modal");
+  const closeModalBtn = document.getElementById("close-modal");
+
+  document.querySelectorAll(".movie-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const title = card.querySelector("h2").textContent.trim();
+      const movie = window.movies.find(m => m.title === title);
+      if (!movie) return;
+
+      const isMega = movie.video.includes("mega.nz/embed");
+      let container = document.getElementById("modal-video");
+      if (isMega) {
+        container.outerHTML = '<iframe id="modal-video" src="' + movie.video + '" class="w-full aspect-video" allowfullscreen></iframe>';
+      } else {
+        if (container.tagName.toLowerCase() !== "video") {
+          container.outerHTML = '<video id="modal-video" class="w-full" controls></video>';
+        }
+        container = document.getElementById("modal-video");
+        container.src = movie.video;
+      }
+
+      document.getElementById("modal-title").textContent = movie.title;
+      document.getElementById("movie-year").textContent = movie.year;
+      document.getElementById("movie-duration").textContent = movie.duration;
+      document.getElementById("movie-rating").textContent = movie.rating;
+      document.getElementById("modal-description").textContent = movie.description;
+      document.getElementById("movie-genre").textContent = movie.genre;
+      document.getElementById("movie-director").textContent = movie.director;
+
+      modal.classList.remove("hidden");
+    });
+  });
+
+  closeModalBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+    const modalVid = document.getElementById("modal-video");
+    if (modalVid.tagName.toLowerCase() === "video") {
+      modalVid.pause();
+      modalVid.removeAttribute("src");
+      modalVid.load();
+    } else {
+      modalVid.outerHTML = '<video id="modal-video" class="w-full" controls></video>';
+    }
+  });
+</script>
 
 </body>
 </html>
