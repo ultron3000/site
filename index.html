@@ -7,6 +7,37 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.1/dist/hls.min.js"></script>
 
+   <!-- Animated Logo at Top-Left -->
+  <img 
+    src="https://media.istockphoto.com/id/2167232116/vector/maharashtra-map-with-hindu-maratha-flag-card-banner-vector.jpg?s=612x612&w=0&k=20&c=6vvJVfUOmUx2Ksh2oT49bLk93q-eZo7p_J5eXvSmraM=" 
+    alt="Kung Fu Panda Logo" 
+    class="absolute top-4 left-4 h-16 md:h-24 animate-logo z-10"
+  />
+</div>
+
+<style>
+  /* Animated Logo */
+  .animate-logo {
+    animation: float-pulse 3s ease-in-out infinite, glow-logo 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes float-pulse {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @keyframes glow-logo {
+    0% { filter: drop-shadow(0 0 2px #fffa65) drop-shadow(0 0 4px #ffba00); }
+    50% { filter: drop-shadow(0 0 6px #fffa65) drop-shadow(0 0 12px #ffba00); }
+    100% { filter: drop-shadow(0 0 2px #fffa65) drop-shadow(0 0 4px #ffba00); }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .animate-logo { height: 4rem; top: 1rem; left: 1rem; }
+  }
+</style>
+
   <style>
     body { font-family: 'Poppins', sans-serif; background-color: #111; color: white; }
     .movie-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; padding: 1.5rem; }
@@ -29,7 +60,7 @@
 <body>
   <header class="text-center py-6 bg-gray-900 shadow">
     <h1 class="text-3xl font-bold text-yellow-400">मराठी चित्रपट संग्रह</h1>
-    <p class="text-gray-400">Click to watch online</p>
+    <p class="text-gray-400"></p>
   </header>
 
   <div class="movie-grid" id="movieGrid"></div>
