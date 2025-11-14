@@ -4,108 +4,118 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>मराठी चित्रपट संग्रह</title>
-<!-- Tailwind for utility classes -->
-<script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.1/dist/hls.min.js"></script>
 <style>
-  :root{--bg:#0b0b0b;--card:#171717;--muted:#9aa0a6;--accent:#ffc107}
-  .light{--bg:#f7f7f8;--card:#ffffff;--muted:#4b5563;color-scheme:light}
-  body{background:var(--bg);color:#fff;font-family:Poppins,system-ui,Segoe UI,Roboto,Arial}
+  :root{--bg:#070707;--card:#121214;--accent:#ffc107;--btn-bg:#1f1f1f}
+  .light{--bg:#f7f7f8;--card:#ffffff;--btn-bg:#ffffff}
+  html,body{height:100%;margin:0;font-family:Poppins,system-ui,Segoe UI,Roboto,Arial;background:var(--bg);color:#fff}
   .light body{color:#111}
-  /* Animated logo top-left */
-  .site-logo{position:absolute;top:1rem;left:1rem;height:4.5rem;z-index:50;border-radius:8px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.35)}
-  .site-logo img{height:100%;width:auto;display:block}
+
+  /* logo */
+  .site-logo{position:fixed;top:1rem;left:1rem;z-index:80;height:68px;border-radius:10px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.45)}
+  .site-logo img{height:100%;display:block}
   .animate-logo{animation:float-pulse 3s ease-in-out infinite,glow 2s ease-in-out infinite alternate}
   @keyframes float-pulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-  @keyframes glow{0%{filter:drop-shadow(0 0 2px #ffd) drop-shadow(0 0 6px #ffb)}50%{filter:drop-shadow(0 0 8px #ffd) drop-shadow(0 0 18px #ffb)}}
-  /* Header */
-  header{padding:3.25rem 1rem 1rem;text-align:center;position:relative}
-  header h1{font-size:1.6rem;color:var(--accent)}
-  /* Controls bar */
-  .controls{position:sticky;top:0;z-index:40;display:flex;gap:.5rem;align-items:center;justify-center:center;justify-content:center;padding:.5rem;background:linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.15));backdrop-filter:blur(6px)}
-  .light .controls{background:linear-gradient(to bottom, rgba(255,255,255,.85), rgba(255,255,255,.6))}
-  .control-btn{background:var(--card);color:inherit;padding:.45rem .7rem;border-radius:8px;border:1px solid rgba(255,255,255,.04);cursor:pointer;font-weight:600;box-shadow:0 6px 18px rgba(2,6,23,.45)}
-  .light .control-btn{box-shadow:0 6px 18px rgba(2,6,23,.06)}
-  /* Grid and cards */
-  .movie-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem;padding:1rem 1rem 3.5rem}
-  .movie-card{background:var(--card);border-radius:12px;overflow:hidden;cursor:pointer;perspective:1000px;transition:transform .25s,box-shadow .25s}
-  .movie-inner{transform-style:preserve-3d;transition:transform .35s}
-  .movie-card:hover{transform:translateY(-6px)}
-  .movie-card img{width:100%;height:300px;object-fit:cover;display:block;transform:translateZ(0);transition:transform .35s,box-shadow .35s}
-  .movie-card:hover .movie-inner{transform:translateZ(6px) rotateX(8deg) rotateY(-8deg) scale(1.03)}
-  .movie-card:hover img{transform:translateZ(40px) scale(1.06);box-shadow:0 30px 50px rgba(0,0,0,.45)}
-  .movie-title{padding:.8rem;text-align:center;font-weight:700;color:var(--accent);font-size:.95rem}
-  /* Grid size modifiers */
-  body.grid-small .movie-card img{height:160px}
-  body.grid-medium .movie-card img{height:260px}
-  body.grid-large .movie-card img{height:340px}
-  /* FAB */
-  .fab-wrap{position:fixed;right:1rem;bottom:1.1rem;z-index:60}
-  .fab{width:56px;height:56px;border-radius:9999px;background:linear-gradient(135deg,#111,#333);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.45rem;cursor:pointer;box-shadow:0 8px 24px rgba(2,6,23,.6);transition:transform .18s}
-  .light .fab{background:linear-gradient(135deg,#fff,#e6e6e6);color:#111}
-  .fab:active{transform:scale(.96)}
-  .fab-menu{position:absolute;right:0;bottom:70px;display:flex;flex-direction:column;gap:.6rem;align-items:flex-end;opacity:0;pointer-events:none;transform:translateY(8px);transition:all .18s}
-  .fab-open .fab-menu{opacity:1;pointer-events:auto;transform:translateY(0)}
-  .fab-item{display:flex;align-items:center;gap:.6rem;padding:.45rem .6rem;border-radius:999px;background:var(--card);color:inherit;cursor:pointer;box-shadow:0 8px 20px rgba(2,6,23,.4)}
-  .fab-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700}
-  .fab-label{font-size:.88rem;font-weight:700}
-  /* Modal */
-  .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:80;justify-content:center;align-items:center;padding:2rem}
+  @keyframes glow{0%{filter:drop-shadow(0 0 2px #ffe) drop-shadow(0 0 6px #ffb)}50%{filter:drop-shadow(0 0 8px #ffe) drop-shadow(0 0 18px #ffb)}}
+
+  header{padding:3.25rem 1rem 0;text-align:center}
+  header h1{margin:0;font-size:1.4rem;color:var(--accent);font-weight:700}
+
+  /* toolbar top-right */
+  .toolbar{position:fixed;top:12px;right:12px;z-index:90;display:flex;gap:10px;align-items:center}
+  .tool-btn{width:48px;height:48px;border-radius:999px;background:var(--btn-bg);display:inline-flex;align-items:center;justify-content:center;border:none;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.45);transition:transform .12s}
+  .tool-btn:active{transform:scale(.96)}
+  .tool-btn svg{width:22px;height:22px;display:block}
+  .light .tool-btn{box-shadow:0 6px 18px rgba(2,6,23,.06)}
+
+  /* grid modes */
+  .movie-grid{display:grid;gap:12px;padding:1rem 1rem 3.5rem;margin-top:0}
+  .mode-standard .movie-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+  @media(min-width:900px){ .mode-standard .movie-grid{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))} }
+  @media(min-width:1200px){ .mode-standard .movie-grid{grid-template-columns:repeat(6,1fr)} }
+
+  .mode-dense .movie-grid{grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;padding:.8rem}
+  @media(min-width:1200px){ .mode-dense .movie-grid{grid-template-columns:repeat(8,1fr)} }
+
+  .mode-card .movie-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;padding:1rem}
+  @media(min-width:1200px){ .mode-card .movie-grid{grid-template-columns:repeat(5,1fr)} }
+
+  /* cards */
+  .movie-card{background:var(--card);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .28s,box-shadow .28s;display:flex;flex-direction:column;align-items:stretch;perspective:1000px}
+  .movie-card:focus{outline:3px solid rgba(255,193,7,.14);outline-offset:3px}
+  .card-inner{transform-style:preserve-3d;transition:transform .35s}
+  .poster{width:100%;height:300px;object-fit:cover;display:block;transition:transform .35s,box-shadow .35s}
+  .title{padding:.7rem .6rem;font-weight:700;color:var(--accent);text-align:center;font-size:.95rem}
+
+  .mode-card .movie-card:hover{transform:translateY(-6px)}
+  .mode-card .movie-card:hover .card-inner{transform:translateZ(6px) rotateX(6deg) rotateY(-6deg) scale(1.03)}
+  .mode-card .movie-card:hover .poster{transform:translateZ(40px) scale(1.06);box-shadow:0 30px 50px rgba(0,0,0,.55)}
+
+  .mode-dense .title{display:none}
+  .mode-dense .movie-card:hover .title{display:block;position:relative;padding:.35rem .4rem;background:linear-gradient(180deg,rgba(0,0,0,.0),rgba(0,0,0,.45));color:#fff;font-size:.85rem;text-align:center}
+
+  .mode-standard .poster{height:260px}
+  .mode-dense .poster{height:140px}
+  .mode-card .poster{height:340px}
+
+  /* modal */
+  .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;justify-content:center;align-items:center;padding:24px}
   .modal.active{display:flex}
-  .modal-box{width:min(900px,92vw);max-height:80vh;background:transparent;border-radius:12px;display:flex;align-items:center;justify-content:center;position:relative}
-  .modal video,.modal iframe{width:100%;height:auto;max-height:72vh;border-radius:8px;background:#000;display:block;border:none}
-  .close-btn{position:absolute;top:-14px;right:-14px;background:#111;color:#fff;border-radius:999px;padding:.35rem .45rem;cursor:pointer;font-size:1.25rem;box-shadow:0 8px 24px rgba(0,0,0,.6)}
-  .light .close-btn{background:#fff;color:#111}
-  @media (max-width:640px){header{padding-top:4rem}.site-logo{height:3.6rem;left:.6rem;top:.8rem}.modal{padding:1rem}.modal-box{width:95vw}}
-  /* accessible focus */
-  .control-btn:focus,.fab:focus,.fab-item:focus{outline:3px solid rgba(255,193,7,.18);outline-offset:3px}
+  .modal-box{width:min(900px,96vw);max-height:80vh;border-radius:12px;display:flex;flex-direction:column;align-items:stretch;position:relative}
+  .modal video,.modal iframe{width:100%;height:auto;max-height:72vh;border-radius:8px;background:#000;border:none;display:block}
+  .modal-close{position:absolute;top:-12px;right:-12px;background:var(--btn-bg);border-radius:999px;padding:.35rem .45rem;border:none;cursor:pointer;font-size:1.05rem;box-shadow:0 8px 20px rgba(0,0,0,.5)}
+  .light .modal-close{background:#fff;color:#111}
+
+  @media(max-width:640px){ .poster{height:220px} .site-logo{height:52px} .toolbar{gap:8px} }
 </style>
 </head>
-<body class="grid-medium">
+<body class="mode-standard">
 
-<!-- Animated logo (top-left) -->
-<div class="site-logo animate-logo" id="logoWrap" title="Logo">
+<!-- logo -->
+<div class="site-logo animate-logo">
   <img src="https://media.istockphoto.com/id/2167232116/vector/maharashtra-map-with-hindu-maratha-flag-card-banner-vector.jpg?s=612x612&w=0&k=20&c=6vvJVfUOmUx2Ksh2oT49bLk93q-eZo7p_J5eXvSmraM=" alt="Logo" />
 </div>
 
-<header>
-  <h1>मराठी चित्रपट संग्रह</h1>
-</header>
+<header><h1>मराठी चित्रपट संग्रह</h1></header>
 
-<!-- Controls bar (keeps minimal; FAB handles grid view) -->
-<div class="controls">
-  <button id="themeToggle" class="control-btn">Toggle Theme</button>
-  <div style="width:8px"></div>
-  <button id="openFab" class="control-btn">Grid Size</button>
+<!-- toolbar -->
+<div class="toolbar" role="toolbar" aria-label="View controls">
+  <button id="themeBtn" class="tool-btn" aria-pressed="false" title="Toggle dark/light">
+    <!-- two-icon SVG: we'll swap by toggling class, keep both paths -->
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <g id="icon-sun" style="display:none">
+        <path d="M6.76 4.84l-1.8-1.79L3.17 5.85l1.79 1.79L6.76 4.84zM1 13h3v-2H1v2zm10 9h2v-3h-2v3zm7.04-1.16l1.79-1.79-1.79-1.79-1.79 1.79 1.79 1.79zM17 13h3v-2h-3v2zM12 7a5 5 0 100 10 5 5 0 000-10z"/>
+      </g>
+      <g id="icon-moon">
+        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+      </g>
+    </svg>
+  </button>
+
+  <button id="gridBtn" class="tool-btn" aria-pressed="false" title="Change grid mode">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 10v-8h8v8h-8z"/>
+    </svg>
+  </button>
 </div>
 
-<!-- Movie grid -->
-<div id="movieGrid" class="movie-grid" aria-live="polite"></div>
+<!-- grid container -->
+<main>
+  <section id="gridWrap" class="movie-grid" aria-live="polite"></section>
+</main>
 
-<!-- Modal -->
+<!-- modal -->
 <div id="videoModal" class="modal" aria-hidden="true">
-  <div class="modal-box" role="dialog" aria-modal="true" aria-label="Video player container">
-    <button id="modalClose" class="close-btn" aria-label="Close player">&times;</button>
-    <div id="playerContainer" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-label="Video player">
+    <button id="modalClose" class="modal-close" aria-label="Close player">&times;</button>
+    <div id="playerContainer" style="width:100%;display:flex;align-items:center;justify-content:center">
       <video id="modalVideo" controls playsinline></video>
     </div>
   </div>
 </div>
 
-<!-- Floating FAB -->
-<div class="fab-wrap" id="fabWrap">
-  <div id="fab" class="fab" aria-expanded="false" aria-label="Open grid menu">☰</div>
-  <div class="fab-menu" id="fabMenu" role="menu" aria-hidden="true">
-    <div class="fab-item" data-size="small" role="menuitem" tabindex="0"><div class="fab-icon">S</div><div class="fab-label">Small</div></div>
-    <div class="fab-item" data-size="medium" role="menuitem" tabindex="0"><div class="fab-icon">M</div><div class="fab-label">Medium</div></div>
-    <div class="fab-item" data-size="large" role="menuitem" tabindex="0"><div class="fab-icon">L</div><div class="fab-label">Large</div></div>
-  </div>
-</div>
-
 <script>
-/* =========================
-   Movies array (full list from your file)
-   ========================= */
+/* Movie list */
 const movies = [
  { title: "नवरदेव-बीएससी अ‍ॅग्री(Navardev BSc Agri)", url: "https://s8i.rackcloudservice.beauty:443/v4/qu/bcgkq/index-f2-v1-a1.txt", image: "https://m.media-amazon.com/images/M/MV5BMWJhYzUyNWUtNmY0NC00NTA3LTkxZTgtODZhZjNkZjEzMGIxXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" },
  { title: "सायकल(Cycle)", url: "https://www.youtube.com/watch?v=QmUUNv5Gqrs", image: "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p15473483_p_v8_aa.jpg" },
@@ -137,183 +147,203 @@ const movies = [
  { title: "नटरंग(Natrang)", url: "https://streamtape.com/e/K4aMX2prPJS0ZxP/", image: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/natarang-et00004089-24-03-2017-17-59-29.jpg" },
  { title: "भोंगा(Bhonga)", url: "https://streamtape.com/e/rx8ePbWvjYFb2YY/", image: "https://static.digit.in/OTT/v2/images/bhonga-483714.jpg?tr=w-600" },
  { title: "येड्यांची जत्रा(Yedyanchi Jatra)", url: "https://streamtape.com/e/A3wDlLKADghBp0/", image: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/yedyanchi-jatra-iemv004634-24-03-2017-16-47-32.jpg" },
- { title: "धर्मवीर(Dharmaveer)", url: "https://dn720405.ca.archive.org/0/items/bolleyBall_bollywood/Dharmaveer_2022_Marathi_Full_Movie_HDRip-%28CooLmovieZ.live%29.mp4", image: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/dharmaveer-et00327394-29-04-2022-04-20-45.jpg" },
+ { title: "धर्मवीर(Dharmaveer)", url: "https://dn720405.ca.archive.org/0/items/bolleyBall_bollywood/Dharmaveer_2022_Marathi_Full_Movie_HDRip-%28CooLmovieZ.live%29.ia.mp4", image: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/dharmaveer-et00327394-29-04-2022-04-20-45.jpg" },
  { title: "धर्मवीर २(Dharmaveer 2)", url: "https://dn720405.ca.archive.org/0/items/bolleyBall_bollywood/Dharmaveer_2022_Marathi_Full_Movie_HDRip-%28CooLmovieZ.live%29.mp4", image: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/dharmaveer-2-et00403175-1719817449.jpg" }
 ];
 
-/* =========================
-   DOM refs & utilities
-   ========================= */
-const grid = document.getElementById('movieGrid');
+/* DOM refs */
+const gridWrap = document.getElementById('gridWrap');
 const modal = document.getElementById('videoModal');
 const playerContainer = document.getElementById('playerContainer');
 const modalVideoId = 'modalVideo';
 let currentHls = null;
 
-/* Utility checks (unchanged behaviour) */
+/* helper checks */
 const isYouTube = u => /youtu/i.test(u);
 const isHls = u => u && (u.includes('.m3u8') || u.includes('index-') || /\.txt/i.test(u));
 const isMP4 = u => /\.mp4/i.test(u);
 const isMega = u => u && u.includes('mega.nz');
 const isStreamtape = u => u && u.includes('streamtape.com');
 
-/* Render grid (keeps original click -> playInModal behavior) */
-function createCard(movie) {
-  const root = document.createElement('div');
-  root.className = 'movie-card';
+/* render grid safely */
+function makeCard(m){
+  const card = document.createElement('div');
+  card.className = 'movie-card';
+  card.tabIndex = 0;
   const inner = document.createElement('div');
-  inner.className = 'movie-inner';
-  inner.innerHTML = `<img src="${movie.image}" alt="${movie.title}" loading="lazy"/><div class="movie-title">${movie.title}</div>`;
-  root.appendChild(inner);
-  root.addEventListener('click', ()=>playInModal(movie.title,movie.url));
-  // keyboard accessibility
-  root.tabIndex = 0;
-  root.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' ') playInModal(movie.title,movie.url) });
-  return root;
+  inner.className = 'card-inner';
+  const img = document.createElement('img');
+  img.className = 'poster';
+  img.src = m.image;
+  img.alt = m.title;
+  img.loading = 'lazy';
+  const t = document.createElement('div');
+  t.className = 'title';
+  t.textContent = m.title;
+  inner.appendChild(img);
+  inner.appendChild(t);
+  card.appendChild(inner);
+  card.addEventListener('click', ()=> playInModal(m.title, m.url));
+  card.addEventListener('keydown', e=> { if(e.key==='Enter' || e.key===' ') playInModal(m.title, m.url); });
+  return card;
 }
-movies.forEach(m => grid.appendChild(createCard(m)));
+movies.forEach(m => gridWrap.appendChild(makeCard(m)));
 
-/* Modal helpers */
+/* Player helpers */
 function resetPlayer(){
-  // destroy any Hls instance
-  if(currentHls){ try{ currentHls.destroy(); } catch(e){} currentHls = null; }
-  // replace player with fresh video element
+  if(currentHls){ try{ currentHls.destroy(); }catch(e){} currentHls = null; }
   playerContainer.innerHTML = `<video id="${modalVideoId}" controls playsinline></video>`;
 }
 function showModal(){ modal.classList.add('active'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden'; }
 function hideModal(){ modal.classList.remove('active'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; }
 
-/* Play logic - preserves your behaviour for sources */
-function playInModal(title,url){
+function playInModal(title, url){
   resetPlayer();
   const videoEl = document.getElementById(modalVideoId);
 
-  // Streamtape embeds
   if(isStreamtape(url)){
-    playerContainer.innerHTML = `<iframe src="${url}" allow="autoplay; fullscreen" allowfullscreen frameborder="0" style="width:100%;height:72vh;border:0;border-radius:8px"></iframe>`;
+    playerContainer.innerHTML = `<iframe src="${url}" allow="autoplay; fullscreen" allowfullscreen style="width:100%;height:72vh;border:0;border-radius:8px"></iframe>`;
     showModal(); return;
   }
-
-  // YouTube
   if(isYouTube(url)){
-    const videoId = url.includes('v=') ? new URL(url).searchParams.get('v') : url.split('/').pop();
-    playerContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0" allow="autoplay; encrypted-media; fullscreen" frameborder="0" style="width:100%;height:72vh;border:0;border-radius:8px" allowfullscreen></iframe>`;
+    const id = url.includes('v=') ? new URL(url).searchParams.get('v') : url.split('/').pop();
+    playerContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&modestbranding=1&rel=0" allow="autoplay; encrypted-media; fullscreen" frameborder="0" style="width:100%;height:72vh;border:0;border-radius:8px" allowfullscreen></iframe>`;
     showModal(); return;
   }
-
-  // Mega
   if(isMega(url)){
     playerContainer.innerHTML = `<iframe src="${url}" allowfullscreen style="width:100%;height:72vh;border:0;border-radius:8px"></iframe>`;
     showModal(); return;
   }
-
-  // HLS
   if(isHls(url)){
     if(Hls.isSupported()){
       currentHls = new Hls();
       currentHls.loadSource(url);
       currentHls.attachMedia(videoEl);
-      currentHls.on(Hls.Events.MANIFEST_PARSED, () => {
-        showModal();
-        // attempt autoplay, but don't break if blocked
-        videoEl.play().catch(()=>{});
-      });
+      currentHls.on(Hls.Events.MANIFEST_PARSED, ()=>{ showModal(); videoEl.play().catch(()=>{}); });
     } else {
-      // native HLS
       videoEl.src = url;
       showModal();
       videoEl.play().catch(()=>{});
     }
     return;
   }
-
-  // MP4 direct
   if(isMP4(url)){
     videoEl.src = url;
     showModal();
-    // ensure controls visible and allow immediate playback without forcing fullscreen
     videoEl.play().catch(()=>{});
     return;
   }
-
-  // fallback to external player page if unknown type
   window.location.href = `player.html?title=${encodeURIComponent(title)}&video=${encodeURIComponent(url)}`;
 }
 
-/* Close behaviour */
+/* close handlers */
 document.getElementById('modalClose').addEventListener('click', ()=>{ resetPlayer(); hideModal(); });
-modal.addEventListener('click', (e)=>{ if(e.target === modal){ resetPlayer(); hideModal(); } });
+modal.addEventListener('click', e=>{ if(e.target === modal){ resetPlayer(); hideModal(); } });
+window.addEventListener('keydown', e=>{ if(e.key==='Escape' && modal.classList.contains('active')){ resetPlayer(); hideModal(); } });
 
-/* Ensure controls always visible: for desktop we cap height (CSS) and player element is normal video so controls show.
-   No changes to autoplay logic beyond trying to play and ignoring errors. */
+/* Grid mode cycling (safe) */
+const body = document.body;
+const gridBtn = document.getElementById('gridBtn');
+const GRID_KEY = 'marathi_grid_mode';
+const modes = ['mode-standard','mode-dense','mode-card'];
+let idx = 0;
+function applyMode(i){
+  body.classList.remove(...modes);
+  body.classList.add(modes[i]);
+  localStorage.setItem(GRID_KEY, modes[i]);
+}
+function cycleMode(){
+  idx = (idx + 1) % modes.length;
+  applyMode(idx);
+}
+gridBtn.addEventListener('click', cycleMode);
+const saved = localStorage.getItem(GRID_KEY);
+if(saved && modes.includes(saved)){ idx = modes.indexOf(saved); applyMode(idx); } else { idx = 0; applyMode(0); }
+
+/* Theme toggle (safe DOM-only approach) */
+const themeBtn = document.getElementById('themeBtn');
+const iconSun = document.getElementById('icon-sun');
+const iconMoon = document.getElementById('icon-moon');
+const THEME_KEY = 'marathi_theme';
+function setTheme(t){
+  if(t === 'light'){ document.documentElement.classList.add('light'); themeBtn.setAttribute('aria-pressed','true'); iconSun.style.display = 'block'; iconMoon.style.display = 'none'; }
+  else { document.documentElement.classList.remove('light'); themeBtn.setAttribute('aria-pressed','false'); iconSun.style.display = 'none'; iconMoon.style.display = 'block'; }
+  localStorage.setItem(THEME_KEY, t);
+}
+themeBtn.addEventListener('click', ()=> setTheme(document.documentElement.classList.contains('light') ? 'dark' : 'light'));
+const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+setTheme(savedTheme);
+
+/* Accessibility nicety: update grid title tooltip */
+function updateGridTitle(){
+  const names = ['Standard Grid','Dense Posters','Card Mode'];
+  gridBtn.title = `Grid mode: ${names[idx]}. Click to change.`;
+}
+updateGridTitle();
+gridBtn.addEventListener('click', () => setTimeout(updateGridTitle, 120));
 
 /* =========================
-   FAB behaviour
+   EXTREME 3D HOVER EFFECT
    ========================= */
-const fab = document.getElementById('fab');
-const fabWrap = document.getElementById('fabWrap');
-const fabMenu = document.getElementById('fabMenu');
-fab.addEventListener('click', ()=> {
-  fabWrap.classList.toggle('fab-open');
-  const open = fabWrap.classList.contains('fab-open');
-  fab.setAttribute('aria-expanded', open ? 'true' : 'false');
-  fabMenu.setAttribute('aria-hidden', (!open).toString());
-});
-document.getElementById('openFab').addEventListener('click', ()=> fab.click());
 
-// handle menu clicks
-fabMenu.querySelectorAll('.fab-item').forEach(item=>{
-  item.addEventListener('click', ()=>{
-    const size = item.getAttribute('data-size');
-    applyGridSize(size);
-    // collapse
-    fabWrap.classList.remove('fab-open');
-    fab.setAttribute('aria-expanded','false');
-    fabMenu.setAttribute('aria-hidden','true');
+function enable3DEffects() {
+  document.querySelectorAll('.movie-card').forEach(card => {
+    
+    // Skip in DENSE mode
+    if (document.body.classList.contains('mode-dense')) return;
+
+    const inner = card.querySelector('.card-inner');
+    const poster = card.querySelector('.poster');
+
+    // Reset first
+    card.addEventListener('mouseleave', () => {
+      inner.style.transform = `rotateX(0deg) rotateY(0deg) scale(1)`;
+      poster.style.transform = `translateZ(0px) scale(1)`;
+      poster.style.boxShadow = `none`;
+    });
+
+    // Mouse move tilt
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;  
+      const y = e.clientY - rect.top;
+
+      const midX = rect.width / 2;
+      const midY = rect.height / 2;
+
+      // EXTREME settings
+      const rotateY = ((x - midX) / midX) * 14;  
+      const rotateX = -((y - midY) / midY) * 14;
+
+      const pop = 65; // poster pop-out depth
+
+      inner.style.transform = `
+        perspective(1000px)
+        rotateX(${rotateX}deg)
+        rotateY(${rotateY}deg)
+        scale(1.08)
+      `;
+
+      poster.style.transform = `
+        translateZ(${pop}px) 
+        scale(1.15)
+      `;
+
+      poster.style.boxShadow = `
+        0 40px 80px rgba(0,0,0,0.55)
+      `;
+    });
   });
-  // keyboard support
-  item.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' ') item.click(); });
-});
-
-/* Grid size apply + persist */
-function applyGridSize(size){
-  document.body.classList.remove('grid-small','grid-medium','grid-large');
-  if(size==='small') document.body.classList.add('grid-small');
-  else if(size==='large') document.body.classList.add('grid-large');
-  else document.body.classList.add('grid-medium');
-  localStorage.setItem('gridSize', size);
 }
-const savedSize = localStorage.getItem('gridSize') || 'medium';
-applyGridSize(savedSize);
 
-/* =========================
-   Theme toggle
-   ========================= */
-const themeToggle = document.getElementById('themeToggle');
-function applyTheme(t){
-  if(t === 'light') document.documentElement.classList.add('light');
-  else document.documentElement.classList.remove('light');
-  localStorage.setItem('siteTheme', t);
-}
-const savedTheme = localStorage.getItem('siteTheme') || 'dark';
-applyTheme(savedTheme);
-themeToggle.addEventListener('click', ()=>{
-  const newTheme = document.documentElement.classList.contains('light') ? 'dark' : 'light';
-  applyTheme(newTheme);
+/* Re-enable on grid mode change */
+gridBtn.addEventListener('click', () => {
+  setTimeout(enable3DEffects, 150);
 });
 
-/* Close modal on Esc */
-window.addEventListener('keydown', e => {
-  if(e.key === 'Escape' && modal.classList.contains('active')){ resetPlayer(); hideModal(); }
-});
+/* Initial call */
+enable3DEffects();
 
-/* small accessibility: focus trapping (minimal) */
-modal.addEventListener('keydown', e => {
-  if(e.key === 'Tab') e.stopPropagation();
-});
-
-/* ensure logo stays visible on mobile and doesn't overlap: (kept simple) */
-window.addEventListener('resize', ()=>{ /* no-op for now; kept for future adjustments */ });
 
 </script>
 </body>
