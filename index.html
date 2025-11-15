@@ -153,6 +153,17 @@ const movies = [
  { title: "देऊळ(Deool)", url: "https://streamtape.com/e/pa7K6kqd7PurQ8e/", image: "https://m.media-amazon.com/images/M/MV5BMjI0Mzg3MTE3MV5BMl5BanBnXkFtZTcwNjc4NTU3Nw@@._V1_.jpg" },
  { title: "व्हेंटिलेटर(Ventilator)", url: "https://cloud.indexer.eu.org/-1003486765270/1328/1763238071/18269d37827e52f536bd63e01a90f78901b793826705ced6fef4f0efc3073b62", image: "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/ventilator-et00043958-17-04-2017-17-58-45.jpg" },
  { title: "पछाडलेला(Pachhadlela)", url: "https://file-cdn.indexer.eu.org/download/AgADOgsAAn_84FU/1763220518/ed69292bd00696037cdaee7abbcee3806b8ed616f6733c658d8b484c613e9891", image: "https://resizing.flixster.com/8FTO3OWAXZFyGdxPTpXOdX70bGQ=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p11621877_k_v8_aa.jpg" },
+ { title: "फर्जंद", url: "https://drive.google.com/file/d/14PPQfQJfspcFMmYCPfBwTcD6WGuxAt0x/preview", image: "https://static.digit.in/OTT/v2/images/farzand-70297jpg" },
+ { title: "फत्तेशिकस्त", url: "https://drive.google.com/file/d/1fIxfr-OWT7Hd5czMlTZ5oqswX_IUFKxf/preview", image: "https://upload.wikimedia.org/wikipedia/en/8/81/Fatteshikast.jpg" },
+ { title: "पावनखिंड", url: "https://drive.google.com/file/d/1cTEVFdmlU17pFMVILTBh92OLdyMEJ-dD/preview", image: "https://m.media-amazon.com/images/M/MV5BOTMyYTEyYWMtNjI2Ny00MGZkLThjZTUtY2VhZTc5OTc5NmY0XkEyXkFqcGc@._V1_.jpg" },
+ { title: "शेर शिवराज", url: "https://drive.google.com/file/d/1BVpWybbG4QgQd8UYBFEPyVmdN3-Rs05S/preview", image: "https://i.pinimg.com/736x/de/aa/b4/deaab43ec3cafec25c5b36a3650a7989.jpg" },
+ { title: "सुभेदार", url: "https://drive.google.com/file/d/1VOyEOjnTEtn8jcZs_XTwBDwGtCgFVLFx/preview", image: "https://media-cache.cinematerial.com/p/500x/cu5tefq3/subhedar-indian-movie-poster.jpg?v=1707902225" },
+ { title: "सरसेनापती हंबीरराव", url: "https://drive.google.com/file/d/1-Tt6UuGDgkev-bTQ-V2xTzq4pytP_Bq5/preview", image: "https://marathimovieworld.com/images/sarsenapati-hambirrao-movie-posters-pravin-tarde.jpg" },
+ { title: "शिवप्रताप गरुडझेप", url: "https://drive.google.com/file/d/1X-z1n7TaLfeHUS54URe6cYmR9uFb6KT1/preview", image: "https://www.loksatta.com/wp-content/uploads/2022/09/Shivpratap-Garudjhep-Cast-2.jpg?w=350" },
+ { title: "हिरकणी", url: "https://drive.google.com/file/d/1kcjXftfjQzzfmBhKXXNv0ZqeN9CB8zsR/preview", image: "https://m.media-amazon.com/images/M/MV5BMDRlZGNlY2MtMzZmZi00Yjg1LTliNDgtZjZhZmJmZGQxOGM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" },
+ { title: "शिवरायांचा छावा", url: "https://drive.google.com/file/d/1qnuEq-66vaxVPzfsHAL2E346kQVjvB45/preview", image: "https://m.media-amazon.com/images/M/MV5BMjhkMTI5MTktMjc0MC00N2I3LWFlMGMtOTY0YmNmYzJlNTM3XkEyXkFqcGc@._V1_.jpg" },
+ { title: "धर्मरक्षक महावीर छत्रपती संभाजी महाराज", url: "https://drive.google.com/file/d/1y8foBArRlApJl7mzHGbWdWa0izC-GMP7/preview", image: "https://m.media-amazon.com/images/M/MV5BOTA3ZjJjYjMtNWY1Ni00NWUzLTkwZTEtZTViMGVhYzMwNDE5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" },
+
 ];
 
 /* DOM refs */
@@ -168,6 +179,10 @@ const isHls = u => u && (u.includes('.m3u8') || u.includes('index-') || /\.txt/i
 const isMP4 = u => /\.mp4/i.test(u);
 const isMega = u => u && u.includes('mega.nz');
 const isStreamtape = u => u && u.includes('streamtape.com');
+const isIndexer = u => u && u.includes("indexer.eu.org");
+const isGDrive = u => u.includes("drive.google.com");
+
+
 
 /* render grid safely */
 function makeCard(m){
@@ -237,6 +252,39 @@ function playInModal(title, url){
     videoEl.play().catch(()=>{});
     return;
   }
+  // Indexer direct links (play as MP4)
+if (isIndexer(url)) {
+    videoEl.src = url;
+    showModal();
+    videoEl.play().catch(()=>{});
+    return;
+}
+// Google Drive preview embed
+if (isGDrive(url)) {
+    let fileId = "";
+    
+    // Method 1: Extract /d/FILEID/
+    const match = url.match(/\/d\/([^/]+)/);
+    if (match) fileId = match[1];
+
+    // Fallback for ?id= 
+    const idParam = new URL(url).searchParams.get("id");
+    if (!fileId && idParam) fileId = idParam;
+
+    if (fileId) {
+        const embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+        playerContainer.innerHTML = `
+            <iframe src="${embedUrl}" 
+                    allow="autoplay; encrypted-media" 
+                    allowfullscreen 
+                    style="width:100%;height:72vh;border:0;border-radius:8px">
+            </iframe>`;
+        showModal();
+        return;
+    }
+}
+
+
   window.location.href = `player.html?title=${encodeURIComponent(title)}&video=${encodeURIComponent(url)}`;
 }
 
